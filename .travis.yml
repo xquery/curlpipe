@@ -1,0 +1,59 @@
+language: c
+
+sudo: required
+
+env:
+  global:
+    - LINUX_DIST=trusty
+    - DEPS_DIR=${TRAVIS_BUILD_DIR}/deps
+    - CXX_FLAGS="-Wall -pedantic -Werror -Wno-variadic-macros -Wno-long-long -Wno-shadow"
+    - RUN_TESTS=true
+    - COVERAGE=false
+    - LD_LIBRARY_PATH=/usr/local/lib
+
+addons:
+    apt:
+        config:
+            retries: true
+        sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-trusty-6.0
+        packages:
+            - cmake
+            - gcc-7
+            - clang-6.0
+            - valgrind
+            - g++-7
+            - libstdc++-7-dev
+
+matrix:
+    include:
+        - os: linux
+          compiler: clang
+          dist: trusty
+          env: T=debug
+
+branches:
+    only:
+        - master
+        - develop
+
+before_install:
+  - export CMAKE_OPTIONS=${CMAKE_OPTIONS}" "${ENV_CMAKE_OPTIONS}
+  - export CXX_FLAGS=${CXX_FLAGS}" "${ENV_CXX_FLAGS}
+  - echo $LANG
+  - echo $LC_ALL
+  - mkdir build
+  - cd build
+  - cmake --version
+  - cmake ${CMAKE_OPTIONS} -DCMAKE_CXX_FLAGS=${CXX_FLAGS} -DCMAKE_BUILD_TYPE=Debug -DCOVERAGE=1 -DBUILD_TESTS=ON ..
+
+install:
+  - pip2 install --user cpp-coveralls
+
+script:
+  - make
+  - make test
+
+after_success:
+  - coveralls --gcov-options '\-lp' -i /home/travis/build/xquery/curlscript/src -i /home/travis/build/xquery/curlscript/lib
