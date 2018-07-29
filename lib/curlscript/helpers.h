@@ -63,7 +63,7 @@ int set_log_verbosity_max(){
 inline int check_file_exists(string file_uri){
     DLOG_S(INFO) << "checking if file " << file_uri << " exists";
     ifstream cs_file(file_uri);
-    CHECK_F(cs_file.good() == true,"Failed to open '%s'", file_uri.c_str());
+    CHECK_F(cs_file.good(),"Failed to open '%s'", file_uri.c_str());
     return EXIT_SUCCESS;
 }
 

@@ -59,8 +59,7 @@ namespace curlscript{
           catch (csparser::ParseException &pe)
           {
               LOG_S(ERROR) << "parser error, " << convert(pe.getMessage());
-              return EXIT_FAILURE;
-          }
+              return EXIT_FAILURE; }
 
       DLOG_S(INFO) << s.getParsed();
       return EXIT_SUCCESS;

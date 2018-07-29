@@ -40,8 +40,7 @@ public:
     {
     }
 
-    void reset(const wchar_t *input)
-    {
+    void reset(const wchar_t *input) override {
         DLOG_S(INFO) << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
 
         this->input = input;
@@ -50,7 +49,7 @@ public:
         depth = 0;
     }
 
-    void startNonterminal(const wchar_t *tag, int b)
+    void startNonterminal(const wchar_t *tag, int b) override
     {
         if (delayedTag != 0)
         {
@@ -69,7 +68,7 @@ public:
         ++depth;
     }
 
-    void endNonterminal(const wchar_t *tag, int e)
+    void endNonterminal(const wchar_t *tag, int e) override
     {
         --depth;
         if (delayedTag != 0)
@@ -95,7 +94,7 @@ public:
         hasChildElement = true;
     }
 
-    void whitespace(int b, int e)
+    void whitespace(int b, int e) override
     {
         characters(b, e);
     }
@@ -107,10 +106,6 @@ public:
             if (delayedTag != 0)
             {
                 DLOG_S(INFO) << "<" << Utf8Encoder::encode(delayedTag).c_str()  << ">";
-
-//                fputc('<' , stdout);
-//                fputs(csparser::Utf8Encoder::encode(delayedTag).c_str(), stdout);
-//                fputc('>' , stdout);
                 delayedTag = 0;
             }
             std::string encoded = Utf8Encoder::encode(input + b, e - b);
@@ -122,16 +117,12 @@ public:
                 {
                     case 0: break;
                     case L'&': DLOG_S(INFO) << "&amp;";
-//                        fputs("&amp;", stdout);
                         break;
                     case L'<': DLOG_S(INFO) << "&lt;";
-//                        fputs("&lt;", stdout);
                         break;
                     case L'>': DLOG_S(INFO) << "&gt;";
-//                        fputs("&gt;", stdout);
                         break;
                     default: DLOG_S(INFO) << c;
-//                        fputc(c, stdout);
                 }
             }
         }
@@ -166,7 +157,7 @@ public:
     {
     }
 
-    void reset(const wchar_t *input)
+    void reset(const wchar_t *input) override
     {
         DLOG_S(INFO) << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
         ss << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
@@ -177,7 +168,7 @@ public:
         depth = 0;
     }
 
-    void startNonterminal(const wchar_t *tag, int b)
+    void startNonterminal(const wchar_t *tag, int b) override
     {
         if (delayedTag != 0)
         {
@@ -199,7 +190,7 @@ public:
         ++depth;
     }
 
-    void endNonterminal(const wchar_t *tag, int e)
+    void endNonterminal(const wchar_t *tag, int e) override
     {
         --depth;
         if (delayedTag != 0)
@@ -229,7 +220,7 @@ public:
         hasChildElement = true;
     }
 
-    void whitespace(int b, int e)
+    void whitespace(int b, int e) override
     {
         characters(b, e);
     }

@@ -36,8 +36,11 @@
 #define LOGURU_FILENAME_WIDTH   16
 #define LOGURU_REDEFINE_ASSERT  1
 
-#define LOGURU_STACKTRACES      1
-#define LOGURU_RTTI             1
+#ifndef NDEBUG
+    #define LOGURU_STACKTRACES      1
+    #define LOGURU_RTTI             1
+#endif
+
 
 #include <loguru.hpp>
 #endif

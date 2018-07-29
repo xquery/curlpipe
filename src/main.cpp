@@ -28,12 +28,12 @@
 using namespace std;
 
 int banner(){
-    LOG_S(INFO) << "curlscript | Copyright 2018 James Fuller jim.fuller@webcomposite.com | https://github.com/xquery/curlscript";
+    LOG_S(INFO) << "curlscript " << CURLSCRIPT_VERSION_MAJOR << "." << CURLSCRIPT_VERSION_MINOR << "." << CURLSCRIPT_VERSION_PATCH << "| Copyright 2018 James Fuller jim.fuller@webcomposite.com | https://github.com/xquery/curlscript";
     return EXIT_SUCCESS;
 }
 
 int usage(){
-    LOG_S(INFO) << "> curlscript test.eval";
+    LOG_S(INFO) << "> curlscript -d -l -s -q -f test.cs";
     return EXIT_SUCCESS;
 }
 
@@ -66,18 +66,15 @@ int main(int argc, char** argv ){
     }else{
         DLOG_S(INFO) << "set emit INFO level";
         banner();
-        set_log_verbosity_info();
-    }
+        set_log_verbosity_info(); }
 
     if(result["debug"].count() == 1){
-        DLOG_S(INFO) << "set debug opt, set emit maximum message level";
-        set_log_verbosity_max();
-    }
+        DLOG_S(INFO) << "set debug opt, emit maximum message level";
+        set_log_verbosity_max(); }
 
     if(result["log"].count() == 1){
         DLOG_S(INFO) << "set logging to " << result["log"].as<string>();
-        set_log_file(argc,argv,result["log"].as<string>());
-    }
+        set_log_file(argc,argv,result["log"].as<string>()); }
 
     if(result["positional"].count() == 1){
         DLOG_S(INFO) << "set positional opt";
@@ -91,9 +88,7 @@ int main(int argc, char** argv ){
             curlscript::eval(result["file"].as<string>());
         }else{
             LOG_S(ERROR) << "must supply eval file.";
-            return EXIT_FAILURE;
-        }
-    }
+            return EXIT_FAILURE; }}
 
     DLOG_S(INFO) << "finished processing.";
     return EXIT_SUCCESS;
