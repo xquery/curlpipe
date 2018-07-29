@@ -1,5 +1,5 @@
-// This file was generated on Mon Jul 23, 2018 14:04 (UTC+02) by REx v5.47 which is Copyright (c) 1979-2017 by Gunther Rademacher <grd@gmx.net>
-// REx command line: csparser.ebnf -tree -cpp
+// This file was generated on Sun Jul 29, 2018 12:49 (UTC+02) by REx v5.47 which is Copyright (c) 1979-2017 by Gunther Rademacher <grd@gmx.net>
+// REx command line: csparser.ebnf -name csparser -cpp -tree
 
 #ifndef CSPARSER_HPP
 #define CSPARSER_HPP
@@ -212,8 +212,6 @@ public:
   {
             b0 = b; e0 = b;
     l1 = l; b1 = b; e1 = e;
-    l2 = 0;
-    l3 = 0;
     end = e;
     eventHandler->reset(input);
   }
@@ -307,43 +305,51 @@ public:
   void parse_CS()
   {
     eventHandler->startNonterminal(L"CS", e0);
-    lookahead1W(5);                 // S^WS | string | EOF
-    whitespace();
-    parse_Exprs();
-    consume(4);                     // EOF
-    eventHandler->endNonterminal(L"CS", e0);
-  }
-
-private:
-
-  void parse_Exprs()
-  {
-    eventHandler->startNonterminal(L"Exprs", e0);
     for (;;)
     {
-      lookahead1W(5);               // S^WS | string | EOF
-      if (l1 != 3)                  // string
+      lookahead1W(5);               // S^WS | EOF | '"' | '$' | '/' | '['
+      if (l1 == 5)                  // EOF
       {
         break;
       }
       whitespace();
       parse_Expr();
     }
-    eventHandler->endNonterminal(L"Exprs", e0);
+    consume(5);                     // EOF
+    eventHandler->endNonterminal(L"CS", e0);
   }
+
+private:
 
   void parse_Expr()
   {
     eventHandler->startNonterminal(L"Expr", e0);
-    parse_URI();
-    lookahead1W(7);                 // S^WS | '>' | '|'
+    parse_item();
+    lookahead1W(7);                 // S^WS | '!' | '=' | '>' | '>>' | '?' | '|'
     whitespace();
     parse_Operator();
-    lookahead1W(1);                 // S^WS | string
+    lookahead1W(4);                 // S^WS | '"' | '$' | '/' | '['
     whitespace();
-    parse_URI();
-    lookahead1W(8);                 // S^WS | string | EOF | ';'
-    if (l1 == 9)                    // ';'
+    parse_item();
+    for (;;)
+    {
+      lookahead1W(9);               // S^WS | EOF | '!' | '"' | '$' | '/' | ';' | '=' | '>' | '>>' | '?' | '[' | '|'
+      if (l1 != 6                   // '!'
+       && l1 != 13                  // '='
+       && l1 != 14                  // '>'
+       && l1 != 15                  // '>>'
+       && l1 != 16                  // '?'
+       && l1 != 22)                 // '|'
+      {
+        break;
+      }
+      whitespace();
+      parse_Operator();
+      lookahead1W(4);               // S^WS | '"' | '$' | '/' | '['
+      whitespace();
+      parse_item();
+    }
+    if (l1 == 12)                   // ';'
     {
       whitespace();
       parse_Separator();
@@ -351,16 +357,49 @@ private:
     eventHandler->endNonterminal(L"Expr", e0);
   }
 
+  void parse_item()
+  {
+    eventHandler->startNonterminal(L"item", e0);
+    switch (l1)
+    {
+    case 17:                        // '['
+      parse_URI();
+      break;
+    case 8:                         // '$'
+      parse_var();
+      break;
+    case 9:                         // '/'
+      parse_segment();
+      break;
+    default:
+      parse_literal();
+      break;
+    }
+    eventHandler->endNonterminal(L"item", e0);
+  }
+
   void parse_Operator()
   {
     eventHandler->startNonterminal(L"Operator", e0);
     switch (l1)
     {
-    case 13:                        // '|'
-      consume(13);                  // '|'
+    case 22:                        // '|'
+      consume(22);                  // '|'
+      break;
+    case 13:                        // '='
+      consume(13);                  // '='
+      break;
+    case 15:                        // '>>'
+      consume(15);                  // '>>'
+      break;
+    case 14:                        // '>'
+      consume(14);                  // '>'
+      break;
+    case 6:                         // '!'
+      consume(6);                   // '!'
       break;
     default:
-      consume(10);                  // '>'
+      consume(16);                  // '?'
       break;
     }
     eventHandler->endNonterminal(L"Operator", e0);
@@ -369,135 +408,114 @@ private:
   void parse_Separator()
   {
     eventHandler->startNonterminal(L"Separator", e0);
-    consume(9);                     // ';'
+    consume(12);                    // ';'
     eventHandler->endNonterminal(L"Separator", e0);
+  }
+
+  void parse_literal()
+  {
+    eventHandler->startNonterminal(L"literal", e0);
+    consume(7);                     // '"'
+    for (;;)
+    {
+      lookahead1W(8);               // schar | digit | alpha | S^WS | '!' | '"' | '=' | '>' | '>>' | '?' | '|'
+      if (l1 == 7)                  // '"'
+      {
+        break;
+      }
+      whitespace();
+      parse_all();
+    }
+    consume(7);                     // '"'
+    eventHandler->endNonterminal(L"literal", e0);
+  }
+
+  void parse_var()
+  {
+    eventHandler->startNonterminal(L"var", e0);
+    consume(8);                     // '$'
+    lookahead1W(0);                 // alpha | S^WS
+    whitespace();
+    parse_nstring();
+    eventHandler->endNonterminal(L"var", e0);
   }
 
   void parse_URI()
   {
     eventHandler->startNonterminal(L"URI", e0);
-    parse_scheme();
-    lookahead1W(13);                // S^WS | string | EOF | '#' | '/' | ':' | ';' | '>' | '?' | '|'
-    switch (l1)
-    {
-    case 3:                         // string
-      lookahead2W(15);              // S^WS | string | EOF | '#' | '/' | ':' | '://' | ';' | '>' | '?' | '@' | '|'
-      switch (lk)
-      {
-      case 227:                     // string ':'
-        lookahead3W(4);             // IntegerLiteral | S^WS | string
-        break;
-      }
-      break;
-    default:
-      lk = l1;
-      break;
-    }
-    if (lk == 387                   // string '@'
-     || lk == 3299)                 // string ':' string
+    consume(17);                    // '['
+    lookahead1W(6);                 // S^WS | '/' | ']' | 'file' | 'http' | 'https'
+    if (l1 != 9                     // '/'
+     && l1 != 18)                   // ']'
     {
       whitespace();
-      parse_authority();
-    }
-    lookahead1W(13);                // S^WS | string | EOF | '#' | '/' | ':' | ';' | '>' | '?' | '|'
-    switch (l1)
-    {
-    case 3:                         // string
-      lookahead2W(14);              // S^WS | string | EOF | '#' | '/' | ':' | '://' | ';' | '>' | '?' | '|'
-      break;
-    default:
-      lk = l1;
-      break;
-    }
-    if (lk == 99                    // string string
-     || lk == 131                   // string EOF
-     || lk == 163                   // string '#'
-     || lk == 195                   // string '/'
-     || lk == 227                   // string ':'
-     || lk == 291                   // string ';'
-     || lk == 323                   // string '>'
-     || lk == 355                   // string '?'
-     || lk == 419)                  // string '|'
-    {
+      parse_scheme();
+      lookahead1W(1);               // S^WS | '//'
       whitespace();
-      parse_host();
+      parse_hostport();
     }
-    lookahead1W(13);                // S^WS | string | EOF | '#' | '/' | ':' | ';' | '>' | '?' | '|'
-    if (l1 == 7)                    // ':'
-    {
-      whitespace();
-      parse_port();
-    }
-    lookahead1W(12);                // S^WS | string | EOF | '#' | '/' | ';' | '>' | '?' | '|'
     whitespace();
     parse_path();
-    if (l1 == 11)                   // '?'
-    {
-      whitespace();
-      parse_query();
-    }
-    lookahead1W(10);                // S^WS | string | EOF | '#' | ';' | '>' | '|'
-    if (l1 == 5)                    // '#'
-    {
-      whitespace();
-      parse_fragment();
-    }
+    consume(18);                    // ']'
     eventHandler->endNonterminal(L"URI", e0);
   }
 
   void parse_scheme()
   {
     eventHandler->startNonterminal(L"scheme", e0);
-    consume(3);                     // string
-    lookahead1W(2);                 // S^WS | '://'
-    consume(8);                     // '://'
+    switch (l1)
+    {
+    case 21:                        // 'https'
+      consume(21);                  // 'https'
+      break;
+    case 20:                        // 'http'
+      consume(20);                  // 'http'
+      break;
+    default:
+      consume(19);                  // 'file'
+      break;
+    }
+    lookahead1W(2);                 // S^WS | ':'
+    consume(11);                    // ':'
     eventHandler->endNonterminal(L"scheme", e0);
   }
 
-  void parse_authority()
+  void parse_hostport()
   {
-    eventHandler->startNonterminal(L"authority", e0);
-    parse_user();
-    lookahead1W(6);                 // S^WS | ':' | '@'
-    if (l1 == 7)                    // ':'
+    eventHandler->startNonterminal(L"hostport", e0);
+    consume(10);                    // '//'
+    lookahead1W(0);                 // alpha | S^WS
+    whitespace();
+    parse_host();
+    if (l1 == 11)                   // ':'
     {
-      consume(7);                   // ':'
-      lookahead1W(1);               // S^WS | string
+      consume(11);                  // ':'
+      lookahead1W(3);               // digit | S^WS | '/' | ']'
       whitespace();
-      parse_pass();
+      parse_port();
     }
-    lookahead1W(3);                 // S^WS | '@'
-    consume(12);                    // '@'
-    eventHandler->endNonterminal(L"authority", e0);
-  }
-
-  void parse_user()
-  {
-    eventHandler->startNonterminal(L"user", e0);
-    consume(3);                     // string
-    eventHandler->endNonterminal(L"user", e0);
-  }
-
-  void parse_pass()
-  {
-    eventHandler->startNonterminal(L"pass", e0);
-    consume(3);                     // string
-    eventHandler->endNonterminal(L"pass", e0);
+    eventHandler->endNonterminal(L"hostport", e0);
   }
 
   void parse_host()
   {
     eventHandler->startNonterminal(L"host", e0);
-    consume(3);                     // string
+    parse_nstring();
     eventHandler->endNonterminal(L"host", e0);
   }
 
   void parse_port()
   {
     eventHandler->startNonterminal(L"port", e0);
-    consume(7);                     // ':'
-    lookahead1W(0);                 // IntegerLiteral | S^WS
-    consume(1);                     // IntegerLiteral
+    for (;;)
+    {
+      lookahead1W(3);               // digit | S^WS | '/' | ']'
+      if (l1 != 2)                  // digit
+      {
+        break;
+      }
+      consume(2);                   // digit
+    }
     eventHandler->endNonterminal(L"port", e0);
   }
 
@@ -506,8 +524,7 @@ private:
     eventHandler->startNonterminal(L"path", e0);
     for (;;)
     {
-      lookahead1W(12);              // S^WS | string | EOF | '#' | '/' | ';' | '>' | '?' | '|'
-      if (l1 != 6)                  // '/'
+      if (l1 != 9)                  // '/'
       {
         break;
       }
@@ -520,42 +537,100 @@ private:
   void parse_segment()
   {
     eventHandler->startNonterminal(L"segment", e0);
-    consume(6);                     // '/'
-    lookahead1W(1);                 // S^WS | string
-    consume(3);                     // string
+    consume(9);                     // '/'
+    lookahead1W(10);                // schar | digit | alpha | S^WS | EOF | '!' | '"' | '$' | '/' | ';' | '=' | '>' |
+                                    // '>>' | '?' | '[' | ']' | '|'
+    whitespace();
+    parse_string();
     eventHandler->endNonterminal(L"segment", e0);
   }
 
-  void parse_query()
+  void parse_nstring()
   {
-    eventHandler->startNonterminal(L"query", e0);
-    consume(11);                    // '?'
-    eventHandler->endNonterminal(L"query", e0);
+    eventHandler->startNonterminal(L"nstring", e0);
+    consume(3);                     // alpha
+    for (;;)
+    {
+      lookahead1W(11);              // schar | digit | alpha | S^WS | EOF | '!' | '"' | '$' | '/' | ':' | ';' | '=' |
+                                    // '>' | '>>' | '?' | '[' | ']' | '|'
+      if (l1 != 1                   // schar
+       && l1 != 2                   // digit
+       && l1 != 3)                  // alpha
+      {
+        break;
+      }
+      switch (l1)
+      {
+      case 3:                       // alpha
+        consume(3);                 // alpha
+        break;
+      case 1:                       // schar
+        consume(1);                 // schar
+        break;
+      default:
+        consume(2);                 // digit
+        break;
+      }
+    }
+    eventHandler->endNonterminal(L"nstring", e0);
   }
 
-  void parse_fragment()
+  void parse_string()
   {
-    eventHandler->startNonterminal(L"fragment", e0);
-    consume(5);                     // '#'
-    lookahead1W(9);                 // S^WS | string | EOF | ';' | '>' | '|'
+    eventHandler->startNonterminal(L"string", e0);
+    for (;;)
+    {
+      lookahead1W(10);              // schar | digit | alpha | S^WS | EOF | '!' | '"' | '$' | '/' | ';' | '=' | '>' |
+                                    // '>>' | '?' | '[' | ']' | '|'
+      if (l1 != 1                   // schar
+       && l1 != 2                   // digit
+       && l1 != 3)                  // alpha
+      {
+        break;
+      }
+      whitespace();
+      parse_character();
+    }
+    eventHandler->endNonterminal(L"string", e0);
+  }
+
+  void parse_character()
+  {
+    eventHandler->startNonterminal(L"character", e0);
     switch (l1)
     {
-    case 3:                         // string
-      lookahead2W(11);              // S^WS | string | EOF | '://' | ';' | '>' | '|'
+    case 3:                         // alpha
+      consume(3);                   // alpha
+      break;
+    case 2:                         // digit
+      consume(2);                   // digit
       break;
     default:
-      lk = l1;
+      consume(1);                   // schar
       break;
     }
-    if (lk == 99                    // string string
-     || lk == 131                   // string EOF
-     || lk == 291                   // string ';'
-     || lk == 323                   // string '>'
-     || lk == 419)                  // string '|'
+    eventHandler->endNonterminal(L"character", e0);
+  }
+
+  void parse_all()
+  {
+    eventHandler->startNonterminal(L"all", e0);
+    switch (l1)
     {
-      consume(3);                   // string
+    case 3:                         // alpha
+      consume(3);                   // alpha
+      break;
+    case 2:                         // digit
+      consume(2);                   // digit
+      break;
+    case 1:                         // schar
+      consume(1);                   // schar
+      break;
+    default:
+      parse_Operator();
+      break;
     }
-    eventHandler->endNonterminal(L"fragment", e0);
+    eventHandler->endNonterminal(L"all", e0);
   }
 
   void consume(int t)
@@ -564,9 +639,7 @@ private:
     {
       whitespace();
       eventHandler->terminal(TOKEN[l1], b1, e1);
-      b0 = b1; e0 = e1; l1 = l2; if (l1 != 0) {
-      b1 = b2; e1 = e2; l2 = l3; if (l2 != 0) {
-      b2 = b3; e2 = e3; l3 = 0; }}
+      b0 = b1; e0 = e1; l1 = 0;
     }
     else
     {
@@ -589,7 +662,7 @@ private:
     for (;;)
     {
       code = match(set);
-      if (code != 2)                // S^WS
+      if (code != 4)                // S^WS
       {
         break;
       }
@@ -607,37 +680,13 @@ private:
     }
   }
 
-  void lookahead2W(int set)
-  {
-    if (l2 == 0)
-    {
-      l2 = matchW(set);
-      b2 = begin;
-      e2 = end;
-    }
-    lk = (l2 << 5) | l1;
-  }
-
-  void lookahead3W(int set)
-  {
-    if (l3 == 0)
-    {
-      l3 = matchW(set);
-      b3 = begin;
-      e3 = end;
-    }
-    lk |= l3 << 10;
-  }
-
   int error(int b, int e, int s, int l, int t)
   {
     throw ParseException(b, e, s, l, t);
   }
 
-  int lk, b0, e0;
+  int     b0, e0;
   int l1, b1, e1;
-  int l2, b2, e2;
-  int l3, b3, e3;
   EventHandler *eventHandler;
 
   const wchar_t *input;
@@ -662,8 +711,8 @@ private:
       }
       else if (c0 < 0xd800)
       {
-        int c1 = c0 >> 4;
-        charclass = MAP1[(c0 & 15) + MAP1[(c1 & 63) + MAP1[c1 >> 6]]];
+        int c1 = c0 >> 5;
+        charclass = MAP1[(c0 & 31) + MAP1[(c1 & 31) + MAP1[c1 >> 5]]];
       }
       else
       {
@@ -691,7 +740,7 @@ private:
     }
 
     if (input[begin] == 0) end = begin;
-    return (result & 15) - 1;
+    return (result & 31) - 1;
   }
 
   class MalformedInputException
@@ -704,7 +753,7 @@ private:
     size_t offset;
   };
 
-class Utf8Encoder
+  class Utf8Encoder
   {
   public:
     static std::string encode(const wchar_t *unencoded)
@@ -779,7 +828,7 @@ class Utf8Encoder
   static void getTokenSet(int tokenSetId, const wchar_t **set, int size)
   {
     int s = tokenSetId < 0 ? - tokenSetId : INITIAL[tokenSetId] & 31;
-    for (int i = 0; i < 14; i += 32)
+    for (int i = 0; i < 23; i += 32)
     {
       int j = i;
       for (unsigned int f = ec(i >> 5, s); f != 0; f >>= 1, ++j)
@@ -803,7 +852,7 @@ class Utf8Encoder
 
   static int ec(int t, int s)
   {
-    int i0 = t * 21 + s - 1;
+    int i0 = t * 22 + s - 1;
     return EXPECTED[i0];
   }
 
@@ -817,62 +866,80 @@ class Utf8Encoder
 
 const int csparser::MAP0[] =
 {
-/*   0 */ 12, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 2,
-/*  36 */ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 7, 0, 0, 8, 9, 10, 3, 3, 3, 3, 3, 3, 3,
-/*  72 */ 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
-/* 109 */ 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 11, 0, 0, 0
+/*   0 */ 25, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 0,
+/*  36 */ 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 9, 0, 10, 11, 12, 0, 13, 13, 13, 13, 13,
+/*  70 */ 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 14, 0, 15, 0, 5, 0, 13,
+/*  98 */ 13, 13, 13, 16, 17, 13, 18, 19, 13, 13, 20, 13, 13, 13, 21, 13, 13, 22, 23, 13, 13, 13, 13, 13, 13, 0, 24, 0,
+/* 126 */ 0, 0
 };
 
 const int csparser::MAP1[] =
 {
-/*   0 */ 54, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62,
-/*  27 */ 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62,
-/*  54 */ 126, 155, 139, 191, 207, 212, 170, 175, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155,
-/*  76 */ 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155,
-/*  98 */ 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155,
-/* 120 */ 155, 155, 155, 155, 155, 155, 12, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-/* 152 */ 0, 3, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 11,
-/* 188 */ 0, 0, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 7, 0, 0, 8, 9, 10, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0,
-/* 224 */ 0, 0, 0, 0
+/*   0 */ 54, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58,
+/*  27 */ 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58,
+/*  54 */ 90, 136, 199, 168, 104, 104, 104, 104, 104, 104, 104, 104, 104, 104, 104, 104, 104, 104, 104, 104, 104, 104,
+/*  76 */ 104, 104, 104, 104, 104, 104, 104, 104, 104, 104, 104, 104, 104, 104, 25, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0,
+/* 103 */ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 0,
+/* 140 */ 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 9, 0, 10, 11, 12, 0, 13, 13, 13, 13, 16,
+/* 174 */ 17, 13, 18, 19, 13, 13, 20, 13, 13, 13, 21, 13, 13, 22, 23, 13, 13, 13, 13, 13, 13, 0, 24, 0, 0, 0, 13, 13,
+/* 202 */ 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 14, 0, 15, 0,
+/* 230 */ 5
 };
 
 const int csparser::INITIAL[] =
 {
-/*  0 */ 1, 130, 3, 4, 133, 134, 7, 8, 137, 138, 139, 140, 141, 142, 143, 144
+/*  0 */ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
 };
 
 const int csparser::TRANSITION[] =
 {
-/*   0 */ 108, 108, 108, 108, 108, 108, 108, 108, 104, 104, 104, 104, 107, 108, 108, 108, 108, 108, 145, 114, 108, 108,
-/*  22 */ 108, 108, 149, 120, 118, 118, 148, 108, 108, 108, 108, 108, 108, 127, 132, 131, 108, 108, 137, 137, 108, 108,
-/*  44 */ 136, 108, 108, 108, 110, 142, 109, 153, 108, 108, 108, 108, 108, 108, 157, 157, 108, 108, 108, 108, 108, 138,
-/*  66 */ 161, 162, 108, 108, 108, 108, 108, 108, 108, 166, 108, 108, 108, 108, 122, 123, 108, 122, 108, 108, 108, 108,
-/*  88 */ 108, 172, 174, 175, 108, 108, 108, 108, 108, 170, 179, 179, 108, 108, 108, 108, 113, 113, 113, 113, 0, 0, 0,
-/* 111 */ 0, 20, 0, 192, 192, 192, 192, 147, 147, 147, 147, 0, 0, 0, 416, 0, 224, 224, 224, 224, 288, 0, 0, 0, 21, 0,
-/* 137 */ 82, 0, 0, 0, 352, 0, 0, 256, 0, 0, 192, 0, 0, 147, 0, 0, 0, 256, 276, 276, 320, 320, 320, 320, 0, 352, 352,
-/* 164 */ 352, 352, 384, 384, 384, 384, 0, 160, 0, 0, 0, 448, 448, 448, 448, 160, 160, 160, 160
+/*   0 */ 212, 212, 212, 212, 212, 212, 212, 212, 208, 208, 208, 211, 212, 212, 212, 212, 212, 283, 217, 212, 212, 212,
+/*  22 */ 212, 212, 212, 223, 221, 212, 212, 212, 212, 212, 212, 231, 229, 212, 212, 212, 212, 212, 212, 212, 237, 212,
+/*  44 */ 212, 212, 212, 212, 241, 244, 243, 248, 212, 212, 212, 212, 271, 212, 254, 212, 212, 212, 212, 212, 317, 212,
+/*  66 */ 316, 212, 212, 212, 212, 212, 212, 212, 258, 212, 212, 212, 212, 212, 212, 225, 262, 212, 212, 212, 212, 212,
+/*  88 */ 212, 233, 266, 212, 270, 212, 212, 212, 212, 250, 275, 212, 212, 212, 212, 212, 282, 212, 279, 212, 212, 212,
+/* 110 */ 212, 212, 212, 289, 287, 212, 212, 212, 212, 212, 291, 292, 305, 212, 212, 212, 212, 212, 282, 212, 279, 212,
+/* 132 */ 311, 212, 212, 212, 282, 333, 279, 212, 212, 212, 212, 212, 282, 296, 279, 212, 212, 212, 212, 212, 282, 212,
+/* 154 */ 279, 299, 212, 212, 212, 212, 282, 212, 279, 212, 309, 212, 212, 212, 282, 212, 279, 212, 212, 315, 212, 212,
+/* 176 */ 282, 212, 279, 212, 212, 321, 212, 212, 282, 212, 279, 213, 302, 212, 212, 212, 212, 323, 327, 212, 212, 212,
+/* 198 */ 212, 212, 212, 331, 337, 212, 212, 212, 212, 212, 173, 173, 173, 173, 0, 0, 0, 0, 19, 224, 224, 224, 224, 256,
+/* 222 */ 256, 256, 256, 0, 0, 0, 448, 0, 288, 288, 288, 0, 0, 0, 497, 64, 0, 64, 64, 0, 14, 0, 320, 320, 320, 0, 0,
+/* 249 */ 352, 0, 0, 0, 544, 96, 0, 96, 96, 0, 416, 416, 416, 448, 448, 448, 448, 497, 497, 497, 497, 512, 0, 0, 0, 96,
+/* 275 */ 544, 544, 544, 544, 128, 0, 128, 128, 0, 0, 0, 224, 0, 576, 576, 576, 0, 0, 0, 608, 0, 0, 0, 16, 0, 0, 18, 0,
+/* 303 */ 0, 21, 0, 0, 608, 608, 0, 20, 0, 0, 0, 640, 694, 0, 0, 0, 384, 0, 0, 704, 0, 0, 0, 736, 736, 736, 736, 736, 0,
+/* 332 */ 192, 0, 0, 15, 0, 0, 192, 192, 192
 };
 
 const int csparser::EXPECTED[] =
 {
-/*  0 */ 6, 12, 260, 4100, 14, 28, 4228, 9220, 540, 9756, 9788, 10012, 11900, 12028, 12284, 16380, 4, 2, 8, 256, 256
+/*  0 */ 24, 1040, 2064, 262676, 131984, 132016, 3932688, 4317264, 4317406, 4453360, 4715518, 4717566, 16, 1024, 524288,
+/* 15 */ 3145728, 32768, 524288, 3145728, 524288, 3145728, 2097152
 };
 
 const wchar_t *csparser::TOKEN[] =
 {
   L"(0)",
-  L"IntegerLiteral",
+  L"schar",
+  L"digit",
+  L"alpha",
   L"S",
-  L"string",
   L"EOF",
-  L"'#'",
+  L"'!'",
+  L"'\"'",
+  L"'$'",
   L"'/'",
+  L"'//'",
   L"':'",
-  L"'://'",
   L"';'",
+  L"'='",
   L"'>'",
+  L"'>>'",
   L"'?'",
-  L"'@'",
+  L"'['",
+  L"']'",
+  L"'file'",
+  L"'http'",
+  L"'https'",
   L"'|'"
 };
 

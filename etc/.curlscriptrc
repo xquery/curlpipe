@@ -1,0 +1,8 @@
+#set defaults on options
+opt.defaults.scheme = http
+opt.defaults.concurrent = false
+
+#connection
+opt.conn.auth.type = any
+opt.conn.auth.user = admin
+opt.conn.auth.pass = admin

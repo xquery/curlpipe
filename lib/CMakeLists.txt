@@ -25,6 +25,9 @@
 set(LIB_NAME libcurlscript)
 
 file(GLOB SRC_FILES curlscript/*.cpp curlscript/*.h* curlscript/curlscript.h)
+configure_file (
+        "${CMAKE_CURRENT_SOURCE_DIR}/version.h.in"
+        "${CMAKE_CURRENT_SOURCE_DIR}/curlscript/version.h")
 add_library(${LIB_NAME} STATIC ${SRC_FILES})
 target_link_libraries(${LIB_NAME} -lpthread -ldl)
 set_target_properties(${LIB_NAME} PROPERTIES LINKER_LANGUAGE CXX)

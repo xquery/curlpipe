@@ -28,7 +28,7 @@
 using namespace std;
 
 int banner(){
-    LOG_S(INFO) << "curlscript | Copyright 2018 James Fuller jim.fuller@webcomposite.com | https://github.com/xquery/eval";
+    LOG_S(INFO) << "curlscript | Copyright 2018 James Fuller jim.fuller@webcomposite.com | https://github.com/xquery/curlscript";
     return EXIT_SUCCESS;
 }
 
@@ -38,7 +38,7 @@ int usage(){
 }
 
 cxxopts::Options setopts(){
-    cxxopts::Options opts("eval", "http scripting with curl.");
+    cxxopts::Options opts("curlscript", "http scripting with curl.");
     opts.add_options()
             ("positional",
              "Positional arguments: these are the arguments that are entered "
@@ -54,10 +54,7 @@ cxxopts::Options setopts(){
 
 int main(int argc, char** argv ){
 
-#ifndef NDEBUG
-    LOG_S(INFO) << "debug mode";
-#endif
-
+    DLOG_S(INFO) << "debug mode";
     DLOG_S(INFO) << "start processing...";
 
     cxxopts::Options opts = setopts();
@@ -67,16 +64,18 @@ int main(int argc, char** argv ){
         DLOG_S(INFO) << "set quiet opt";
        set_log_verbosity_error();
     }else{
+        DLOG_S(INFO) << "set emit INFO level";
         banner();
         set_log_verbosity_info();
     }
 
     if(result["debug"].count() == 1){
-        DLOG_S(INFO) << "set debug opt";
+        DLOG_S(INFO) << "set debug opt, set emit maximum message level";
         set_log_verbosity_max();
     }
 
     if(result["log"].count() == 1){
+        DLOG_S(INFO) << "set logging to " << result["log"].as<string>();
         set_log_file(argc,argv,result["log"].as<string>());
     }
 

@@ -22,9 +22,9 @@ https://www.google.com >> $myvar
 ##################
 # selection semantics
 ##################
-https://www.google.com ? /html/meta[1]
+https://www.google.com . /html/meta[1]
 $myvar[1]  # gets first multipart
-$myvar[1] ? /test/test/test
+$myvar[1] . /test/test/test
 
 ##################
 # redirect to a file descriptor

@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/xquery/curlscript.svg?branch=develop)](https://travis-ci.org/xquery/curlscript)
 [![Coverage Status](https://coveralls.io/repos/github/xquery/curlscript/badge.svg?branch=develop)](https://coveralls.io/github/xquery/curlscript?branch=develop)
 
-
+Curl is 
 ## Usage
 
 ## Developing
@@ -41,7 +41,7 @@ This project depends on the following external libs:
 
 ## License
 
-curlscript is provided under the [MIT License v2.0](LICENSE)
+curlscript is provided under the [MIT License](COPYING)
 
 MIT License
 

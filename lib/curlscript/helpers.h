@@ -28,6 +28,7 @@
 #include <iostream>
 #include <sstream>
 #include <fstream>
+#include "version.h"
 
 using namespace std;
 

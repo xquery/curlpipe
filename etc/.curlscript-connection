@@ -1,0 +1,5 @@
+#load into opt.conn eg. opt.conn.auth.user
+auth.user = admin
+auth.pass = admin
+auth.type = any
+
