@@ -2,12 +2,16 @@ CS
   ::= Expr* EOF
 
 Expr
-  ::= item Operator item (Operator item )* Separator?
+  ::= (opt | items Operator item (Operator item )*) Separator?
+
+opt ::= "set" nstring "=" ( literal | URI )
+
+items ::= item ("," item)?
 
 item ::= URI | var | segment | literal
 
 Operator
-  ::= '|' |  '=' | '>>' | '>' | '!' | '?'
+  ::= '|' |  '=' | '>>' | '>' | '!' | '?' | "!=" | "=="
 
 Separator
   ::= ';'
@@ -18,13 +22,13 @@ var
   ::= "$" nstring
 
 URI
-  ::= "[" (scheme hostport)? path  "]"
+  ::= "[" (scheme hostport?)? path  "]"
 
 scheme
-  ::= ("https" | "http" | "file") ':'
+  ::= ("https" | "http" | "file") '://'
 
 hostport
-  ::= "//" host (":" port)?
+  ::= host (":" port)?
 
 host
   ::= nstring
@@ -47,7 +51,7 @@ character ::= alpha | digit | schar
 all ::= Operator | alpha | digit | schar
 
 whitespace
-         ::= S^WS
+         ::=  S^WS
           /* ws: definition */
 
 <?TOKENS?>

@@ -12,6 +12,9 @@ set opt.conn.auth.type = any
 set opt.conn.auth.user = admin
 set opt.conn.auth.pass = admin
 
+set opt.defaults.headers.Accept = "application/json"
+set opt.defaults.headers.Content-type = "application/json"
+
 ##################
 # set variable
 ##################
