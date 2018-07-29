@@ -2,9 +2,42 @@
 [![Build Status](https://travis-ci.org/xquery/curlscript.svg?branch=develop)](https://travis-ci.org/xquery/curlscript)
 [![Coverage Status](https://coveralls.io/repos/github/xquery/curlscript/badge.svg?branch=develop)](https://coveralls.io/github/xquery/curlscript?branch=develop)
 
-[Curl](https://curl.haxx.se/) is a great ~~swiss army knife~~ http client. A swiss army knife  
+[Curl](https://curl.haxx.se/) is a great ~~swiss army knife~~ http client which does much more then just working with HTTP. Curl is comprised of 
+libcurl (programmatic api) and the curl tool (command line interface). Over the years the curl tool has grown, exposing hundreds
+of flags ('knobs') - in most users only ever invoke a subset of these flags.
+
+Curlscript is an experiment in exposing curl's goodness via a little DSL. 
+   
+```$bash
+$opt = [/wwww.com]
+set opt.defaults.header.Accept = "applicationxml"
+
+[file://wwww.com] | [http://myalias.com] ;
+
+[file://wwww.com], [file://wwww.com] | [http://myalias.com] ;
+
+[file://wwww.com]| [http://myalias.com] |
+      [http://myalias.com:21/test/kkkk/mmm] >> [file://test.txt];
+
+$my = [http://myalias.com];
+
+$my ? /test | [http://myalias.com]
+
+$my ? /test
+
+"asdfasdfasdfsadfsadfsdafdsafsdafsdafsa" | [http://www.example.org/post]
+
+"name=test"| [http://www.example.org/post]
+
+[file://wwww.com], [file://wwww.com] ?/test != "kkk"
+
+[https://www.webcomposite.com]  > [file:///a.txt]
+[https://www.webcomposite.com] | [file:///b.txt]
+```
+
 
 ## Usage
+
 
 ## Developing
 
