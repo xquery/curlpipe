@@ -4,8 +4,9 @@ WARNING - under development (as in everything is probably broken)
 [![Build Status](https://travis-ci.org/xquery/curlscript.svg?branch=develop)](https://travis-ci.org/xquery/curlscript)
 [![Coverage Status](https://coveralls.io/repos/github/xquery/curlscript/badge.svg?branch=develop)](https://coveralls.io/github/xquery/curlscript?branch=develop)
 
-[Curl](https://curl.haxx.se/) is a great ~~swiss army knife~~ http client which does much more then just working with HTTP. Curl is comprised of 
-libcurl (programmatic api) and the curl tool (command line interface). Over the years the curl tool has grown, exposing hundreds
+[Curl](https://curl.haxx.se/) is a great ~~swiss army knife~~ http client which does much more then just make working with HTTP easier.
+ 
+Curl is comprised of libcurl (programmatic api) and the curl tool (command line interface). Over the years the curl tool has grown, exposing hundreds
 of flags - most users only ever invoke a subset.
 
 Curlscript is an experiment in exposing curl's goodness via a little [DSL](https://en.wikipedia.org/wiki/Domain-specific_language).
