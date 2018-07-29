@@ -7,9 +7,10 @@ WARNING - under development (as in everything is probably broken)
 [Curl](https://curl.haxx.se/) is a great ~~swiss army knife~~ http client which does much more then just make working with HTTP easier.
  
 Curl is comprised of libcurl (programmatic api) and the curl tool (command line interface). Over the years the curl tool has grown, exposing hundreds
-of flags - most users only ever invoke a subset.
+of flags - whereby most users only ever invoke a subset and learn more advanced features over time. 
 
-Curlscript is an experiment in exposing curl's goodness via a little [DSL](https://en.wikipedia.org/wiki/Domain-specific_language).
+Curlscript is an experiment in exposing curl's goodness via a little [DSL](https://en.wikipedia.org/wiki/Domain-specific_language) making it easy to build up
+pipelines of execution using familiar semantics.  
 
 GET   
 ```$bash
@@ -46,27 +47,23 @@ POST zip file
 /tmp/mydoc.zip | [http://www.httpbin.org/post] ;
 ```
 
+PUT some json
 ```$bash
-
-[file://wwww.com], [file://wwww.com] | [http://myalias.com] ;
-
-[file://wwww.com]| [http://myalias.com] |
-      [http://myalias.com:21/test/kkkk/mmm] >> [file://test.txt];
-
-$my = [http://myalias.com];
-
-$my ? /test | [http://myalias.com]
-
-$my ? /test
-
-"asdfasdfasdfsadfsadfsdafdsafsdafsdafsa" | [http://www.example.org/post]
-
-[file://wwww.com], [file://wwww.com] ?/test != "kkk"
-
-[https://www.webcomposite.com]  > [file:///a.txt]
-[https://www.webcomposite.com] | [file:///b.txt]
+[http://www.httpbin.org/put] = {"test:1}
 ```
 
+DELETE
+```$bash
+[http://www.httpbin.org/delete] = /dev/null
+```
+
+Comparison
+```$bash
+
+[http://www.httpbin.org/get] ?/url == 'http://www.httpbin.org/get'
+
+[http://www.httpbin.org/get] ?/url != 'http://www.example.com'
+```
 
 ## Usage
 
