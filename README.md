@@ -1,18 +1,51 @@
 # curlscript (develop)
+WARNING - under development (as in everything is probably broken)
+
 [![Build Status](https://travis-ci.org/xquery/curlscript.svg?branch=develop)](https://travis-ci.org/xquery/curlscript)
 [![Coverage Status](https://coveralls.io/repos/github/xquery/curlscript/badge.svg?branch=develop)](https://coveralls.io/github/xquery/curlscript?branch=develop)
 
 [Curl](https://curl.haxx.se/) is a great ~~swiss army knife~~ http client which does much more then just working with HTTP. Curl is comprised of 
 libcurl (programmatic api) and the curl tool (command line interface). Over the years the curl tool has grown, exposing hundreds
-of flags ('knobs') - in most users only ever invoke a subset of these flags.
+of flags - most users only ever invoke a subset.
 
-Curlscript is an experiment in exposing curl's goodness via a little DSL. 
-   
+Curlscript is an experiment in exposing curl's goodness via a little [DSL](https://en.wikipedia.org/wiki/Domain-specific_language).
+
+GET   
 ```$bash
-$opt = [/wwww.com]
-set opt.defaults.header.Accept = "applicationxml"
+[http://www.httpbin.org/get]
+```
 
-[file://wwww.com] | [http://myalias.com] ;
+GET and save to file  
+```$bash
+[http://www.httpbin.org/get] > /tmp/response.txt
+```
+
+GET and narrow down result
+```$bash
+[http://www.httpbin.org/get] ? /id
+```
+
+POST some json
+```$bash
+{"id":1 , "name":"James Fuller"} | [http://www.httpbin.org/post] ;
+```
+
+POST some xml
+```$bash
+&lt;person id="1"&gt;&lt;name&gt;James Fuller&lt;name&gt;&lt;/person&gt; | [http://www.httpbin.org/post] ;
+```
+
+POST url encoded
+```$bash
+"id=1&name=James Fuller" | [http://www.httpbin.org/post] ;
+```
+
+POST zip file
+```$bash
+/tmp/mydoc.zip | [http://www.httpbin.org/post] ;
+```
+
+```$bash
 
 [file://wwww.com], [file://wwww.com] | [http://myalias.com] ;
 
@@ -26,8 +59,6 @@ $my ? /test | [http://myalias.com]
 $my ? /test
 
 "asdfasdfasdfsadfsadfsdafdsafsdafsdafsa" | [http://www.example.org/post]
-
-"name=test"| [http://www.example.org/post]
 
 [file://wwww.com], [file://wwww.com] ?/test != "kkk"
 

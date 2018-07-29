@@ -41,7 +41,6 @@
     #define LOGURU_RTTI             1
 #endif
 
-
 #include <loguru.hpp>
 #endif
 

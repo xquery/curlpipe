@@ -1,9 +1,13 @@
 $opt = [/wwww.com]
 set opt.defaults.header.Accept = "applicationxml"
 
- [file://wwww.com] | [http://myalias.com] ;
+[https://www.google.com]
 
- [file://wwww.com], [file://wwww.com] | [http://myalias.com] ;
+[https://www.google.com],[https://www.google.com]
+
+[file://wwww.com] | [http://myalias.com] ;
+
+[file://wwww.com], [file://wwww.com] | [http://myalias.com] ;
 
 [file://wwww.com]| [http://myalias.com] |
       [http://myalias.com:21/test/kkkk/mmm] >> [file://test.txt];

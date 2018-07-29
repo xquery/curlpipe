@@ -2,7 +2,7 @@ CS
   ::= Expr* EOF
 
 Expr
-  ::= (opt | items Operator item (Operator item )*) Separator?
+  ::= ( opt | items ( Operator items (Operator items )* )? ) Separator?
 
 opt ::= "set" nstring "=" ( literal | URI )
 
