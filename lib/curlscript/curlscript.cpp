@@ -37,31 +37,43 @@
 #include "log.h"
 #include "helpers.h"
 #include "serializer.h"
+#include "ast.cpp"
+#include "eval.cpp"
+
+#include <pugixml.hpp>
 
 using namespace std;
+using namespace pugi;
 
 namespace curlscript{
 
   int eval(string file_uri) {
+
+
       DLOG_S(INFO) << "loading " << file_uri;
       bool indent = false;
 
-      XMLSerializer s(indent);
+      ASTserializer s(indent);
       string input = load_file(file_uri);
 
       wstring winput =convert(input);
 
       csparser parser(winput.c_str(), &s);
-          try
-          {
-              parser.parse_CS();
-          }
-          catch (csparser::ParseException &pe)
-          {
-              LOG_S(ERROR) << "parser error, " << convert(pe.getMessage());
-              return EXIT_FAILURE; }
+      try {
+          parser.parse_CS(); }
+      catch (csparser::ParseException &pe)
+      {
+          LOG_S(ERROR) << "parser error, " << convert(pe.getMessage());
+          return EXIT_FAILURE; }
 
-      DLOG_S(INFO) << s.getParsed();
+      vector<expr> exprs = generate_ast(s.getParsed());
+
+      eval_exprs(exprs);
+
+//      auto f = [](int a, int b) -> int { return a + b; };
+
+//      DLOG_S(INFO) << f(1,2);
+
       return EXIT_SUCCESS;
   }
 

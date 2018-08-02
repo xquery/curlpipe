@@ -28,8 +28,8 @@ file(GLOB SRC_FILES curlscript/*.cpp curlscript/*.h* curlscript/curlscript.h)
 configure_file (
         "${CMAKE_CURRENT_SOURCE_DIR}/version.h.in"
         "${CMAKE_CURRENT_SOURCE_DIR}/curlscript/version.h")
-add_library(${LIB_NAME} STATIC ${SRC_FILES})
-target_link_libraries(${LIB_NAME} -lpthread -ldl)
+add_library(${LIB_NAME} STATIC ${SRC_FILES} curlscript/eval.cpp curlscript/expr.h)
+target_link_libraries(${LIB_NAME} -lpthread -ldl pugixml -lcurl)
 set_target_properties(${LIB_NAME} PROPERTIES LINKER_LANGUAGE CXX)
 target_include_directories (${LIB_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 set_target_properties(${LIB_NAME} PROPERTIES PREFIX "")

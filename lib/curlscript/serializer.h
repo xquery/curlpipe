@@ -259,7 +259,7 @@ public:
         }
     }
 
-    void terminal(const wchar_t *tag, int b, int e) override {
+    void terminal(const wchar_t *tag, int b, int e)  {
         if (tag[0] == L'\'') tag = L"TOKEN";
         startNonterminal(tag, b);
         characters(b, e);
@@ -278,4 +278,138 @@ private:
     int depth;
 };
 
+class ASTserializer : public csparser::EventHandler
+{
+    std::stringstream ss;
+
+public:
+    ASTserializer(bool indent)
+            : input(0)
+            , delayedTag(0)
+            , indent(indent)
+            , hasChildElement(false)
+            , depth(0)
+    {
+    }
+
+    void reset(const wchar_t *input) override
+    {
+        DLOG_S(INFO) << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+        ss << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+
+        this->input = input;
+        delayedTag = 0;
+        hasChildElement = false;
+        depth = 0;
+    }
+
+    void startNonterminal(const wchar_t *tag, int b) override
+    {
+        if (delayedTag != 0)
+        {
+            DLOG_S(INFO) << "<" << Utf8Encoder::encode(delayedTag).c_str()  << ">";
+            ss << "<" << Utf8Encoder::encode(delayedTag).c_str()  << ">";
+        }
+        delayedTag = tag;
+        if (indent)
+        {
+            DLOG_S(INFO) << "\n";
+            ss << "\n";
+            for (int i = 0; i < depth; ++i)
+            {
+                DLOG_S(INFO) << "  ";
+                ss << "  ";
+            }
+        }
+        hasChildElement = false;
+        ++depth;
+    }
+
+    void endNonterminal(const wchar_t *tag, int e) override
+    {
+        --depth;
+        if (delayedTag != 0)
+        {
+            delayedTag = 0;
+            DLOG_S(INFO) << "</" << Utf8Encoder::encode(tag).c_str()  << ">";
+            ss << "<" << Utf8Encoder::encode(tag).c_str()  << "/>";
+        }
+        else
+        {
+            if (indent)
+            {
+                if (hasChildElement)
+                {
+                    DLOG_S(INFO) << "\n";
+                    ss << "\n";
+                    for (int i = 0; i < depth; ++i)
+                    {
+                        DLOG_S(INFO) << "  ";
+                        ss << "  ";
+                    }
+                }
+            }
+            DLOG_S(INFO) << "</" << Utf8Encoder::encode(tag).c_str()  << ">";
+            ss << "</" << Utf8Encoder::encode(tag).c_str()  << ">";
+        }
+        hasChildElement = true;
+    }
+
+    void whitespace(int b, int e) override
+    {
+        characters(b, e);
+    }
+
+    void characters(int b, int e)
+    {
+        if (b < e)
+        {
+            if (delayedTag != 0)
+            {
+                DLOG_S(INFO) << "<" << Utf8Encoder::encode(delayedTag).c_str()  << ">";
+                ss << "<" << Utf8Encoder::encode(delayedTag).c_str()  << ">";
+                delayedTag = 0;
+            }
+            std::string encoded = Utf8Encoder::encode(input + b, e - b);
+            int size = encoded.size();
+            for (int i = 0; i < size; ++i)
+            {
+                char c = encoded[i];
+                switch (c)
+                {
+                    case 0: break;
+                    case L'&': DLOG_S(INFO) << "&amp;";
+                        ss << "&amp;";
+                        break;
+                    case L'<': DLOG_S(INFO) << "&lt;";
+                        ss << "&lt;";
+                        break;
+                    case L'>': DLOG_S(INFO) << "&gt;";
+                        ss << "&gt;";
+                        break;
+                    default: DLOG_S(INFO) << c;
+                        ss << c;
+                }
+            }
+        }
+    }
+
+    void terminal(const wchar_t *tag, int b, int e)  {
+        if (tag[0] == L'\'') tag = L"TOKEN";
+        startNonterminal(tag, b);
+        characters(b, e);
+        endNonterminal(tag, e);
+    }
+
+    string getParsed(){
+        return ss.str();
+    }
+
+private:
+    const wchar_t *input;
+    const wchar_t *delayedTag;
+    bool indent;
+    bool hasChildElement;
+    int depth;
+};
 #endif

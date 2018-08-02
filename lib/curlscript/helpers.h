@@ -32,6 +32,12 @@
 
 using namespace std;
 
+string get_version(){
+    std::ostringstream s;
+    s <<  CURLSCRIPT_VERSION_MAJOR << "." << CURLSCRIPT_VERSION_MINOR << "." << CURLSCRIPT_VERSION_PATCH;
+    return s.str();
+}
+
 int set_log_file(int argc, char** argv, string log_uri) {
     DLOG_S(INFO) << "set log opt";
     loguru::init(argc, argv);

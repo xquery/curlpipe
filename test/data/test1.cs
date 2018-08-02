@@ -1,7 +1,7 @@
-$opt = [/wwww.com]
+$opt = [/.curlscriptrc]
 set opt.defaults.header.Accept = "applicationxml"
 
-[https://www.google.com]
+[https://www.google.com] | [http://test.com] | [http://test.com]
 
 [https://www.google.com],[https://www.google.com]
 
@@ -20,7 +20,7 @@ $my ? /test
 
 "asdfasdfasdfsadfsadfsdafdsafsdafsdafsa" | [http://www.example.org/post]
 
-"name=test"| [http://www.example.org/post]
+"name=test" | [http://www.example.org/post]
 
 [file://wwww.com], [file://wwww.com] ?/test != "kkk"
 

@@ -10,7 +10,7 @@ Curl is comprised of libcurl (programmatic api) and the curl tool (command line 
 of flags - whereby most users only ever invoke a subset and learn more advanced features over time. 
 
 Curlscript is an experiment in exposing curl's goodness via a little [DSL](https://en.wikipedia.org/wiki/Domain-specific_language) making it easy to build up
-pipelines of execution using familiar semantics.  
+pipelines of execution using natural semantics.  
 
 GET   
 ```$bash

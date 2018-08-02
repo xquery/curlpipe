@@ -1,0 +1,3 @@
+setup httpbin for tool tests
+>docker run -p 81:80 kennethreitz/httpbin
+

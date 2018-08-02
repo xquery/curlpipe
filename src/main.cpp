@@ -28,7 +28,7 @@
 using namespace std;
 
 int banner(){
-    LOG_S(INFO) << "curlscript " << CURLSCRIPT_VERSION_MAJOR << "." << CURLSCRIPT_VERSION_MINOR << "." << CURLSCRIPT_VERSION_PATCH << "| Copyright 2018 James Fuller jim.fuller@webcomposite.com | https://github.com/xquery/curlscript";
+    LOG_S(INFO) << "curlscript " << get_version() << "| Copyright 2017-2018 James Fuller jim.fuller@webcomposite.com | https://github.com/xquery/curlscript";
     return EXIT_SUCCESS;
 }
 
