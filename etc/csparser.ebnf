@@ -2,21 +2,19 @@ CS
   ::= Expr* EOF
 
 Expr
-  ::= ( opt Operator ( literal | URI )| items ( Operator items (Operator items )* )? ) Separator?
+  ::=   (  var Operator ( literal | URI )
+         | items ( Operator items (Operator items )* )? ) Separator?
 
-opt ::= "set" nstring
+var ::= "$"nstring
 
 items ::= item ("," item)?
 
-item ::= URI | var | segment | literal
+item ::= URI | segment | literal
 
 Separator
   ::= ';'
 
 literal ::= '"' astring '"'
-
-var
-  ::= "$" nstring
 
 URI
   ::= "[" (scheme hostport?)? path  "]"
@@ -34,10 +32,12 @@ path
   ::= (segment)*
 
 segment
-  ::= '/' string
+  ::= ('/'|'.') string
+
+comments ::= "#" astring (astring)?
 
 whitespace
-         ::=  S^WS
+         ::=  S^WS | comments
           /* ws: definition */
 
 <?TOKENS?>

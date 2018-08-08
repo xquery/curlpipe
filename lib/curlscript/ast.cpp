@@ -30,7 +30,7 @@
 using namespace std;
 
 namespace curlscript {
-    
+
     vector<expr> generate_ast(string parsed){
 
         pugi::xml_document doc;
@@ -39,63 +39,37 @@ namespace curlscript {
 
         pugi::xpath_node_set expressions = doc.select_nodes("/CS/Expr");
 
+        int i =0;
         for (pugi::xpath_node_set::const_iterator it = expressions.begin(); it != expressions.end(); ++it)
         {
             expr cur;
             pugi::xpath_node node = *it;
             pugi::xml_node expression = node.node();
 
-            int i =0;
             for (pugi::xml_node expr_part: expression.children())
             {
-                string part_name = expr_part.name();
-                if( part_name == "items" && i == 0)  {
-                    //must handle multiple item
-
-
-                    string scheme = expr_part.child("item").child("URI").child("scheme").text().as_string();
-                    string host = expr_part.child("item").child("URI").child("hostport").child("host").child(
-                            "nstring").text().as_string();
-                    string path = expr_part.child("item").child("URI").child("path").child("segment").child(
-                            "string").text().as_string();
-                    string uri = scheme + host + "/" + path;
-
+                string name = expr_part.name();
+                if(name.compare("items") == 0 ) {
                     std::vector<item> items;
-                    item cur_item;
+                    for (pugi::xml_node item: expr_part.children()) {
+                        if(item.child("URI")){
+                            struct item cur_item;
+                            cur_item.uri.scheme = item.child("URI").child("scheme").text().as_string();
+                            cur_item.uri.host = item.child("URI").child("hostport").child("host").child(
+                                    "nstring").text().as_string();
+                            cur_item.uri.path = item.child("URI").child("path").child("segment").child(
+                                    "string").text().as_string();
+                            items.push_back(cur_item);
+                        }else if(item.child("var")){
 
-                    cur_item.scheme = scheme;
-                    cur_item.host = host;
-                    cur_item.path = path;
-                    DLOG_S(INFO) << scheme;
-
-                    items.push_back(cur_item);
-                    cur.items1 = items;
+                        }
+                    }
+                    cur.statements.push_back(make_tuple(items, expr_part.next_sibling().text().as_string()));
                 }
-                if(part_name == "Operator")
-                {
-                    cur.op = expr_part.text().as_string();
-                }
-                if( part_name == "items" && i > 0)  {
-                    string scheme = expr_part.child("item").child("URI").child("scheme").text().as_string();
-                    string host = expr_part.child("item").child("URI").child("hostport").child("host").child(
-                            "nstring").text().as_string();
-                    string path = expr_part.child("item").child("URI").child("path").child("segment").child(
-                            "string").text().as_string();
-                    string uri = scheme + host + "/" + path;
-
-                    std::vector<item> items;
-
-                    item cur_item;
-
-                    cur_item.scheme = scheme;
-                    cur_item.host = host;
-                    cur_item.path = path;
-                    items.push_back(cur_item);
-                    cur.items2 = items;
-                }
-                i++;
             }
             exprs.push_back(cur);
+            cur.order=i;
+            i++;
         }
     return exprs;
     }

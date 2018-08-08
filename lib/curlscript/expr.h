@@ -7,19 +7,28 @@ using namespace std;
 
 namespace curlscript {
 
-    struct item {
+    struct var {
+        string var_name;
+    };
+
+    struct uri {
         string scheme;
         string host;
         string path;
+        string get_uri() { return scheme + host ; }
+    };
 
-        string get_uri() { return scheme + host + "/" + path; }
+    struct item {
+        struct var;
+        struct uri uri;
     };
 
     struct expr {
-        string identifier;
-        vector <item> items1;
-        string op;
-        vector <item> items2;
+        string uid;
+        int order;
+        string var_name;
+        string var_value;
+        vector <tuple<vector<item>,string>> statements;
     };
 }
 

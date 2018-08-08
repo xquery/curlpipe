@@ -1,2 +1,4 @@
-[http://www.webcomposite.com],[http://www.webcomposite1.com]
-[http://www.webcomposite.com] > [file://tmp]
+[file://wwww.com]| [http://myalias2.com] |
+      [http://myalias.com:21/test/kkkk/mmm] >> [file://test.txt];
+[file://wwww.com]| [http://myalias.com]
+

@@ -22,7 +22,6 @@
  * IN THE SOFTWARE.
 ******************************************************************************/
 
-#include <cstdio>
 #include <cwchar>
 #include <cmath>
 #include <iostream>
@@ -34,44 +33,58 @@
 #include <map>
 #include <cassert>
 
-#include "log.h"
-#include "helpers.h"
-#include "serializer.h"
-#include "ast.cpp"
-#include "eval.cpp"
-
-#include <pugixml.hpp>
+#include <curl/curl.h>
 
 using namespace std;
-using namespace pugi;
 
-namespace curlscript{
+CURLM *curlm;
 
-  int eval(string file_uri) {
+int init_http(){
+    curlm = curl_multi_init();
+    return CURLE_OK;
+}
 
-      DLOG_S(INFO) << "loading " << file_uri;
-      bool indent = false;
+int cleanup_http(){
+    curl_global_cleanup();
+    return CURLE_OK;
+}
 
-      ASTserializer s(indent);
-      string input = load_file(file_uri);
+static size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *userp) {
+    ((std::string *) userp)->append((char *) contents, size * nmemb);
+    return size * nmemb;
+}
 
-      wstring winput =convert(input);
+string http_get(string url){
 
-      csparser parser(winput.c_str(), &s);
-      try {
-          parser.parse_CS(); }
-      catch (csparser::ParseException &pe)
-      {
-          LOG_S(ERROR) << "parser error, " << convert(pe.getMessage());
-          return EXIT_FAILURE; }
+    std::ostringstream ss;
+    string readBuffer;
 
-      vector<expr> exprs = generate_ast(s.getParsed());
-      std::ostringstream output;
-      eval_exprs(exprs, output);
+    int handle_count;
+    CURL *c = NULL;
+    c = curl_easy_init();
 
-      DLOG_S(INFO) << output.str();
-      DLOG_S(INFO) << s.getParsed();
-      return EXIT_SUCCESS;
-  }
+    if (c) {
+        curl_easy_setopt(c, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
+        curl_easy_setopt(c, CURLOPT_VERBOSE, 0L);
+        curl_easy_setopt(c, CURLOPT_USERAGENT, "curlscript via curl/7.19.6");
+        curl_easy_setopt(c, CURLOPT_FAILONERROR, 1);
+        curl_easy_setopt(c, CURLOPT_FOLLOWLOCATION, 1L);
+        curl_easy_setopt(c, CURLOPT_URL, url.c_str());
+        curl_easy_setopt(c, CURLOPT_HTTPGET, 1L);
+        curl_easy_setopt(c, CURLOPT_NOPROGRESS, 1L);
+        curl_easy_setopt(c, CURLOPT_WRITEFUNCTION, WriteCallback);
+        curl_easy_setopt(c, CURLOPT_WRITEDATA, &readBuffer);
 
+        curl_multi_add_handle(curlm, c);
+
+        CURLMcode code;
+        while (1) {
+            code = curl_multi_perform(curlm, &handle_count);
+            if (handle_count == 0) {
+                ss << readBuffer;
+                break;
+            }
+        }
+    }
+    return ss.str();
 }

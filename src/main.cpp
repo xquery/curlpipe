@@ -24,6 +24,10 @@
 
 #include <curlscript/curlscript.cpp>
 #include <cxxopts.hpp>
+#include <vector>
+#include <numeric>
+#include <functional>
+#include <iostream>
 
 using namespace std;
 

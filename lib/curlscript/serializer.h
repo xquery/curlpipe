@@ -294,7 +294,7 @@ public:
 
     void reset(const wchar_t *input) override
     {
-        DLOG_S(INFO) << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+//        DLOG_S(INFO) << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
         ss << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
 
         this->input = input;
@@ -307,17 +307,17 @@ public:
     {
         if (delayedTag != 0)
         {
-            DLOG_S(INFO) << "<" << Utf8Encoder::encode(delayedTag).c_str()  << ">";
+//            DLOG_S(INFO) << "<" << Utf8Encoder::encode(delayedTag).c_str()  << ">";
             ss << "<" << Utf8Encoder::encode(delayedTag).c_str()  << ">";
         }
         delayedTag = tag;
         if (indent)
         {
-            DLOG_S(INFO) << "\n";
+//            DLOG_S(INFO) << "\n";
             ss << "\n";
             for (int i = 0; i < depth; ++i)
             {
-                DLOG_S(INFO) << "  ";
+//                DLOG_S(INFO) << "  ";
                 ss << "  ";
             }
         }
@@ -331,7 +331,7 @@ public:
         if (delayedTag != 0)
         {
             delayedTag = 0;
-            DLOG_S(INFO) << "</" << Utf8Encoder::encode(tag).c_str()  << ">";
+//            DLOG_S(INFO) << "</" << Utf8Encoder::encode(tag).c_str()  << ">";
             ss << "<" << Utf8Encoder::encode(tag).c_str()  << "/>";
         }
         else
@@ -340,16 +340,16 @@ public:
             {
                 if (hasChildElement)
                 {
-                    DLOG_S(INFO) << "\n";
+//                    DLOG_S(INFO) << "\n";
                     ss << "\n";
                     for (int i = 0; i < depth; ++i)
                     {
-                        DLOG_S(INFO) << "  ";
+//                        DLOG_S(INFO) << "  ";
                         ss << "  ";
                     }
                 }
             }
-            DLOG_S(INFO) << "</" << Utf8Encoder::encode(tag).c_str()  << ">";
+//            DLOG_S(INFO) << "</" << Utf8Encoder::encode(tag).c_str()  << ">";
             ss << "</" << Utf8Encoder::encode(tag).c_str()  << ">";
         }
         hasChildElement = true;
@@ -366,7 +366,7 @@ public:
         {
             if (delayedTag != 0)
             {
-                DLOG_S(INFO) << "<" << Utf8Encoder::encode(delayedTag).c_str()  << ">";
+//                DLOG_S(INFO) << "<" << Utf8Encoder::encode(delayedTag).c_str()  << ">";
                 ss << "<" << Utf8Encoder::encode(delayedTag).c_str()  << ">";
                 delayedTag = 0;
             }
@@ -378,16 +378,16 @@ public:
                 switch (c)
                 {
                     case 0: break;
-                    case L'&': DLOG_S(INFO) << "&amp;";
+                    case L'&': // DLOG_S(INFO) << "&amp;";
                         ss << "&amp;";
                         break;
-                    case L'<': DLOG_S(INFO) << "&lt;";
+                    case L'<': // DLOG_S(INFO) << "&lt;";
                         ss << "&lt;";
                         break;
-                    case L'>': DLOG_S(INFO) << "&gt;";
+                    case L'>': // DLOG_S(INFO) << "&gt;";
                         ss << "&gt;";
                         break;
-                    default: DLOG_S(INFO) << c;
+                    default: // DLOG_S(INFO) << c;
                         ss << c;
                 }
             }

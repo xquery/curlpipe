@@ -70,17 +70,19 @@ Comparison
 
 ## Developing
 
-### Build & Test
+### Compiling
 
+Just do the normal cmake thing:
 ```
-> cmake -DCMAKE_BUILD_TYPE=Debug
-> make
-> make test
-> make install
-
+mkdir build
+cd build
+cmake ..
+make 
 ```
 
 Note that running cmake will pull down dependencies and requires access to internet.
+
+### Testing
 
 
 ### Release Package

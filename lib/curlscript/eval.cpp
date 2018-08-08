@@ -33,89 +33,51 @@
 #include <vector>
 #include <map>
 #include <cassert>
+#include <vector>
+#include <numeric>
+#include <functional>
+#include <iostream>
 
 #include <curl/curl.h>
 #include "log.h"
 #include "expr.h"
+#include "http.cpp"
 
 using namespace std;
 
 namespace curlscript {
 
-    CURLM *curlm;
+    void eval_exprs(vector<expr> exprs, std::ostringstream &output){
 
-    static size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *userp) {
-        ((std::string *) userp)->append((char *) contents, size * nmemb);
-        return size * nmemb;
-    }
+        init_http();
 
-    string http_get(string url){
-
-        curlm = curl_multi_init();
-
-        std::ostringstream ss;
-        string readBuffer;
-
-        int handle_count;
-        CURL *curl1 = NULL;
-        curl1 = curl_easy_init();
-
-        if (curl1) {
-//          curl_easy_setopt(curl1, CURLOPT_HTTPHEADER, headers);
-//          curl_easy_setopt(curl1, CURLOPT_USERNAME, config.user.c_str());
-//          curl_easy_setopt(curl1, CURLOPT_PASSWORD, config.pass.c_str());
-//            curl_easy_setopt(curl1, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
-
-            curl_easy_setopt(curl1, CURLOPT_VERBOSE, 0L);
-            curl_easy_setopt(curl1, CURLOPT_USERAGENT, "curlscript via curl/7.19.6");
-            curl_easy_setopt(curl1, CURLOPT_FAILONERROR, 1);
-            curl_easy_setopt(curl1, CURLOPT_FOLLOWLOCATION, 1L);
-            curl_easy_setopt(curl1, CURLOPT_URL, url.c_str());
-            curl_easy_setopt(curl1, CURLOPT_HTTPGET, 1L);
-            curl_easy_setopt(curl1, CURLOPT_NOPROGRESS, 1L);
-            curl_easy_setopt(curl1, CURLOPT_WRITEFUNCTION, WriteCallback);
-            curl_easy_setopt(curl1, CURLOPT_WRITEDATA, &readBuffer);
-
-            curl_multi_add_handle(curlm, curl1);
-
-            CURLMcode code;
-            while (1) {
-                code = curl_multi_perform(curlm, &handle_count);
-                if (handle_count == 0) {
-                    ss << readBuffer;
-                    break;
+        for_each(
+            begin(exprs),
+            end(exprs),
+            [&](expr& expr){
+                DLOG_S(INFO) << "order:" << expr.order;
+                output << "my expirement";
+                for (auto & statement : expr.statements) {
+                    for (auto & item : std::get<0>(statement)) {
+                        DLOG_S(INFO) << "uri:" << item.uri.get_uri();
+                    }
+                    DLOG_S(INFO) << "op:" << std::get<1>(statement);
                 }
-            }
-        }
-        return ss.str();
+                DLOG_S(INFO) << "end" ; });
+
+
+        DLOG_S(INFO) << "#expr:" << exprs.size();
+//        for (auto & expr : exprs) {
+//            for (auto & statement : expr.statements) {
+//                for (auto & item : std::get<0>(statement)) {
+//                    DLOG_S(INFO) << "uri:" << item.uri.get_uri();
+//                }
+//                DLOG_S(INFO) << "op:" << std::get<1>(statement);
+//            }
+//            DLOG_S(INFO) << "end" ;
+//        }
+        cleanup_http();
     }
-
-    void eval_exprs(vector<expr> exprs){
-
-        for (auto & expr : exprs) {
-
-            for (auto & item : expr.items1) {
-                DLOG_S(INFO) << item.get_uri();
-                if(expr.op.empty()){
-//                  DLOG_S(INFO) << http_get(item.get_uri());
-                }
-            }
-
-            DLOG_S(INFO) << expr.op;
-
-            for (auto & item : expr.items2) {
-                DLOG_S(INFO) << item.get_uri();
-                if(expr.op.empty()){
-//                  DLOG_S(INFO) << http_get(item.get_uri());
-                }
-            }
-
-        }
-        DLOG_S(INFO) << exprs.size();
-        curl_global_cleanup();
-
-    }
-
 
 
 }
