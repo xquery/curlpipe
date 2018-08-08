@@ -24,7 +24,11 @@ GET and save to file
 
 GET and narrow down result
 ```$bash
-[http://www.httpbin.org/get] ? /id
+[http://www.httpbin.org/get] ? [/id] 
+```
+
+```$bash
+[http://www.httpbin.org/get].id  
 ```
 
 POST some json
@@ -33,18 +37,18 @@ POST some json
 ```
 
 POST some xml
-```$bash
+```$xml
 &lt;person id="1"&gt;&lt;name&gt;James Fuller&lt;name&gt;&lt;/person&gt; | [http://www.httpbin.org/post] ;
 ```
 
-POST url encoded
+POST name=value
 ```$bash
 "id=1&name=James Fuller" | [http://www.httpbin.org/post] ;
 ```
 
 POST zip file
 ```$bash
-/tmp/mydoc.zip | [http://www.httpbin.org/post] ;
+[/tmp/mydoc.zip] | [http://www.httpbin.org/post] ;
 ```
 
 PUT some json
@@ -54,15 +58,29 @@ PUT some json
 
 DELETE
 ```$bash
-[http://www.httpbin.org/delete] = /dev/null
+[http://www.httpbin.org/delete] = []
+```
+```$bash
+[http://www.httpbin.org/delete] = [/dev/null]
 ```
 
+set variable
+```$bash
+$opt = [/.curlscriptrc]
+```
+```$bash
+$opt.defaults.header.Accept = "applicationxml"
+```
+```$bash
+$mypayload = [/tmp/payload];
+$mypayload | [http://www.httpbin.org/delete]
+```
 Comparison
 ```$bash
-
-[http://www.httpbin.org/get] ?/url == 'http://www.httpbin.org/get'
-
-[http://www.httpbin.org/get] ?/url != 'http://www.example.com'
+[http://www.httpbin.org/get].url == 'http://www.httpbin.org/get'
+```
+```$bash
+[http://www.httpbin.org/get] .url != 'http://www.example.com'
 ```
 
 ## Usage

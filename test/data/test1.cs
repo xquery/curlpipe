@@ -3,6 +3,7 @@ $opt = [/.curlscriptrc]
 $opt.defaults.header.Accept = "applicationxml"
 
 # http
+[https://www.google.com/airplanes/1] = []
 
 [https://www.google.com] | [http://test.com] | [http://test.com]
 
