@@ -4,11 +4,9 @@ sudo: required
 
 env:
   global:
-    - LINUX_DIST=trusty
-    - DEPS_DIR=${TRAVIS_BUILD_DIR}/deps
     - CXX_FLAGS="-Wall -pedantic -Werror -Wno-variadic-macros -Wno-long-long -Wno-shadow"
     - RUN_TESTS=true
-    - COVERAGE=false
+    - COVERAGE=true
     - LD_LIBRARY_PATH=/usr/local/lib
 
 addons:
@@ -32,11 +30,18 @@ matrix:
           compiler: clang
           dist: trusty
           env: T=debug
+        - os: linux
+          compiler: gcc
+          dist: trusty
+          env: T=debug
 
 branches:
     only:
         - master
         - develop
+
+notifications:
+  email: false
 
 before_install:
   - export CMAKE_OPTIONS=${CMAKE_OPTIONS}" "${ENV_CMAKE_OPTIONS}
