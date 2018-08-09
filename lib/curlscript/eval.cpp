@@ -57,25 +57,29 @@ namespace curlscript {
             [&](expr& expr){
                 DLOG_S(INFO) << "order:" << expr.order;
                 output << "my expirement";
-                for (auto & statement : expr.statements) {
-                    for (auto & item : std::get<0>(statement)) {
-                        DLOG_S(INFO) << "uri:" << item.uri.get_uri();
-                    }
-                    DLOG_S(INFO) << "op:" << std::get<1>(statement);
-                }
+                for_each(
+                        begin(expr.statements),
+                        end(expr.statements),
+                        [&](tuple<vector<item>,string,vector<item>>& statement) {
+                            string op = std::get<1>(statement);
+                            DLOG_S(INFO) << "op:" << std::get<1>(statement);
+                            if(op.empty()){
+                                for (auto & item : std::get<0>(statement)) {
+                                    DLOG_S(INFO) << "uri:" << item.uri.get_uri();
+                                }
+                            }else{
+                                for (auto & item : std::get<0>(statement)) {
+                                    DLOG_S(INFO) << "uri:" << item.uri.get_uri();
+                                }
+                                DLOG_S(INFO) << "op:" << std::get<1>(statement);
+                                for (auto & item : std::get<2>(statement)) {
+                                    DLOG_S(INFO) << "uri:" << item.uri.get_uri();
+                                }
+                            }
+                        });
                 DLOG_S(INFO) << "end" ; });
 
-
         DLOG_S(INFO) << "#expr:" << exprs.size();
-//        for (auto & expr : exprs) {
-//            for (auto & statement : expr.statements) {
-//                for (auto & item : std::get<0>(statement)) {
-//                    DLOG_S(INFO) << "uri:" << item.uri.get_uri();
-//                }
-//                DLOG_S(INFO) << "op:" << std::get<1>(statement);
-//            }
-//            DLOG_S(INFO) << "end" ;
-//        }
         cleanup_http();
     }
 

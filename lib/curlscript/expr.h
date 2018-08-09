@@ -14,8 +14,17 @@ namespace curlscript {
     struct uri {
         string scheme;
         string host;
+        string port;
         string path;
-        string get_uri() { return scheme + host ; }
+        string get_uri() {
+            string uri;
+            uri += scheme;
+            uri += host;
+            if(!port.empty()){
+                uri += ":" + port;
+            };
+            uri += path;
+            return uri;}
     };
 
     struct item {
@@ -28,7 +37,7 @@ namespace curlscript {
         int order;
         string var_name;
         string var_value;
-        vector <tuple<vector<item>,string>> statements;
+        vector <tuple<vector<item>,string,vector<item>>> statements;
     };
 }
 

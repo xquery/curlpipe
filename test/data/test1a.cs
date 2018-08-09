@@ -1,4 +1,4 @@
-[file://wwww.com]| [http://myalias2.com] |
-      [http://myalias.com:21/test/kkkk/mmm] >> [file://test.txt];
-[file://wwww.com]| [http://myalias.com]
+[http://localhost:81/get] > [/tmp/test.xml]
+[http://localhost:812/get] > [/tmp/test.xml] | [http://www.example.com/post]
+
 
