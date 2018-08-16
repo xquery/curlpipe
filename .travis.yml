@@ -21,17 +21,16 @@ addons:
             - valgrind
             - g++-7
             - libstdc++-7-dev
-            - libpugixml1
 
 matrix:
     include:
         - os: linux
           compiler: clang
-          dist: trusty
+          dist: precise
           env: T=debug
         - os: linux
           compiler: gcc
-          dist: trusty
+          dist: precise
           env: T=debug
 
 branches:
