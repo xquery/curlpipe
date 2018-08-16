@@ -6,10 +6,10 @@ WARNING - under development (as in everything is probably broken)
 
 [Curl](https://curl.haxx.se/) is a great ~~swiss army knife~~ http client which does much more then just make working with HTTP easier.
  
-Curl is comprised of libcurl (programmatic api) and the curl tool (command line interface). Over the years the curl tool has grown, exposing hundreds
-of flags - whereby most users only ever invoke a subset and learn more advanced features over time. 
+Curl is comprised of libcurl (the programmatic api) and the curl command line interface. Over the years the curl tool has grown, exposing hundreds
+of flags - whereby most users only ever invoke a subset learning more advanced features over time.
 
-Curlscript is an experiment in exposing curl's goodness via a little [DSL](https://en.wikipedia.org/wiki/Domain-specific_language) making it easy to build up
+Curlscript is an experiment in exposing much of curl's goodness via a little [DSL](https://en.wikipedia.org/wiki/Domain-specific_language) making it easy to build up
 pipelines of execution using natural semantics.  
 
 GET   
