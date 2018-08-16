@@ -49,7 +49,7 @@ set(USE_PUGIXML true)
 #add_subdirectory(deps)
 download_project(PROJ                curl
         GIT_REPOSITORY      https://github.com/curl/curl.git
-        GIT_TAG             master
+        GIT_TAG             eb81384
         ${UPDATE_DISCONNECTED_IF_AVAILABLE}
         )
 download_project(PROJ                googletest
