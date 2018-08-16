@@ -85,23 +85,19 @@ include_directories(${rapidjson_SOURCE_DIR}/include)
 #include_directories(${pugixml_SOURCE_DIR}/src)
 include_directories(${loguru_SOURCE_DIR})
 
-set(EVENT__DISABLE_TESTS ON)
 add_subdirectory(${pugixml_SOURCE_DIR})
-set(EVENT__DISABLE_TESTS OFF)
-
 add_subdirectory(${curl_SOURCE_DIR})
 
 # build targets
 if(BUILD_LIB)
     add_subdirectory(lib)
 endif()
+
 if(BUILD_TOOL)
     add_subdirectory(src)
 endif()
+
 if(NOT DISABLE_TESTS)
-    include(CTest)
-    enable_testing()
-    add_subdirectory(${googletest_SOURCE_DIR} ${googletest_BINARY_DIR})
     add_subdirectory(test)
 endif()
 
