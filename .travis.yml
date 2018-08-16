@@ -21,7 +21,7 @@ addons:
             - valgrind
             - g++-7
             - libstdc++-7-dev
-            - pugixml
+            - libpugixml1
 
 matrix:
     include:
