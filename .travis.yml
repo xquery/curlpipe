@@ -49,7 +49,7 @@ before_install:
   - mkdir build
   - cd build
   - cmake --version
-  - cmake ${CMAKE_OPTIONS} -DCMAKE_CXX_FLAGS=${CXX_FLAGS} -DCMAKE_BUILD_TYPE=Debug -DCOVERAGE=1 -DBUILD_TESTS=OFF ..
+  - cmake ${CMAKE_OPTIONS} -DCMAKE_CXX_FLAGS=${CXX_FLAGS} -DCMAKE_BUILD_TYPE=Debug -DCOVERAGE=1 -DBUILD_TESTS=ON ..
 
 install:
   - pip2 install --user cpp-coveralls

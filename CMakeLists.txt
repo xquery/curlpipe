@@ -85,7 +85,10 @@ include_directories(${rapidjson_SOURCE_DIR}/include)
 #include_directories(${pugixml_SOURCE_DIR}/src)
 include_directories(${loguru_SOURCE_DIR})
 
+set(EVENT__DISABLE_TESTS ON)
 add_subdirectory(${pugixml_SOURCE_DIR})
+set(EVENT__DISABLE_TESTS OFF)
+
 add_subdirectory(${curl_SOURCE_DIR})
 
 # build targets
