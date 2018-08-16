@@ -78,8 +78,6 @@ download_project(PROJ                cxxopts
         ${UPDATE_DISCONNECTED_IF_AVAILABLE}
         )
 
-add_subdirectory(${pugixml_SOURCE_DIR})
-add_subdirectory(${curl_SOURCE_DIR})
 
 # headers
 include_directories(${cxxopts_SOURCE_DIR}/include)
@@ -96,6 +94,9 @@ endif()
 if(BUILD_TOOL)
     add_subdirectory(src)
 endif()
+
+add_subdirectory(${curl_SOURCE_DIR})
+add_subdirectory(${pugixml_SOURCE_DIR})
 
 if(NOT DISABLE_TESTS)
     include(CTest)
