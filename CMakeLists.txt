@@ -98,6 +98,9 @@ endif()
 if(NOT DISABLE_TESTS)
     include(CTest)
     enable_testing()
+    set(CTEST_CUSTOM_TESTS_IGNORE
+            xpath_large_node_set
+            )
     add_subdirectory(${googletest_SOURCE_DIR} ${googletest_BINARY_DIR})
     add_subdirectory(test)
 endif()
