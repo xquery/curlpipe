@@ -53,11 +53,14 @@ before_install:
   - cmake ${CMAKE_OPTIONS} -DCMAKE_CXX_FLAGS=${CXX_FLAGS} -DCMAKE_BUILD_TYPE=Debug -DCOVERAGE=1 ..
 
 install:
-  - pip2 install --user cpp-coveralls
+  - pip install --upgrade --user git+git://github.com/eddyxu/cpp-coveralls.git
 
 script:
   - make
   - make test
 
 after_success:
-  - coveralls --gcov-options '\-lp' -i /home/travis/build/xquery/curlscript/src -i /home/travis/build/xquery/curlscript/lib
+  - coveralls --build-root build --gcov-options '\-lp' \
+  -e build/xquery/curlscript/src \
+  -e build/xquery/curlscript/lib \
+  -e build/xquery/curlscript/test
