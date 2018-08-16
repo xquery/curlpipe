@@ -11,8 +11,6 @@ env:
 
 addons:
     apt:
-        config:
-            retries: true
         sources:
             - ubuntu-toolchain-r-test
             - llvm-toolchain-trusty-6.0
@@ -23,6 +21,7 @@ addons:
             - valgrind
             - g++-7
             - libstdc++-7-dev
+            - pugixml
 
 matrix:
     include:
