@@ -1,5 +1,5 @@
 # curlscript (develop)
-WARNING - under development (as in everything is probably broken)
+WARNING - under development (as in everything is probably broken) test
 
 [![Build Status](https://travis-ci.org/xquery/curlscript.svg?branch=develop)](https://travis-ci.org/xquery/curlscript)
 [![Coverage Status](https://coveralls.io/repos/github/xquery/curlscript/badge.svg?branch=develop)](https://coveralls.io/github/xquery/curlscript?branch=develop)
