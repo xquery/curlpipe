@@ -56,7 +56,6 @@ install:
 
 script:
   - make
-  - make test
 
 after_success:
   - coveralls --gcov-options '\-lp' -i /home/travis/build/xquery/curlscript/src -i /home/travis/build/xquery/curlscript/lib
