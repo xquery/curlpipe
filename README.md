@@ -4,13 +4,16 @@ WARNING - under development (as in everything is probably broken) test
 [![Build Status](https://travis-ci.org/xquery/curlscript.svg?branch=develop)](https://travis-ci.org/xquery/curlscript)
 [![Coverage Status](https://coveralls.io/repos/github/xquery/curlscript/badge.svg?branch=develop)](https://coveralls.io/github/xquery/curlscript?branch=develop)
 
-[Curl](https://curl.haxx.se/) is a great ~~swiss army knife~~ http client which does much more then just make working with HTTP easier.
- 
-Curl is comprised of libcurl (the programmatic api) and the curl command line interface. Over the years the curl tool has grown, exposing hundreds
-of flags - whereby most users only ever invoke a subset learning more advanced features over time.
+[Curl](https://curl.haxx.se/) is a great ~~swiss army knife~~ http client which does much more then just make it easy to work with HTTP.
+
+Over the years, the curl command line interface has grown rapidly, exposing hundreds of flags - most users initially only ever invoke a subset of features, learning more advanced features over time.
 
 Curlscript is an experiment in exposing much of curl's goodness via a little [DSL](https://en.wikipedia.org/wiki/Domain-specific_language) making it easy to build up
 pipelines of execution using natural semantics.  
+
+## Getting started
+
+## Usage
 
 GET   
 ```$bash
@@ -83,10 +86,13 @@ Comparison
 [http://www.httpbin.org/get] .url != 'http://www.example.com'
 ```
 
-## Usage
+## Points of Interests
 
+* The curlscript language is defined with an [EBNF](etc/csparser.ebnf) to produce a strict parser.
+* I have unabashedly stolen syntactical forms and conventions from several languages - it maybe this approach creates a ['chimera'](https://en.wikipedia.org/wiki/Chimera_(mythology))
+causing discomfort for most people ... please do [raise an issue](https://github.com/xquery/curlscript/issues) if you feel strongly where syntax must change.
 
-## Developing
+## Developing curlscript
 
 ### Compiling
 
@@ -114,9 +120,9 @@ Note that running cmake will pull down dependencies and requires access to inter
 
 ### Dependencies
 This project depends on the following external libs:
-
+[loguru](https://github.com/emilk/loguru)
 * [REx Parser Generator](http://www.bottlecaps.de/rex/): Gunther Rademacher <grd@gmx.net> excellant parser generator. 
-* [loguru](https://github.com/emilk/loguru): no fuss logging.
+* : no fuss logging.
 * [cxxopt](https://github.com/jarro2783/cxxopts): parsing command args.
 * [googletest](https://github.com/google/googletest): testing.
 * [rapidjson](https://github.com/miloyip/rapidjson): json munging.
