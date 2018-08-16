@@ -99,6 +99,9 @@ if(BUILD_TOOL)
 endif()
 
 if(NOT DISABLE_TESTS)
+    include(CTest)
+    enable_testing()
+    add_subdirectory(${googletest_SOURCE_DIR} ${googletest_BINARY_DIR})
     add_subdirectory(test)
 endif()
 

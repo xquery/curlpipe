@@ -1,9 +1,4 @@
-if(NOT DISABLE_TESTS)
-    include(CTest)
-    enable_testing()
-    add_subdirectory(${googletest_SOURCE_DIR} ${googletest_BINARY_DIR})
-
-    # copy data directory into build directory to make available to test binary
+# copy data directory into build directory to make available to test binary
 file(COPY data DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 # force gtest cache
@@ -18,4 +13,3 @@ target_link_libraries(runAllTests gtest gmock_main libcurlscript)
 # ensure this target gets run with generic runTests target
 add_test(NAME runAllTests COMMAND runAllTests)
 
-endif()
