@@ -64,7 +64,7 @@ download_project(PROJ                rapidjson
         )
 download_project(PROJ                pugixml
         GIT_REPOSITORY      https://github.com/zeux/pugixml.git
-        GIT_TAG             master
+        GIT_TAG             8436f2a
         ${UPDATE_DISCONNECTED_IF_AVAILABLE}
         )
 download_project(PROJ                loguru
