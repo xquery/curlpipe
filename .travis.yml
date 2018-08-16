@@ -26,11 +26,11 @@ matrix:
     include:
         - os: linux
           compiler: clang
-          dist: precise
+          dist: trusty
           env: T=debug
         - os: linux
           compiler: gcc
-          dist: precise
+          dist: trusty
           env: T=debug
 
 branches:
