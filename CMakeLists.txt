@@ -82,7 +82,7 @@ download_project(PROJ                cxxopts
 # headers
 include_directories(${cxxopts_SOURCE_DIR}/include)
 include_directories(${rapidjson_SOURCE_DIR}/include)
-#include_directories(${curl_SOURCE_DIR}/include)
+include_directories(${curl_SOURCE_DIR}/include)
 #include_directories(${pugixml_SOURCE_DIR}/src)
 include_directories(${loguru_SOURCE_DIR})
 
@@ -95,7 +95,7 @@ if(BUILD_TOOL)
     add_subdirectory(src)
 endif()
 
-add_subdirectory(${curl_SOURCE_DIR})
+#add_subdirectory(${curl_SOURCE_DIR})
 add_subdirectory(${pugixml_SOURCE_DIR})
 
 if(NOT DISABLE_TESTS)
