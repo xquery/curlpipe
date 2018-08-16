@@ -61,6 +61,6 @@ script:
 
 after_success:
   - coveralls --build-root build --gcov-options '\-lp' \
-  -e build/xquery/curlscript/src \
-  -e build/xquery/curlscript/lib \
-  -e build/xquery/curlscript/test
+    -e build/xquery/curlscript/src \
+    -e build/xquery/curlscript/lib \
+    -e build/xquery/curlscript/test
