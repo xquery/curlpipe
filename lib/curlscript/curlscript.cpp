@@ -40,14 +40,11 @@
 #include "ast.cpp"
 #include "eval.cpp"
 
-#include <pugixml.hpp>
-
 using namespace std;
-using namespace pugi;
 
 namespace curlscript{
 
-  int eval(string file_uri) {
+  int eval(const string file_uri) {
 
       DLOG_S(INFO) << "loading " << file_uri;
       bool indent = false;
