@@ -60,4 +60,4 @@ script:
   - make test
 
 after_success:
-  - coveralls --build-root build --gcov-options '\-lp' -e build/curl-src -e build/cxxopts-src -e build/googletest-src -e build/loguru-src -e build/pugixml-src -e build/rapidjson-src -i build/xquery/curlscript/src -i build/xquery/curlscript/lib -i build/xquery/curlscript/test
+  - coveralls --build-root build --gcov-options '\-lp' -e build/curl-src -e build/cxxopts-src -e build/googletest-src -e build/loguru-src -e build/pugixml-src -e build/rapidjson-src -i build/xquery
