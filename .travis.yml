@@ -44,8 +44,6 @@ notifications:
 before_install:
   - export CMAKE_OPTIONS=${CMAKE_OPTIONS}" "${ENV_CMAKE_OPTIONS}
   - export CXX_FLAGS=${CXX_FLAGS}" "${ENV_CXX_FLAGS}
-  - echo $LANG
-  - echo $LC_ALL
   - mkdir build
   - cd build
   - mkdir docs
@@ -60,4 +58,4 @@ script:
   - make test
 
 after_success:
-  - coveralls --build-root build --gcov-options '\-lp' -e build/curl-src -e build/cxxopts-src -e build/googletest-src -e build/loguru-src -e build/pugixml-src -e build/rapidjson-src -i build/xquery
+  - coveralls --build-root build --gcov-options '\-lp' -e build/curl-src -e build/cxxopts-src -e build/googletest-src -e build/loguru-src -e build/pugixml-src -e build/rapidjson-src -i /home/travis/build/xquery/curlscript
