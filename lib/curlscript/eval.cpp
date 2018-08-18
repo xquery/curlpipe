@@ -62,15 +62,11 @@ namespace curlscript {
                         end(expr.statements),
                         [&](tuple<vector<item>,string,vector<item>>& statement) {
                             string op = std::get<1>(statement);
-                            DLOG_S(INFO) << "op:" << std::get<1>(statement);
                             if(op.empty()){
                                 for (auto & item : std::get<0>(statement)) {
                                     DLOG_S(INFO) << "uri:" << item.uri.get_uri();
                                 }
                             }else{
-                                for (auto & item : std::get<0>(statement)) {
-                                    DLOG_S(INFO) << "uri:" << item.uri.get_uri();
-                                }
                                 DLOG_S(INFO) << "op:" << std::get<1>(statement);
                                 for (auto & item : std::get<2>(statement)) {
                                     DLOG_S(INFO) << "uri:" << item.uri.get_uri();

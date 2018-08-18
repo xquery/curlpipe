@@ -88,7 +88,8 @@ Comparison
 
 ## Points of Interests
 
-* The curlscript language is defined with an [EBNF](etc/csparser.ebnf) to produce a strict parser.
+* At this stage I have not thought much about performance, once I learn more I expect to rewrite internals
+* The curlscript language is defined with an [EBNF](etc/csparser.ebnf) which is used to produce a strict parser.
 * I have unabashedly stolen syntactical forms and conventions from several languages - it maybe this approach creates a ['chimera'](https://en.wikipedia.org/wiki/Chimera_(mythology))
 causing discomfort for most people ... please do [raise an issue](https://github.com/xquery/curlscript/issues) if you feel strongly where syntax must change.
 

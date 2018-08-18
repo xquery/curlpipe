@@ -2,8 +2,9 @@ CS
   ::= Expr* EOF
 
 Expr
-  ::=   (  var Operator ( literal | URI )
-         | items ( Operator items (Operator items )* )? ) Separator?
+  ::=   ( var Operator ( literal | URI ) | items ( statement (statement)* )? ) Separator?
+
+statement ::= Operator items
 
 var ::= "$"nstring
 
@@ -52,7 +53,7 @@ nstring ::= alpha (alpha | schar | digit)*
 
 string ::= character*
 
-astring ::= all*
+astring ::= all (all)*
 
 character ::= alpha | digit | schar
 

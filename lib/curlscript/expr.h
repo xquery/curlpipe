@@ -2,6 +2,7 @@
 #ifndef CURLSCRIPT_EXPR_H
 #define CURLSCRIPT_EXPR_H
 
+#include <string>
 
 using namespace std;
 

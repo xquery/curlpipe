@@ -42,35 +42,35 @@ int set_log_file(int argc, char** argv, string log_uri) {
     DLOG_S(INFO) << "set log opt";
     loguru::init(argc, argv);
     loguru::add_file(log_uri.c_str(), loguru::Append, loguru::Verbosity_MAX);
-    return EXIT_SUCCESS;
+    return 0;
 };
 
 int set_log_verbosity(int verbosity){
     DLOG_S(INFO) << "set logging to " << verbosity;
     loguru::g_stderr_verbosity = verbosity;
-    return EXIT_SUCCESS;
+    return 0;
 }
 
 int set_log_verbosity_info(){
     set_log_verbosity(loguru::Verbosity_INFO);
-    return EXIT_SUCCESS;
+    return 0;
 }
 
 int set_log_verbosity_error(){
     set_log_verbosity(loguru::Verbosity_ERROR);
-    return EXIT_SUCCESS;
+    return 0;
 }
 
 int set_log_verbosity_max(){
     set_log_verbosity(loguru::Verbosity_MAX);
-    return EXIT_SUCCESS;
+    return 0;
 }
 
 inline int check_file_exists(string file_uri){
     DLOG_S(INFO) << "checking if file " << file_uri << " exists";
     ifstream cs_file(file_uri);
     CHECK_F(cs_file.good(),"Failed to open '%s'", file_uri.c_str());
-    return EXIT_SUCCESS;
+    return 0;
 }
 
 inline string load_file(string file_uri){

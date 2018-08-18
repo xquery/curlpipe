@@ -40,6 +40,8 @@
 #include "ast.cpp"
 #include "eval.cpp"
 
+#define CS_OK 0;
+
 using namespace std;
 
 namespace curlscript{
@@ -68,7 +70,7 @@ namespace curlscript{
 
       DLOG_S(INFO) << output.str();
       DLOG_S(INFO) << s.getParsed();
-      return EXIT_SUCCESS;
+      return 0;
   }
 
 }

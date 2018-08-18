@@ -32,13 +32,13 @@
 using namespace std;
 
 int banner(){
-    LOG_S(INFO) << "curlscript " << get_version() << "| Copyright 2017-2018 James Fuller jim.fuller@webcomposite.com | https://github.com/xquery/curlscript";
-    return EXIT_SUCCESS;
+    cout << "curlscript " << get_version() << " | ⓒ 2017-2018 James Fuller <jim.fuller@webcomposite.com> | https://github.com/xquery/curlscript" << endl;
+    return CS_OK;
 }
 
 int usage(){
-    LOG_S(INFO) << "> curlscript -d -l -s -q -f test.cs";
-    return EXIT_SUCCESS;
+    cout << "> curlscript -d -l -s -q -f test.cs" << endl;
+    return CS_OK;
 }
 
 cxxopts::Options setopts(){
