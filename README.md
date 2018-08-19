@@ -15,6 +15,8 @@ pipelines of execution using natural semantics.
 
 ## Usage
 
+## Examples
+
 GET   
 ```$bash
 [http://www.httpbin.org/get]
@@ -42,8 +44,8 @@ POST some json
 ```
 
 POST some xml
-```$xml
-&lt;person id="1"&gt;&lt;name&gt;James Fuller&lt;name&gt;&lt;/person&gt; | [http://www.httpbin.org/post] ;
+```$bash
+<person id="1"><name>James Fulle<name></person> | [http://www.httpbin.org/post] ;
 
 [/tmp/data.xml] | [http://www.httpbin.org/post] ;
 ```
@@ -92,17 +94,19 @@ Comparison
 
 ## Points of Interests
 
-* Have been [lazy](http://threevirtues.com/) in defining internals or worrying about performance 
+* At this early stage, being intentionally [lazy](http://threevirtues.com/) in defining internals or worrying too much about performance.
 * The curlscript language is defined with an [EBNF](etc/csparser.ebnf) which is used to produce a strict parser.
-* Designing a programming language is hard, at this stage I am focused on coherence and if the parse tree is easy to run, please do [raise an issue](https://github.com/xquery/curlscript/issues) if you feel strongly where syntax could change.
+* Designing a programming language is hard - for me coherence and a parse tree that is easy to run are my first goals, please do [raise an issue](https://github.com/xquery/curlscript/issues) if you feel strongly where syntax could change.
 * I find using [CMake](https://cmake.org/) non intuitive ... though will never learn it if I do not use it, hence its usage here. 
 
 ## Developing curlscript
 
+Please [raise an issue](https://github.com/xquery/curlscript/issues) or fork and create a [pr](https://github.com/xquery/curlscript/pulls). 
+
 ### Compiling
 
-Just do the normal cmake thing:
-```
+Do the cmake thing:
+```$bash
 mkdir build
 cd build
 cmake ..

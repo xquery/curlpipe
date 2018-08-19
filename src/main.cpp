@@ -88,14 +88,14 @@ int main(int argc, char** argv ){
         DLOG_S(INFO) << "set positional opt";
         auto& v = result["positional"].as<std::vector<std::string>>();
         for (const auto& s : v) {
-            curlscript::eval(s,result["quiet"].count());
+            curlscript::exec(s, result["quiet"].count());
         }
     } else{
         if(result["file"].count() == 1){
             DLOG_S(INFO) << "set file opt";
-            curlscript::eval(result["file"].as<string>(),result["quiet"].count());
+            curlscript::exec(result["file"].as<string>(), result["quiet"].count());
         }else{
-            LOG_S(ERROR) << "must supply eval file.";
+            LOG_S(ERROR) << "must supply exec file.";
             return EXIT_FAILURE; }}
 
     DLOG_S(INFO) << "finished processing, dumping output to stdout.";

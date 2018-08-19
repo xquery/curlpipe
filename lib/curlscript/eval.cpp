@@ -50,14 +50,14 @@ namespace curlscript {
 
     void eval_exprs(vector<expr> exprs, std::ostringstream &output){
 
-        DLOG_S(INFO) << "begin eval expressions";
+        DLOG_S(INFO) << "begin exec expressions";
         init_http();
 
         for_each(
             begin(exprs),
             end(exprs),
             [&](expr& expr){
-                DLOG_S(INFO) << "begin eval expr";
+                DLOG_S(INFO) << "begin exec expr";
 
                 output << std::accumulate(
                         begin(expr.statements),
@@ -84,11 +84,11 @@ namespace curlscript {
                                 }
                             }
                             return out;});
-                DLOG_S(INFO) << "end eval expr" ; });
+                DLOG_S(INFO) << "end exec expr" ; });
 
         DLOG_S(INFO) << "#expr:" << exprs.size();
         cleanup_http();
-        DLOG_S(INFO) << "end eval expressions";
+        DLOG_S(INFO) << "end exec expressions";
 
     }
 
