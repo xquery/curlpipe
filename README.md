@@ -132,11 +132,11 @@ The build should helpfully complain if there are other common dependencies missi
 ### Dependencies
 This project depends on the following external libs:
 * [REx Parser Generator](http://www.bottlecaps.de/rex/): Gunther Rademacher <grd@gmx.net> excellant parser generator. 
+* [loguru](https://github.com/emilk/loguru): no fuss logging.
 * [cxxopt](https://github.com/jarro2783/cxxopts): parsing command args.
 * [googletest](https://github.com/google/googletest): testing.
 * [rapidjson](https://github.com/miloyip/rapidjson): json munging.
 * [pugixml](https://github.com/zeux/pugixml): xml dancing.
-* [loguru](https://github.com/emilk/loguru)
 
 ## License
 
