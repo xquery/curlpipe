@@ -28,6 +28,6 @@
 using namespace curlscript;
 
 TEST(CurlScriptTest,TestCurlScriptApi) {
-//    EXPECT_EQ(exec("data/test-api-data.cs", true),0);
+    EXPECT_EQ(exec("data/test-api-data.cs", true),0);
     EXPECT_DEATH(exec("data/nonexistingfile.cs"), "file");
 }

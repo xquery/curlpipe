@@ -4,16 +4,22 @@ WARNING - under development (as in everything is probably broken) test
 [![Build Status](https://travis-ci.org/xquery/curlscript.svg?branch=develop)](https://travis-ci.org/xquery/curlscript)
 [![Coverage Status](https://coveralls.io/repos/github/xquery/curlscript/badge.svg?branch=develop)](https://coveralls.io/github/xquery/curlscript?branch=develop)
 
-[Curl](https://curl.haxx.se/) is a great ~~swiss army knife~~ http client which does much more then just make it easy to work with HTTP.
+[Curl](https://curl.haxx.se/) is a great ~~swiss army knife~~ http client which does much more then  make it easy to work with HTTP, supporting a plethora of protocols addressable with a URI.
 
-Over the years, the curl command line interface has grown rapidly, exposing hundreds of flags - most users initially only ever invoke a subset of features, learning more advanced features over time.
+Over the years, the curl command line interface has grown - exposing hundreds of options - most users only ever invoke a subset of features, learning more advanced features over time.
 
 Curlscript is an experiment in exposing much of curl's goodness via a little [DSL](https://en.wikipedia.org/wiki/Domain-specific_language) making it easy to build up
-pipelines of execution using natural semantics.  
+pipelines of execution using natural semantics rather then 'flag soup'.  
 
 ## Getting started
 
+Download a release or build the software.
+
 ## Usage
+
+```$bash
+> curlscript -h 
+```
 
 ## Examples
 
@@ -81,9 +87,16 @@ $opt = [/.curlscriptrc]
 $opt.defaults.header.Accept = "applicationxml"
 ```
 ```$bash
+$myid = 1;
 $mypayload = [/tmp/payload];
 $mypayload | [http://www.httpbin.org/delete]
 ```
+
+transclusion in URI
+```
+$mypayload | [http://www.httpbin.org/delete/${myid}]
+```
+
 Comparison
 ```$bash
 [http://www.httpbin.org/get].url == 'http://www.httpbin.org/get'
@@ -111,9 +124,13 @@ mkdir build
 cd build
 cmake ..
 make 
+make test
+make install
 ```
 
-Note that running cmake will pull down dependencies and requires access to internet.
+Note that running cmake will pull down dependencies and requires access to internet. This is problematic 
+approach for those wishing to build without accessing the internet and will change in the near future eg. should be
+able to build and install deps independently.
 
 The build should helpfully complain if there are other common dependencies missing from your platform (ex. openssl).
 
