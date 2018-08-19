@@ -37,11 +37,15 @@ GET and narrow down result
 POST some json
 ```$bash
 {"id":1 , "name":"James Fuller"} | [http://www.httpbin.org/post] ;
+
+[/tmp/data.json] | [http://www.httpbin.org/post] ;
 ```
 
 POST some xml
 ```$xml
 &lt;person id="1"&gt;&lt;name&gt;James Fuller&lt;name&gt;&lt;/person&gt; | [http://www.httpbin.org/post] ;
+
+[/tmp/data.xml] | [http://www.httpbin.org/post] ;
 ```
 
 POST name=value
