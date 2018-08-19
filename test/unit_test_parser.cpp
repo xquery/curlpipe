@@ -46,7 +46,7 @@ using namespace std;
 //}
 
 TEST(CurlScriptTestParser,TestCurlScriptFailParser){
-    XMLSerializer s(true);
+    ASTserializer s(true);
     string input = load_file("data/test3-error.cs");
     wstring winput =convert(input);
     csparser parser(winput.c_str(), &s);

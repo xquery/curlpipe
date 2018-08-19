@@ -81,6 +81,15 @@ inline string load_file(string file_uri){
     return buffer.str();
 }
 
+int save_file(string file_uri, string data){
+    DLOG_S(INFO) << "saving output to " << file_uri ;
+    ofstream outfile;
+    outfile.open(file_uri, ios::out);
+    outfile << data;
+    outfile.close();
+    return 0;
+}
+
 inline std::wstring convert( string input )
 {
     std::wstring winput(input.length(), L' '); // Make room for characters

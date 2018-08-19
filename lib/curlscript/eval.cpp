@@ -42,6 +42,7 @@
 #include "log.h"
 #include "expr.h"
 #include "http.cpp"
+#include "helpers.h"
 
 using namespace std;
 
@@ -49,34 +50,46 @@ namespace curlscript {
 
     void eval_exprs(vector<expr> exprs, std::ostringstream &output){
 
+        DLOG_S(INFO) << "begin eval expressions";
         init_http();
 
         for_each(
             begin(exprs),
             end(exprs),
             [&](expr& expr){
-                DLOG_S(INFO) << "order:" << expr.order;
-                output << "my expirement";
-                for_each(
+                DLOG_S(INFO) << "begin eval expr";
+
+                output << std::accumulate(
                         begin(expr.statements),
                         end(expr.statements),
-                        [&](tuple<vector<item>,string,vector<item>>& statement) {
+                        string{""},
+                        [&](string out, tuple<vector<item>,string,vector<item>>& statement) {
                             string op = std::get<1>(statement);
                             if(op.empty()){
                                 for (auto & item : std::get<0>(statement)) {
-                                    DLOG_S(INFO) << "uri:" << item.uri.get_uri();
+                                    out += http_get(item.uri.get_uri());
                                 }
                             }else{
-                                DLOG_S(INFO) << "op:" << std::get<1>(statement);
-                                for (auto & item : std::get<2>(statement)) {
-                                    DLOG_S(INFO) << "uri:" << item.uri.get_uri();
+                                string op = std::get<1>(statement);
+                                DLOG_S(INFO) << "op:" << op;
+                                if(op.compare(">") == 0){
+                                    for (auto & item : std::get<2>(statement)) {
+                                        save_file(item.uri.get_uri(),out);
+                                    }
+                                }
+                                if(op.compare("|") == 0){
+                                    for (auto & item : std::get<2>(statement)) {
+                                        out =http_post(item.uri.get_uri(),out);
+                                    }
                                 }
                             }
-                        });
-                DLOG_S(INFO) << "end" ; });
+                            return out;});
+                DLOG_S(INFO) << "end eval expr" ; });
 
         DLOG_S(INFO) << "#expr:" << exprs.size();
         cleanup_http();
+        DLOG_S(INFO) << "end eval expressions";
+
     }
 
 

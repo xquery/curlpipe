@@ -46,31 +46,35 @@ using namespace std;
 
 namespace curlscript{
 
-  int eval(const string file_uri) {
+  int eval(const string file_uri, bool quiet) {
 
       DLOG_S(INFO) << "loading " << file_uri;
       bool indent = false;
 
       ASTserializer s(indent);
-      string input = load_file(file_uri);
-
-      wstring winput =convert(input);
+      wstring winput =convert(load_file(file_uri));
 
       csparser parser(winput.c_str(), &s);
       try {
           parser.parse_CS(); }
-      catch (csparser::ParseException &pe)
-      {
+      catch (csparser::ParseException &pe) {
           LOG_S(ERROR) << "parser error, " << convert(pe.getMessage());
           return EXIT_FAILURE; }
 
       vector<expr> exprs = generate_ast(s.getParsed());
+      DLOG_S(INFO) << s.getParsed();
+
       std::ostringstream output;
       eval_exprs(exprs, output);
 
-      DLOG_S(INFO) << output.str();
-      DLOG_S(INFO) << s.getParsed();
+      if(!quiet){
+          cout << output.str();
+      }
+
       return 0;
   }
 
+    int eval(const string file_uri){
+        eval(file_uri,false);
+    }
 }

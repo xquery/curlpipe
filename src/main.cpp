@@ -47,10 +47,11 @@ cxxopts::Options setopts(){
             ("positional",
              "Positional arguments: these are the arguments that are entered "
              "without an option", cxxopts::value<std::vector<std::string>>())
-            ("d,debug", "Enable debugging")
+            ("d,debug", "Emit debug level logging")
             ("l,log", "Enable logging to file")
             ("s,serialiser", "Switch serialiser",cxxopts::value<string>())
             ("q,quiet", "Disable output")
+            ("i,info", "Emit info level logging")
             ("f,file", "File name", cxxopts::value<string>());
     opts.parse_positional({"input", "output", "positional"});
     return opts;
@@ -58,19 +59,22 @@ cxxopts::Options setopts(){
 
 int main(int argc, char** argv ){
 
+#ifndef NDEBUG
     DLOG_S(INFO) << "debug mode";
+#endif
+
     DLOG_S(INFO) << "start processing...";
 
     cxxopts::Options opts = setopts();
     auto result = opts.parse(argc,argv);
 
-    if(result["quiet"].count() == 1){
-        DLOG_S(INFO) << "set quiet opt";
-       set_log_verbosity_error();
-    }else{
+    if(result["info"].count() == 1){
         DLOG_S(INFO) << "set emit INFO level";
         banner();
-        set_log_verbosity_info(); }
+        set_log_verbosity_info();
+    }else{
+        DLOG_S(INFO) << "set info opt";
+        set_log_verbosity_error();}
 
     if(result["debug"].count() == 1){
         DLOG_S(INFO) << "set debug opt, emit maximum message level";
@@ -84,16 +88,16 @@ int main(int argc, char** argv ){
         DLOG_S(INFO) << "set positional opt";
         auto& v = result["positional"].as<std::vector<std::string>>();
         for (const auto& s : v) {
-            curlscript::eval(s);
+            curlscript::eval(s,result["quiet"].count());
         }
     } else{
         if(result["file"].count() == 1){
             DLOG_S(INFO) << "set file opt";
-            curlscript::eval(result["file"].as<string>());
+            curlscript::eval(result["file"].as<string>(),result["quiet"].count());
         }else{
             LOG_S(ERROR) << "must supply eval file.";
             return EXIT_FAILURE; }}
 
-    DLOG_S(INFO) << "finished processing.";
+    DLOG_S(INFO) << "finished processing, dumping output to stdout.";
     return EXIT_SUCCESS;
 }

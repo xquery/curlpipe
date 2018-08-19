@@ -88,10 +88,10 @@ Comparison
 
 ## Points of Interests
 
-* At this stage I have not thought much about performance, once I learn more I expect to rewrite internals
+* Have been [lazy](http://threevirtues.com/) in defining internals or worrying about performance 
 * The curlscript language is defined with an [EBNF](etc/csparser.ebnf) which is used to produce a strict parser.
-* I have unabashedly stolen syntactical forms and conventions from several languages - it maybe this approach creates a ['chimera'](https://en.wikipedia.org/wiki/Chimera_(mythology))
-causing discomfort for most people ... please do [raise an issue](https://github.com/xquery/curlscript/issues) if you feel strongly where syntax must change.
+* Designing a programming language is hard, at this stage I am focused on coherence and if the parse tree is easy to run, please do [raise an issue](https://github.com/xquery/curlscript/issues) if you feel strongly where syntax could change.
+* I find using [CMake](https://cmake.org/) non intuitive ... though will never learn it if I do not use it, hence its usage here. 
 
 ## Developing curlscript
 
