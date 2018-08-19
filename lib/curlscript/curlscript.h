@@ -29,5 +29,7 @@
 
 namespace curlscript{
     int eval(std::string file_uri);
+    int eval(std::string file_uri,bool quiet);
 }
+
 #endif //CURLSCRIPT_CURLSCRIPT_H

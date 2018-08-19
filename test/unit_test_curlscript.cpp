@@ -28,7 +28,8 @@
 using namespace std;
 
 TEST(CurlScriptTest,TestCurlScript){
-//    EXPECT_GT(curlscript::eval("data/test-api-data.cs"),0);
+    EXPECT_EQ(curlscript::eval("data/test-api-data.cs",true),0);
+    EXPECT_EQ(curlscript::eval("data/test-api-data.cs",false),0);
     EXPECT_DEATH(curlscript::eval("nonexistingfile"),"");
     EXPECT_DEATH(curlscript::eval(""),"");
 }
