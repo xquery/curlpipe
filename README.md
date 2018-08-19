@@ -115,8 +115,7 @@ make
 
 Note that running cmake will pull down dependencies and requires access to internet.
 
-Some code dependencies (ex. openssl) should already be existing on the platform. The build will complain
-if missing.
+The build should helpfully complain if there are other common dependencies missing from your platform (ex. openssl).
 
 ### Testing
 
@@ -132,13 +131,12 @@ if missing.
 
 ### Dependencies
 This project depends on the following external libs:
-[loguru](https://github.com/emilk/loguru)
 * [REx Parser Generator](http://www.bottlecaps.de/rex/): Gunther Rademacher <grd@gmx.net> excellant parser generator. 
-* [loguru](https://github.com/emilk/loguru): no fuss logging.
 * [cxxopt](https://github.com/jarro2783/cxxopts): parsing command args.
 * [googletest](https://github.com/google/googletest): testing.
 * [rapidjson](https://github.com/miloyip/rapidjson): json munging.
 * [pugixml](https://github.com/zeux/pugixml): xml dancing.
+* [loguru](https://github.com/emilk/loguru)
 
 ## License
 
