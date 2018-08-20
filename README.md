@@ -33,13 +33,26 @@ GET and save to file
 [http://www.httpbin.org/get] > /tmp/response.txt
 ```
 
-GET and narrow down result
+GET and append to file  
 ```$bash
-[http://www.httpbin.org/get] ? [/id] 
+[http://www.httpbin.org/get] >> /tmp/response.txt
 ```
 
+GET and narrow down result
 ```$bash
+[http://www.httpbin.org/get] . [/id] 
+
 [http://www.httpbin.org/get].id  
+```
+
+trinary operator
+```$bash
+[http://www.httpbin.org/get] ? [/tmp/success.txt] : "failure" > [/tmp/fail.txt]
+
+[http://www.httpbin.org/get] =~ "test"
+       ? [/tmp/success.txt] 
+       : "failure" > [/tmp/fail.txt]
+       
 ```
 
 POST some json
@@ -68,15 +81,15 @@ POST zip file
 
 PUT some json
 ```$bash
-[http://www.httpbin.org/put] = {"test:1}
+{"test:1} = [http://www.httpbin.org/put]
 ```
 
 DELETE
 ```$bash
-[http://www.httpbin.org/delete] = []
+[] = [http://www.httpbin.org/delete]
 ```
 ```$bash
-[http://www.httpbin.org/delete] = [/dev/null]
+[/dev/null] = [http://www.httpbin.org/delete] 
 ```
 
 set variable

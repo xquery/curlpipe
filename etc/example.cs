@@ -49,12 +49,12 @@ $myvar | https://test.com/records
 ##################
 # PUT method examples
 ##################
-https://test.com/resource/id = {"test:1}
+{"test:1} = https://test.com/resource/id
 
 ##################
 # DELETE method examples
 ##################
-http://test.com/resource/id = /dev/null      # if empty/null then this is a DELETE
+/dev/null = http://test.com/resource/id      # if empty/null then this is a DELETE
 
 ##################
 # HEAD method example

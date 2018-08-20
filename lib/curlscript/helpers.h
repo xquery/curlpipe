@@ -90,6 +90,17 @@ int save_file(string file_uri, string data){
     return 0;
 }
 
+int append_file(string file_uri, string data)
+{
+    ofstream file;
+    file.open(file_uri, std::ios::out | std::ios::app);
+    if (file.fail())
+        throw std::ios_base::failure(std::strerror(errno));
+    file.exceptions(file.exceptions() | std::ios::failbit | std::ifstream::badbit);
+    file << data;
+    return 0;
+}
+
 inline std::wstring convert( string input )
 {
     std::wstring winput(input.length(), L' '); // Make room for characters

@@ -77,6 +77,11 @@ namespace curlscript {
                                         save_file(item.uri.get_uri(),out);
                                     }
                                 }
+                                if(op.compare(">>") == 0){
+                                    for (auto & item : std::get<2>(statement)) {
+                                        append_file(item.uri.get_uri(),out);
+                                    }
+                                }
                                 if(op.compare("|") == 0){
                                     for (auto & item : std::get<2>(statement)) {
                                         out =http_post(item.uri.get_uri(),out);
