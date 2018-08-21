@@ -67,6 +67,7 @@ namespace curlscript {
                             string op = std::get<1>(statement);
                             if(op.empty()){
                                 for (auto & item : std::get<0>(statement)) {
+                                    DLOG_S(INFO) << "item uri:" << item.uri.get_uri();
                                     out += http_get(item.uri.get_uri());
                                 }
                             }else{

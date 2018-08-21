@@ -62,9 +62,10 @@ namespace curlscript {
                             for(pugi::xml_node port: item.child("URI").child("hostport").child("port").children()) {
                                 cur_item.uri.port +=port.text().as_string();
                             }
-                            for(pugi::xml_node segment: item.child("URI").child("path").children()){
+
+                            for(pugi::xml_node path: item.child("URI").children("segment")) {
                                 cur_item.uri.path += "/";
-                                cur_item.uri.path += segment.child("string").text().as_string();
+                                cur_item.uri.path += path.child("string").text().as_string();
                             }
                             items1.push_back(cur_item);
                         }else if(item.child("var")){
@@ -81,9 +82,9 @@ namespace curlscript {
                             for(pugi::xml_node port: item.child("URI").child("hostport").child("port").children()) {
                                 cur_item.uri.port +=port.text().as_string();
                             }
-                            for(pugi::xml_node segment: item.child("URI").child("path").children()){
+                            for(pugi::xml_node path: item.child("URI").children("segment")) {
                                 cur_item.uri.path += "/";
-                                cur_item.uri.path += segment.child("string").text().as_string();
+                                cur_item.uri.path += path.child("string").text().as_string();
                             }
                             items2.push_back(cur_item);
                         }else if(item.child("var")){

@@ -8,17 +8,18 @@ statement ::= Operator items
 
 var ::= "$"nstring
 
-items ::= item ("," item)?
+items ::= item ("," item)*
 
-item ::= URI | segment | literal
+item ::= URI | literal
 
 Separator
   ::= ';'
 
-literal ::= '"' astring '"'
+literal
+  ::= '"' astring '"'
 
 URI
-  ::= "[" (scheme hostport?)? path  "]"
+  ::= "[" scheme? ( hostport | segment ) (segment)* query? fragment? "]"
 
 hostport
   ::= host (":" port)?
@@ -27,15 +28,18 @@ host
   ::= nstring
 
 port
-  ::= digit*
-
-path
-  ::= (segment)*
+  ::= digit (digit)*
 
 segment
-  ::= ('/'|'.') string
+  ::= path_delim string path_delim?
 
-comments ::= "#" astring (astring)?
+query
+  ::= '?' string
+
+fragment
+  ::= '#' string
+
+comments ::= "//" astring (astring)*
 
 whitespace
          ::=  S^WS | comments
@@ -47,19 +51,20 @@ scheme
   ::= ("https" | "http" | "file") '://'
 
 Operator
-  ::= '|' |  '=' | '>>' | '>' | '!' | '?' | "!=" | "=="
+  ::= '|' |  '=' | ">>" | '>' | '!' | '?' | "!=" | "=="
 
 nstring ::= alpha (alpha | schar | digit)*
 
-string ::= character*
+string ::= character (character)*
 
 astring ::= all (all)*
+all ::= Operator | alpha | digit | schar
 
 character ::= alpha | digit | schar
 
-all ::= Operator | alpha | digit | schar
-
 schar ::= "_" | "."
+
+path_delim ::= '/'
 
 digit ::= [0-9]
 

@@ -91,7 +91,7 @@ int http_set_options(CURL *c){
 
 string http_get(string url){
 
-    DLOG_S(INFO) << "perform HTTP GET " << url;
+    DLOG_S(INFO) << "doing HTTP GET " << url;
 
     std::ostringstream ss;
     string readBuffer;
