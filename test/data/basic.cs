@@ -1,8 +1,8 @@
 [file:///tmp/output.txt]
 
-[http://localhost:81/uuid]
+[http://localhost:81/uuid "Accept":"applicationxml"]
 
-[http://httpbin.org/get] | [http://localhost:81/post] > [/tmp/test1.json] ;
+[http://httpbin.org/get] | [http://localhost:81/post "Accept":"applicationxml"] > [/tmp/test1.json] ;
 
 [http://localhost:81/bytes/35] > [/tmp/test2.json]
 

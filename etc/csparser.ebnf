@@ -19,7 +19,13 @@ literal
   ::= '"' astring '"'
 
 URI
-  ::= "[" scheme? ( hostport | segment ) (segment)* query? fragment? "]"
+  ::= "[" scheme? ( hostport | segment ) (segment)* query? fragment? headers "]"
+
+headers
+  ::= header*
+
+header
+  ::=  literal ":" literal
 
 hostport
   ::= host (":" port)?

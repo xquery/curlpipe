@@ -26,6 +26,13 @@ Download a release or build the software.
 GET   
 ```$bash
 [http://www.httpbin.org/get]
+
+[file:///tmp/test.txt]
+```
+
+GET setting headers
+```$bash
+[http://www.httpbin.org/get "Accept":"application/json"]
 ```
 
 GET and save to file  
@@ -57,14 +64,14 @@ trinary operator
 
 POST some json
 ```$bash
-{"id":1 , "name":"James Fuller"} | [http://www.httpbin.org/post] ;
+{"id":1 , "name":"James Fuller" age="${age}"} | [http://www.httpbin.org/post] ;
 
 [/tmp/data.json] | [http://www.httpbin.org/post] ;
 ```
 
 POST some xml
 ```$bash
-<person id="1"><name>James Fulle<name></person> | [http://www.httpbin.org/post] ;
+<person id="1"><name>John Smith<name><age>${age}</age></person> | [http://www.httpbin.org/post] ;
 
 [/tmp/data.xml] | [http://www.httpbin.org/post] ;
 ```
@@ -124,7 +131,8 @@ Comparison
 * The curlscript language is defined with an [EBNF](etc/csparser.ebnf) which is used to produce a strict parser.
 * Designing a programming language is hard - for me coherence and a parse tree that is easy to run are my first goals, please do [raise an issue](https://github.com/xquery/curlscript/issues) if you feel strongly where syntax could change.
 * I find using [CMake](https://cmake.org/) non intuitive ... though will never learn it if I do not use it, hence its usage here. 
-
+* No windows testing (yet)
+ 
 ## Developing curlscript
 
 Please [raise an issue](https://github.com/xquery/curlscript/issues) or fork and create a [pr](https://github.com/xquery/curlscript/pulls). 
