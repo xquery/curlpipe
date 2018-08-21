@@ -41,7 +41,7 @@ https://www.google.com 2> /errors.txt                    # write errors to file
 ##################
 # POST method examples
 ##################
-"name=John Wayne&age=24" -H"Content-type:plain/text" | test.com    # POST
+"name=John Wayne&age=24" | [https://test.com/post "Content-type":"plain/text"]  # POST
 {"name":"John Wayne","age":24} | test.com                          # POST
 <person><name>John Wayne</name><age>24</age></person> | test.com   # POST
 $myvar | https://test.com/records
