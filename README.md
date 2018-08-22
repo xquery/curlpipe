@@ -37,12 +37,12 @@ GET setting headers
 
 GET and save to file  
 ```$bash
-[http://www.httpbin.org/get] > /tmp/response.txt
+[http://www.httpbin.org/get] > [/tmp/response.txt]
 ```
 
 GET and append to file  
 ```$bash
-[http://www.httpbin.org/get] >> /tmp/response.txt
+[http://www.httpbin.org/get] >> [/tmp/response.txt]
 ```
 
 GET and narrow down result
