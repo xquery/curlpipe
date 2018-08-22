@@ -1,0 +1,16 @@
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:_ZNKSt15basic_stringbufIcSt11char_traitsIcESaIcEE3strEv
+   fun:str
+   fun:_ZN6loguru12StreamLoggerD1Ev
+   fun:_Z16http_set_optionsPv
+   fun:_Z8http_getSs
+   fun:operator()
+   fun:accumulate<__gnu_cxx::__normal_iterator<std::tuple<std::vector<curlscript::item, std::allocator<curlscript::item> >, std::basic_string<char>, std::vector<curlscript::item, std::allocator<curlscript::item> > > *, std::vector<std::tuple<std::vector<curlscript::item, std::allocator<curlscript::item> >, std::basic_string<char>, std::vector<curlscript::item, std::allocator<curlscript::item> > >, std::allocator<std::tuple<std::vector<curlscript::item, std::allocator<curlscript::item> >, std::basic_string<char>, std::vector<curlscript::item, std::allocator<curlscript::item> > > > > >, std::basic_string<char>, (lambda at /home/travis/build/xquery/curlscript/lib/curlscript/eval.cpp:66:25)>
+   fun:operator()
+   fun:for_each<__gnu_cxx::__normal_iterator<curlscript::expr *, std::vector<curlscript::expr, std::allocator<curlscript::expr> > >, (lambda at /home/travis/build/xquery/curlscript/lib/curlscript/eval.cpp:59:13)>
+   fun:_ZN10curlscript10eval_exprsESt6vectorINS_4exprESaIS1_EERSt19basic_ostringstreamIcSt11char_traitsIcESaIcEE
+   fun:_ZN10curlscript4execESsb
+   fun:main
+}
