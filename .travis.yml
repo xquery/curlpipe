@@ -2,6 +2,9 @@ language: cpp
 
 sudo: required
 
+services:
+  - docker
+
 env:
   global:
     - CXX_FLAGS="-Wall -pedantic -Werror -Wno-variadic-macros -Wno-long-long -Wno-shadow"
@@ -42,6 +45,7 @@ notifications:
   email: false
 
 before_install:
+  - docker run -p 81:80 kennethreitz/httpbin
   - export CMAKE_OPTIONS=${CMAKE_OPTIONS}" "${ENV_CMAKE_OPTIONS}
   - export CXX_FLAGS=${CXX_FLAGS}" "${ENV_CXX_FLAGS}
   - mkdir build

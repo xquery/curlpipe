@@ -1,5 +1,5 @@
 // GET and save
-[http://localhost:81/uuid "Accept":"applicationxml"] > "/tmp/output.json"
+[http://localhost:81/uuid "Accept":"applicationxml"] > [file:///tmp/output.json]
 
 // retrieve file
 [file:///tmp/output.json]

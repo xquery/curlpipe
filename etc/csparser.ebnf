@@ -19,22 +19,23 @@ literal
   ::= '"' astring '"'
 
 URI
-  ::= "[" scheme? ( hostport | segment ) (segment)* query? fragment? headers "]"
-
-headers
-  ::= header*
+  ::= "[" scheme? ( hostport | segment ) (segment)* headers "]"
 
 header
   ::=  literal ":" literal
 
-hostport
-  ::= host (":" port)?
+headers
+  ::= header*
+
 
 host
   ::= nstring
 
 port
   ::= digit (digit)*
+
+hostport
+  ::= host (":" port)?
 
 segment
   ::= path_delim string path_delim?
