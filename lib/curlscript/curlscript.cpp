@@ -46,7 +46,7 @@ using namespace std;
 
 namespace curlscript{
 
-  int exec(const string file_uri, bool quiet) {
+  int exec(string file_uri, bool quiet) {
 
       DLOG_S(INFO) << "loading " << file_uri;
       bool indent = false;
@@ -74,7 +74,7 @@ namespace curlscript{
       return 0;
   }
 
-    int exec(const string file_uri){
+    int exec(string file_uri){
         exec(file_uri, false);
     }
 }
