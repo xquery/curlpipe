@@ -59,6 +59,7 @@ install:
 
 script:
   - make
+  - valgrind --leak-check=full --show-leak-kinds=all --errors-for-leak-kinds=all --track-fds=yes src/curlscript test/data/valgrind.cs
   - make test
 
 after_success:
