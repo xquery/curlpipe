@@ -29,6 +29,7 @@
 #include <sstream>
 #include <fstream>
 #include "version.h"
+#include "log.h"
 
 using namespace std;
 
