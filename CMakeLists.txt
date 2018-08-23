@@ -63,11 +63,11 @@ download_project(PROJ                googletest
 #        GIT_TAG             master
 #        ${UPDATE_DISCONNECTED_IF_AVAILABLE}
 #        )
-#download_project(PROJ                pugixml
-#        GIT_REPOSITORY      https://github.com/zeux/pugixml.git
-#        GIT_TAG             master
-#        ${UPDATE_DISCONNECTED_IF_AVAILABLE}
-#        )
+download_project(PROJ                pugixml
+        GIT_REPOSITORY      https://github.com/zeux/pugixml.git
+        GIT_TAG             master
+        ${UPDATE_DISCONNECTED_IF_AVAILABLE}
+        )
 download_project(PROJ                loguru
         GIT_REPOSITORY      https://github.com/emilk/loguru.git
         GIT_TAG             master
@@ -97,7 +97,7 @@ if(BUILD_TOOL)
 endif()
 
 #add_subdirectory(${curl_SOURCE_DIR})
-#add_subdirectory(${pugixml_SOURCE_DIR})
+add_subdirectory(${pugixml_SOURCE_DIR})
 
 if(NOT DISABLE_TESTS)
     include(CTest)
