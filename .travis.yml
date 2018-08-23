@@ -21,6 +21,8 @@ addons:
     - valgrind
     - g++-7
     - libstdc++-7-dev
+    - libssh2-1-dev
+    - libssh-dev
 
 matrix:
   include:
@@ -48,6 +50,7 @@ before_install:
 - echo $LC_ALL
 - mkdir -p build
 - cd build
+- mkdir -p docs
 - cmake --version
 - cmake ${CMAKE_OPTIONS} -DCMAKE_CXX_FLAGS=${CXX_FLAGS} -DCMAKE_BUILD_TYPE=Debug -DENABLE_COVERAGE=ON -DCOVERAGE=1 ..
 
