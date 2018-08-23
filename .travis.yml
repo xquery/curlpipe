@@ -35,10 +35,10 @@ matrix:
           compiler: gcc
           dist: trusty
           env: T=debug CMAKE_BUILD_TYPE=Debug
-#        - os: osx
-#          compiler: gcc
-#          dist: trusty
-#          env: T=debug CMAKE_BUILD_TYPE=Debug C=--with-libssh2
+        - os: osx
+          compiler: gcc
+          dist: trusty
+          env: T=debug CMAKE_BUILD_TYPE=Debug C=" --with-libssh2"
 #        - os: linux
 #          compiler: clang
 #          dist: trusty
@@ -66,7 +66,7 @@ before_install:
   - cd build
   - mkdir -p docs
   - cmake --version
-  - cmake ${CMAKE_OPTIONS} -DCMAKE_CXX_FLAGS=${CXX_FLAGS} -DCMAKE_BUILD_TYPE=Debug -DENABLE_COVERAGE=ON -DCOVERAGE=1 ..
+  - cmake ${CMAKE_OPTIONS} -DCMAKE_CXX_FLAGS=${CXX_FLAGS}${C} -DCMAKE_BUILD_TYPE=Debug -DENABLE_COVERAGE=ON -DCOVERAGE=1 ..
 
 install:
   - pip2 install --upgrade --user git+git://github.com/eddyxu/cpp-coveralls.git
