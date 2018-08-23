@@ -38,7 +38,7 @@ matrix:
         - os: osx
           compiler: gcc
           dist: trusty
-          env: T=debug CMAKE_BUILD_TYPE=Debug C="--with-ssl=/usr/local/opt/libressl --with-libmetalink"
+          env: T=debug CMAKE_BUILD_TYPE=Debug C=--with-libssh2
         - os: linux
           compiler: clang
           dist: trusty
