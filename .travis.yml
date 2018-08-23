@@ -35,6 +35,10 @@ matrix:
           compiler: gcc
           dist: trusty
           env: T=debug CMAKE_BUILD_TYPE=Debug
+        - os: osx
+          compiler: gcc
+          dist: trusty
+          env: T=debug CMAKE_BUILD_TYPE=Debug
         - os: linux
           compiler: clang
           dist: trusty

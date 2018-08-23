@@ -79,14 +79,6 @@ download_project(PROJ                cxxopts
         ${UPDATE_DISCONNECTED_IF_AVAILABLE}
         )
 
-
-# include header only deps here
-include_directories(${cxxopts_SOURCE_DIR}/include)
-include_directories(${loguru_SOURCE_DIR})
-include_directories(${rapidjson_SOURCE_DIR}/include)
-#include_directories(${curl_SOURCE_DIR}/include)
-#include_directories(${pugixml_SOURCE_DIR}/src)
-
 if(NOT DISABLE_TESTS)
     include(CTest)
     enable_testing()
@@ -94,6 +86,12 @@ if(NOT DISABLE_TESTS)
     add_subdirectory(test)
 endif()
 
+# include header only deps here
+include_directories(${cxxopts_SOURCE_DIR}/include)
+include_directories(${loguru_SOURCE_DIR})
+include_directories(${rapidjson_SOURCE_DIR}/include)
+
+# add deps
 add_subdirectory(${curl_SOURCE_DIR})
 add_subdirectory(${pugixml_SOURCE_DIR})
 
