@@ -58,11 +58,11 @@ download_project(PROJ                googletest
         GIT_TAG             master
         ${UPDATE_DISCONNECTED_IF_AVAILABLE}
         )
-#download_project(PROJ                rapidjson
-#        GIT_REPOSITORY      https://github.com/miloyip/rapidjson.git
-#        GIT_TAG             master
-#        ${UPDATE_DISCONNECTED_IF_AVAILABLE}
-#        )
+download_project(PROJ                rapidjson
+        GIT_REPOSITORY      https://github.com/miloyip/rapidjson.git
+        GIT_TAG             master
+        ${UPDATE_DISCONNECTED_IF_AVAILABLE}
+        )
 download_project(PROJ                pugixml
         GIT_REPOSITORY      https://github.com/zeux/pugixml.git
         GIT_TAG             master
@@ -80,12 +80,22 @@ download_project(PROJ                cxxopts
         )
 
 
-# headers
+# include header only deps here
 include_directories(${cxxopts_SOURCE_DIR}/include)
 include_directories(${loguru_SOURCE_DIR})
-#include_directories(${rapidjson_SOURCE_DIR}/include)
+include_directories(${rapidjson_SOURCE_DIR}/include)
 #include_directories(${curl_SOURCE_DIR}/include)
 #include_directories(${pugixml_SOURCE_DIR}/src)
+
+if(NOT DISABLE_TESTS)
+    include(CTest)
+    enable_testing()
+    add_subdirectory(${googletest_SOURCE_DIR} ${googletest_BINARY_DIR})
+    add_subdirectory(test)
+endif()
+
+add_subdirectory(${curl_SOURCE_DIR})
+add_subdirectory(${pugixml_SOURCE_DIR})
 
 # build targets
 if(BUILD_LIB)
@@ -94,16 +104,6 @@ endif()
 
 if(BUILD_TOOL)
     add_subdirectory(src)
-endif()
-
-add_subdirectory(${curl_SOURCE_DIR})
-add_subdirectory(${pugixml_SOURCE_DIR})
-
-if(NOT DISABLE_TESTS)
-    include(CTest)
-    enable_testing()
-    add_subdirectory(${googletest_SOURCE_DIR} ${googletest_BINARY_DIR})
-    add_subdirectory(test)
 endif()
 
 if (WIN32)
