@@ -30,15 +30,15 @@ matrix:
         - os: linux
           compiler: clang
           dist: trusty
-          env: T=debug CMAKE_BUILD_TYPE=Debug ENABLE_COVERAGE=ON COVERAGE=1
+          env: T=debug
         - os: linux
           compiler: gcc
           dist: trusty
-          env: T=debug CMAKE_BUILD_TYPE=Debug
-        - os: osx
-          compiler: gcc
-          dist: trusty
-          env: T=debug CMAKE_BUILD_TYPE=Debug C=" --with-libssh2"
+          env: T=debug
+#        - os: osx
+#          compiler: gcc
+#          dist: trusty
+#          env: T=debug CMAKE_BUILD_TYPE=Debug C=" --with-libssh2"
 #        - os: linux
 #          compiler: clang
 #          dist: trusty
@@ -57,8 +57,8 @@ notifications:
   email: false
 
 before_install:
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update          ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install rtmpdump libssh2 c-ares libmetalink libressl nghttp2 libmetalink; fi
+#  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update          ; fi
+#  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install rtmpdump libssh2 c-ares libmetalink libressl nghttp2 libmetalink; fi
   - docker run -p 81:80 kennethreitz/httpbin &
   - export CMAKE_OPTIONS=${CMAKE_OPTIONS}" "${ENV_CMAKE_OPTIONS}
   - export CXX_FLAGS=${CXX_FLAGS}" "${ENV_CXX_FLAGS}
@@ -66,7 +66,7 @@ before_install:
   - cd build
   - mkdir -p docs
   - cmake --version
-  - cmake ${CMAKE_OPTIONS} -DCMAKE_CXX_FLAGS=${CXX_FLAGS}${C} -DCMAKE_BUILD_TYPE=Debug -DENABLE_COVERAGE=ON -DCOVERAGE=1 ..
+  - cmake ${CMAKE_OPTIONS} -DCMAKE_CXX_FLAGS=${CXX_FLAGS} -DCMAKE_BUILD_TYPE=Debug -DENABLE_COVERAGE=ON -DCOVERAGE=1 ..
 
 install:
   - pip2 install --upgrade --user git+git://github.com/eddyxu/cpp-coveralls.git
