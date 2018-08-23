@@ -48,26 +48,26 @@ set(USE_PUGIXML true)
 # retrieve deps
 #add_subdirectory(deps)
 
-download_project(PROJ                curl
-        GIT_REPOSITORY      https://github.com/curl/curl.git
-        GIT_TAG             master
-        ${UPDATE_DISCONNECTED_IF_AVAILABLE}
-        )
+#download_project(PROJ                curl
+#        GIT_REPOSITORY      https://github.com/curl/curl.git
+#        GIT_TAG             master
+#        ${UPDATE_DISCONNECTED_IF_AVAILABLE}
+#        )
 download_project(PROJ                googletest
         GIT_REPOSITORY      https://github.com/google/googletest.git
         GIT_TAG             master
         ${UPDATE_DISCONNECTED_IF_AVAILABLE}
         )
-download_project(PROJ                rapidjson
-        GIT_REPOSITORY      https://github.com/miloyip/rapidjson.git
-        GIT_TAG             master
-        ${UPDATE_DISCONNECTED_IF_AVAILABLE}
-        )
-download_project(PROJ                pugixml
-        GIT_REPOSITORY      https://github.com/zeux/pugixml.git
-        GIT_TAG             master
-        ${UPDATE_DISCONNECTED_IF_AVAILABLE}
-        )
+#download_project(PROJ                rapidjson
+#        GIT_REPOSITORY      https://github.com/miloyip/rapidjson.git
+#        GIT_TAG             master
+#        ${UPDATE_DISCONNECTED_IF_AVAILABLE}
+#        )
+#download_project(PROJ                pugixml
+#        GIT_REPOSITORY      https://github.com/zeux/pugixml.git
+#        GIT_TAG             master
+#        ${UPDATE_DISCONNECTED_IF_AVAILABLE}
+#        )
 download_project(PROJ                loguru
         GIT_REPOSITORY      https://github.com/emilk/loguru.git
         GIT_TAG             master
@@ -82,10 +82,10 @@ download_project(PROJ                cxxopts
 
 # headers
 include_directories(${cxxopts_SOURCE_DIR}/include)
-include_directories(${rapidjson_SOURCE_DIR}/include)
-include_directories(${curl_SOURCE_DIR}/include)
-#include_directories(${pugixml_SOURCE_DIR}/src)
 include_directories(${loguru_SOURCE_DIR})
+#include_directories(${rapidjson_SOURCE_DIR}/include)
+#include_directories(${curl_SOURCE_DIR}/include)
+#include_directories(${pugixml_SOURCE_DIR}/src)
 
 # build targets
 if(BUILD_LIB)
@@ -97,7 +97,7 @@ if(BUILD_TOOL)
 endif()
 
 #add_subdirectory(${curl_SOURCE_DIR})
-add_subdirectory(${pugixml_SOURCE_DIR})
+#add_subdirectory(${pugixml_SOURCE_DIR})
 
 if(NOT DISABLE_TESTS)
     include(CTest)
