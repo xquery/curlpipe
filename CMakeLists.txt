@@ -86,9 +86,10 @@ if(NOT DISABLE_TESTS)
     add_subdirectory(test)
 endif()
 
-# include header only deps here
+# include header deps here
 include_directories(${cxxopts_SOURCE_DIR}/include)
 include_directories(${loguru_SOURCE_DIR})
+include_directories(${curl_SOURCE_DIR}/include)
 include_directories(${rapidjson_SOURCE_DIR}/include)
 
 # add deps
