@@ -80,10 +80,14 @@ download_project(PROJ                cxxopts
         )
 
 # include header deps here
+include_directories(${curl_SOURCE_DIR}/include)
 include_directories(${loguru_SOURCE_DIR})
 include_directories(${cxxopts_SOURCE_DIR}/include)
-include_directories(${curl_SOURCE_DIR}/include)
 include_directories(${rapidjson_SOURCE_DIR}/include)
+
+# add deps
+add_subdirectory(${pugixml_SOURCE_DIR})
+add_subdirectory(${curl_SOURCE_DIR})
 
 if(NOT DISABLE_TESTS)
     include(CTest)
@@ -91,10 +95,6 @@ if(NOT DISABLE_TESTS)
     add_subdirectory(${googletest_SOURCE_DIR} ${googletest_BINARY_DIR})
     add_subdirectory(test)
 endif()
-
-# add deps
-add_subdirectory(${curl_SOURCE_DIR})
-add_subdirectory(${pugixml_SOURCE_DIR})
 
 # build targets
 if(BUILD_LIB)
