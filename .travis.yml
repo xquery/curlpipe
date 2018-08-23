@@ -24,8 +24,6 @@ addons:
             - valgrind
             - g++-7
             - libstdc++-7-dev
-            - libpugixml-dev
-            - libcurl4-openssl-dev
 
 matrix:
     include:
