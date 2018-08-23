@@ -84,10 +84,11 @@ include_directories(${cxxopts_SOURCE_DIR}/include)
 include_directories(${rapidjson_SOURCE_DIR}/include)
 include_directories(${curl_SOURCE_DIR}/include)
 include_directories(${loguru_SOURCE_DIR})
+include_directories(${pugixml_SOURCE_DIR}/src)
 
 # add deps
 add_subdirectory(${pugixml_SOURCE_DIR})
-#add_subdirectory(${curl_SOURCE_DIR})
+add_subdirectory(${curl_SOURCE_DIR})
 
 if(NOT DISABLE_TESTS)
     include(CTest)
