@@ -24,6 +24,9 @@ addons:
             - valgrind
             - g++-7
             - libstdc++-7-dev
+            - libssh-dev
+            - libssh2-1-dev
+            - perl
 
 matrix:
     include:
