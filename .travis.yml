@@ -60,9 +60,9 @@ before_install:
   - docker run -p 81:80 kennethreitz/httpbin &
   - export CMAKE_OPTIONS=${CMAKE_OPTIONS}" "${ENV_CMAKE_OPTIONS}
   - export CXX_FLAGS=${CXX_FLAGS}" "${ENV_CXX_FLAGS}
-  - mkdir build
+  - mkdir -p build
   - cd build
-  - mkdir docs
+  - mkdir -p docs
   - cmake --version
   - cmake ${CMAKE_OPTIONS} -DCMAKE_CXX_FLAGS=${CXX_FLAGS} ..
 
