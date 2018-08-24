@@ -60,7 +60,7 @@ install:
 script:
 - make
 - make test
-- valgrind --leak-check=full --show-reachable=yes --error-limit=no --gen-suppressions=all --suppressions=../minimal.supp test/runAllTests
+#- valgrind --show-leak-kinds=all --leak-check=full --show-reachable=yes --error-limit=no --gen-suppressions=all --suppressions=../minimal.supp test/runAllTests
 
 after_success:
 - coveralls --build-root build --gcov-options '\-lp' -e build/xquery/curlscript/src -e build/xquery/curlscript/lib -e build/xquery/curlscript/test

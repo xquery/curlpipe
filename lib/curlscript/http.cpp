@@ -49,6 +49,7 @@ int init_http(){
 
 int cleanup_http(){
     DLOG_S(INFO) << "cleanup http";
+    curl_multi_cleanup(curlm);
     curl_global_cleanup();
     return CURLE_OK;
 }
@@ -114,6 +115,8 @@ string http_get(string url){
             code = curl_multi_perform(curlm, &handle_count);
             if (handle_count == 0) {
                 ss << readBuffer;
+                curl_multi_remove_handle(curlm, c);
+                curl_easy_cleanup(c);
                 break;
             }
         }
@@ -147,6 +150,8 @@ string http_post(string url, string payload){
             code = curl_multi_perform(curlm, &handle_count);
             if (handle_count == 0) {
                 ss << readBuffer;
+                curl_multi_remove_handle(curlm, c);
+                curl_easy_cleanup(c);
                 break;
             }
         }
