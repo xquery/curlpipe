@@ -89,6 +89,7 @@ int http_set_options(CURL *c){
     curl_easy_setopt(c, CURLOPT_FOLLOWLOCATION, 1L);
     curl_easy_setopt(c, CURLOPT_NOPROGRESS, 1L);
     curl_easy_setopt(c, CURLOPT_WRITEFUNCTION, writeCallback);
+    return CURLE_OK;
 }
 
 string http_get(string url){

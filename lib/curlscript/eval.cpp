@@ -37,6 +37,7 @@
 #include <numeric>
 #include <functional>
 #include <iostream>
+#include <tuple>
 
 #include <curl/curl.h>
 #include "log.h"
@@ -71,19 +72,19 @@ namespace curlscript {
                                     out += http_get(item.uri.get_uri());
                                 }
                             }else{
-                                string op = std::get<1>(statement);
+                                string op = (string)std::get<1>(statement);
                                 DLOG_S(INFO) << "op:" << op;
-                                if(op.compare(">") == 0){
+                                if(op == ">"){
                                     for (auto & item : std::get<2>(statement)) {
                                         save_file(item.uri.get_uri(),out);
                                     }
                                 }
-                                if(op.compare(">>") == 0){
+                                if(op == ">>"){
                                     for (auto & item : std::get<2>(statement)) {
                                         append_file(item.uri.get_uri(),out);
                                     }
                                 }
-                                if(op.compare("|") == 0){
+                                if(op == "|"){
                                     for (auto & item : std::get<2>(statement)) {
                                         out =http_post(item.uri.get_uri(),out);
                                     }
