@@ -30,3 +30,238 @@
    fun:_ZN10curlscript4execESsb
    fun:main
 }
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   obj:/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.21
+   fun:call_init.part.0
+   fun:call_init
+   fun:_dl_init
+   obj:/lib/x86_64-linux-gnu/ld-2.23.so
+   obj:*
+   obj:*
+   obj:*
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:CRYPTO_malloc
+   fun:lh_new
+   obj:/lib/x86_64-linux-gnu/libcrypto.so.1.0.0
+   obj:/lib/x86_64-linux-gnu/libcrypto.so.1.0.0
+   obj:/lib/x86_64-linux-gnu/libcrypto.so.1.0.0
+   fun:BIO_set
+   fun:BIO_new
+   fun:BIO_new_file
+   obj:/lib/x86_64-linux-gnu/libcrypto.so.1.0.0
+   fun:CONF_modules_load_file
+   fun:Curl_ossl_init
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:CRYPTO_malloc
+   fun:lh_new
+   obj:/lib/x86_64-linux-gnu/libcrypto.so.1.0.0
+   obj:/lib/x86_64-linux-gnu/libcrypto.so.1.0.0
+   obj:/lib/x86_64-linux-gnu/libcrypto.so.1.0.0
+   fun:BIO_set
+   fun:BIO_new
+   fun:BIO_new_file
+   obj:/lib/x86_64-linux-gnu/libcrypto.so.1.0.0
+   fun:CONF_modules_load_file
+   fun:Curl_ossl_init
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   obj:/lib/x86_64-linux-gnu/libgcrypt.so.20.0.5
+   obj:/lib/x86_64-linux-gnu/libgcrypt.so.20.0.5
+   obj:/lib/x86_64-linux-gnu/libgcrypt.so.20.0.5
+   obj:/lib/x86_64-linux-gnu/libgcrypt.so.20.0.5
+   obj:/lib/x86_64-linux-gnu/libgcrypt.so.20.0.5
+   obj:/lib/x86_64-linux-gnu/libgcrypt.so.20.0.5
+   fun:gcry_control
+   fun:libssh2_init
+   fun:global_init
+   fun:curl_global_init
+   fun:curl_easy_init
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   obj:/lib/x86_64-linux-gnu/libgcrypt.so.20.0.5
+   obj:/lib/x86_64-linux-gnu/libgcrypt.so.20.0.5
+   obj:/lib/x86_64-linux-gnu/libgcrypt.so.20.0.5
+   obj:/lib/x86_64-linux-gnu/libgcrypt.so.20.0.5
+   obj:/lib/x86_64-linux-gnu/libgcrypt.so.20.0.5
+   obj:/lib/x86_64-linux-gnu/libgcrypt.so.20.0.5
+   fun:gcry_control
+   fun:libssh2_init
+   fun:global_init
+   fun:curl_global_init
+   fun:curl_easy_init
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   obj:/lib/x86_64-linux-gnu/libgcrypt.so.20.0.5
+   obj:/lib/x86_64-linux-gnu/libgcrypt.so.20.0.5
+   obj:/lib/x86_64-linux-gnu/libgcrypt.so.20.0.5
+   obj:/lib/x86_64-linux-gnu/libgcrypt.so.20.0.5
+   fun:gcry_control
+   fun:libssh2_init
+   fun:global_init
+   fun:curl_global_init
+   fun:curl_easy_init
+   fun:Curl_conncache_init
+   fun:Curl_multi_handle
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   obj:/lib/x86_64-linux-gnu/libgcrypt.so.20.0.5
+   obj:/lib/x86_64-linux-gnu/libgcrypt.so.20.0.5
+   obj:/lib/x86_64-linux-gnu/libgcrypt.so.20.0.5
+   obj:/lib/x86_64-linux-gnu/libgcrypt.so.20.0.5
+   fun:gcry_control
+   fun:libssh2_init
+   fun:global_init
+   fun:curl_global_init
+   fun:curl_easy_init
+   fun:Curl_conncache_init
+   fun:Curl_multi_handle
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:CRYPTO_malloc
+   fun:sk_new
+   obj:/lib/x86_64-linux-gnu/libcrypto.so.1.0.0
+   obj:/lib/x86_64-linux-gnu/libcrypto.so.1.0.0
+   fun:BIO_set
+   fun:BIO_new
+   fun:BIO_new_file
+   obj:/lib/x86_64-linux-gnu/libcrypto.so.1.0.0
+   fun:CONF_modules_load_file
+   fun:Curl_ossl_init
+   fun:Curl_ssl_init
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:CRYPTO_malloc
+   fun:sk_new
+   obj:/lib/x86_64-linux-gnu/libcrypto.so.1.0.0
+   obj:/lib/x86_64-linux-gnu/libcrypto.so.1.0.0
+   fun:BIO_set
+   fun:BIO_new
+   fun:BIO_new_file
+   obj:/lib/x86_64-linux-gnu/libcrypto.so.1.0.0
+   fun:CONF_modules_load_file
+   fun:Curl_ossl_init
+   fun:Curl_ssl_init
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   obj:/lib/x86_64-linux-gnu/libgcrypt.so.20.0.5
+   obj:/lib/x86_64-linux-gnu/libgcrypt.so.20.0.5
+   obj:/lib/x86_64-linux-gnu/libgcrypt.so.20.0.5
+   obj:/lib/x86_64-linux-gnu/libgcrypt.so.20.0.5
+   obj:/lib/x86_64-linux-gnu/libgcrypt.so.20.0.5
+   obj:/lib/x86_64-linux-gnu/libgcrypt.so.20.0.5
+   obj:/lib/x86_64-linux-gnu/libgcrypt.so.20.0.5
+   fun:gcry_control
+   fun:libssh2_init
+   fun:global_init
+   fun:curl_global_init
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:CRYPTO_malloc
+   fun:lh_insert
+   obj:/lib/x86_64-linux-gnu/libcrypto.so.1.0.0
+   obj:/lib/x86_64-linux-gnu/libcrypto.so.1.0.0
+   fun:BIO_set
+   fun:BIO_new
+   fun:BIO_new_file
+   obj:/lib/x86_64-linux-gnu/libcrypto.so.1.0.0
+   fun:CONF_modules_load_file
+   fun:Curl_ossl_init
+   fun:Curl_ssl_init
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:CRYPTO_malloc
+   obj:/lib/x86_64-linux-gnu/libcrypto.so.1.0.0
+   obj:/lib/x86_64-linux-gnu/libcrypto.so.1.0.0
+   fun:BIO_set
+   fun:BIO_new
+   fun:BIO_new_file
+   obj:/lib/x86_64-linux-gnu/libcrypto.so.1.0.0
+   fun:CONF_modules_load_file
+   fun:Curl_ossl_init
+   fun:Curl_ssl_init
+   fun:global_init
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   obj:/lib/x86_64-linux-gnu/libgcrypt.so.20.0.5
+   obj:/lib/x86_64-linux-gnu/libgcrypt.so.20.0.5
+   obj:/lib/x86_64-linux-gnu/libgcrypt.so.20.0.5
+   obj:/lib/x86_64-linux-gnu/libgcrypt.so.20.0.5
+   obj:/lib/x86_64-linux-gnu/libgcrypt.so.20.0.5
+   obj:/lib/x86_64-linux-gnu/libgcrypt.so.20.0.5
+   obj:/lib/x86_64-linux-gnu/libgcrypt.so.20.0.5
+   fun:gcry_control
+   fun:libssh2_init
+   fun:global_init
+   fun:curl_global_init
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   obj:/lib/x86_64-linux-gnu/libgcrypt.so.20.0.5
+   obj:/lib/x86_64-linux-gnu/libgcrypt.so.20.0.5
+   obj:/lib/x86_64-linux-gnu/libgcrypt.so.20.0.5
+   obj:/lib/x86_64-linux-gnu/libgcrypt.so.20.0.5
+   obj:/lib/x86_64-linux-gnu/libgcrypt.so.20.0.5
+   obj:/lib/x86_64-linux-gnu/libgcrypt.so.20.0.5
+   obj:/lib/x86_64-linux-gnu/libgcrypt.so.20.0.5
+   fun:gcry_control
+   fun:libssh2_init
+   fun:global_init
+   fun:curl_global_init
+}
