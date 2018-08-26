@@ -67,15 +67,11 @@ static size_t writeCallback(void *contents, size_t size, size_t nmemb, void *use
     ((std::string *) userp)->append((char *) contents, size * nmemb);
     return size * nmemb;
 }
-string http_get_info(){
-
-
-}
 
 int http_set_options(CURL *c){
     DLOG_S(INFO) << "set http opts";
 //    headers = curl_slist_append(headers, "Content-Type: application/json");
-    curl_easy_setopt(c, CURLOPT_HTTPHEADER, headers);
+//    curl_easy_setopt(c, CURLOPT_HTTPHEADER, headers);
 
     curl_easy_setopt(c, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
     curl_easy_setopt(c, CURLOPT_VERBOSE, 0L);
