@@ -75,6 +75,6 @@ namespace curlscript{
   }
 
     int exec(string file_uri){
-        exec(file_uri, false);
+        return exec(file_uri, false);
     }
 }

@@ -22,12 +22,13 @@
  * IN THE SOFTWARE.
 ******************************************************************************/
 
-#include <curlscript/curlscript.cpp>
 #include <cxxopts.hpp>
 #include <vector>
 #include <numeric>
 #include <functional>
 #include <iostream>
+
+#include <curlscript/curlscript.cpp>
 
 using namespace std;
 
