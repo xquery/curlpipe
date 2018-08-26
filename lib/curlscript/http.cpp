@@ -49,9 +49,9 @@ int init_http(){
 
 int cleanup_http(){
     DLOG_S(INFO) << "cleanup http";
-    curl_slist_free_all(headers);
     curl_multi_cleanup(curlm);
     curl_global_cleanup();
+    curl_slist_free_all(headers);
     return CURLE_OK;
 }
 
