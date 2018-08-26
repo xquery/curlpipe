@@ -74,7 +74,7 @@ string http_get_info(){
 
 int http_set_options(CURL *c){
     DLOG_S(INFO) << "set http opts";
-    headers = curl_slist_append(headers, "Content-Type: application/json");
+//    headers = curl_slist_append(headers, "Content-Type: application/json");
     curl_easy_setopt(c, CURLOPT_HTTPHEADER, headers);
 
     curl_easy_setopt(c, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
