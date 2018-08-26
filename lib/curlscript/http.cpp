@@ -39,7 +39,6 @@
 using namespace std;
 
 CURLM *curlm;
-struct curl_slist *headers = NULL;
 
 int init_http(){
     DLOG_S(INFO) << "init http";
@@ -51,7 +50,6 @@ int cleanup_http(){
     DLOG_S(INFO) << "cleanup http";
     curl_multi_cleanup(curlm);
     curl_global_cleanup();
-    curl_slist_free_all(headers);
     return CURLE_OK;
 }
 
@@ -70,9 +68,6 @@ static size_t writeCallback(void *contents, size_t size, size_t nmemb, void *use
 
 int http_set_options(CURL *c){
     DLOG_S(INFO) << "set http opts";
-//    headers = curl_slist_append(headers, "Content-Type: application/json");
-//    curl_easy_setopt(c, CURLOPT_HTTPHEADER, headers);
-
     curl_easy_setopt(c, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
     curl_easy_setopt(c, CURLOPT_VERBOSE, 0L);
     curl_easy_setopt(c, CURLOPT_HEADERFUNCTION, headerCallback);
@@ -97,10 +92,15 @@ string http_get(string url){
 
     int handle_count;
     CURL *c = NULL;
+    struct curl_slist *headers = NULL;
+
     c = curl_easy_init();
 
     if (c) {
         http_set_options(c);
+        headers = curl_slist_append(headers, "Content-Type: application/json");
+        curl_easy_setopt(c, CURLOPT_HTTPHEADER, headers);
+
         curl_easy_setopt(c, CURLOPT_HTTPGET, 1L);
         curl_easy_setopt(c, CURLOPT_URL, url.c_str());
         curl_easy_setopt(c, CURLOPT_WRITEDATA, &readBuffer);
@@ -113,6 +113,7 @@ string http_get(string url){
             code = curl_multi_perform(curlm, &handle_count);
             if (handle_count == 0) {
                 ss << readBuffer;
+                curl_slist_free_all(headers);
                 curl_multi_remove_handle(curlm, c);
                 curl_easy_cleanup(c);
                 break;
