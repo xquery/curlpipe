@@ -1,4 +1,14 @@
 {
+    libtrace initialization false positive
+    Memcheck:Param
+    msg->desc.port.name
+    fun:mach_msg_trap
+    fun:mach_msg
+    fun:task_set_special_port
+    fun:_os_trace_create_debug_control_port
+    fun:_libtrace_init
+}
+{
    <loguru1>
    Memcheck:Cond
    fun:_ZNKSt15basic_stringbufIcSt11char_traitsIcESaIcEE3strEv

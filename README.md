@@ -143,7 +143,7 @@ Do the cmake thing:
 ```$bash
 mkdir build
 cd build
-cmake ..
+cmake -DCMAKE_BUILD_TYPE=Debug -DENABLE_MANUAL=OFF -DBUILD_TESTING=OFF 
 make 
 make test
 make install
