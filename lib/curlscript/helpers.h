@@ -39,9 +39,8 @@ string get_version(){
     return s.str();
 }
 
-int set_log_file(int argc, char** argv, string log_uri) {
+int set_log_file(string log_uri) {
     DLOG_S(INFO) << "set log opt";
-    loguru::init(argc, argv);
     loguru::add_file(log_uri.c_str(), loguru::Append, loguru::Verbosity_MAX);
     return 0;
 };

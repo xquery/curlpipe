@@ -49,7 +49,7 @@ cxxopts::Options setopts(){
              "Positional arguments: these are the arguments that are entered "
              "without an option", cxxopts::value<std::vector<std::string>>())
             ("d,debug", "Emit debug level logging")
-            ("l,log", "Enable logging to file")
+            ("l,log", "Enable logging to file", cxxopts::value<string>())
             ("s,serialiser", "Switch serialiser",cxxopts::value<string>())
             ("q,quiet", "Disable output")
             ("i,info", "Emit info level logging")
@@ -64,26 +64,24 @@ int main(int argc, char** argv ){
     DLOG_S(INFO) << "debug mode";
 #endif
 
-    DLOG_S(INFO) << "start processing...";
-
     cxxopts::Options opts = setopts();
     auto result = opts.parse(argc,argv);
 
+    if(result["log"].count() == 1){
+        DLOG_S(INFO) << "set logging to " << result["log"].as<string>();
+        set_log_file(result["log"].as<string>()); }
+
+    DLOG_S(INFO) << "start processing...";
+
     if(result["info"].count() == 1){
-        DLOG_S(INFO) << "set emit INFO level";
         banner();
         set_log_verbosity_info();
     }else{
-        DLOG_S(INFO) << "set info opt";
-        set_log_verbosity_error();}
+        set_log_verbosity_error();
+        }
 
     if(result["debug"].count() == 1){
-        DLOG_S(INFO) << "set debug opt, emit maximum message level";
         set_log_verbosity_max(); }
-
-    if(result["log"].count() == 1){
-        DLOG_S(INFO) << "set logging to " << result["log"].as<string>();
-        set_log_file(argc,argv,result["log"].as<string>()); }
 
     if(result["positional"].count() == 1){
         DLOG_S(INFO) << "set positional opt";
@@ -96,7 +94,7 @@ int main(int argc, char** argv ){
             DLOG_S(INFO) << "set file opt";
             curlscript::exec(result["file"].as<string>(), result["quiet"].count());
         }else{
-            LOG_S(ERROR) << "must supply exec file.";
+            LOG_S(ERROR) << "must supply curlscript file.";
             return EXIT_FAILURE; }}
 
     DLOG_S(INFO) << "finished processing, dumping output to stdout.";

@@ -56,15 +56,17 @@ namespace curlscript{
 
       csparser parser(winput.c_str(), &s);
       try {
+          DLOG_S(INFO) << "serializing to xml representation";
           parser.parse_CS(); }
       catch (csparser::ParseException &pe) {
           LOG_S(ERROR) << "parser error, " << convert(pe.getMessage());
           return EXIT_FAILURE; }
 
-      vector<expr> exprs = generate_ast(s.getParsed());
       DLOG_S(INFO) << s.getParsed();
+      vector<expr> exprs = generate_ast(s.getParsed());
 
       std::ostringstream output;
+      DLOG_S(INFO) << "evaluate AST";
       eval_exprs(exprs, output);
 
       if(!quiet){

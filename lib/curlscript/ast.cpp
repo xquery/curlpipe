@@ -44,10 +44,12 @@ namespace curlscript {
             cur_item.uri.path += "/";
             cur_item.uri.path += path.child("string").text().as_string();
         }
+        DLOG_S(INFO) << "      uri:" << cur_item.uri.get_uri();
         return cur_item;
     }
 
     vector<expr> generate_ast(string parsed){
+        DLOG_S(INFO) << "generate AST";
         pugi::xml_document doc;
         doc.load_string(parsed.c_str());
         std::vector<expr> exprs;
@@ -56,6 +58,8 @@ namespace curlscript {
         int count =0;
         for (pugi::xpath_node_set::const_iterator it = expressions.begin(); it != expressions.end(); ++it)
         {
+            DLOG_S(INFO) << "  Expr: ";
+
             expr cur;
             pugi::xpath_node node = *it;
             pugi::xml_node expression = node.node();
@@ -63,6 +67,8 @@ namespace curlscript {
             for (pugi::xml_node expr_part: expression.children())
             {
                 string name = expr_part.name();
+                DLOG_S(INFO) << "    name:" << name;
+
                 std::vector<item> items1;
                 std::string op;
                 std::vector<item> items2;
@@ -77,6 +83,7 @@ namespace curlscript {
                     }
                 } else if(name.compare("statement") == 0){
                     op = expr_part.first_child().text().as_string();
+                    DLOG_S(INFO) << "      op:" << op;
                     for (pugi::xml_node item: expr_part.child("items")) {
                         if(item.child("URI")){
                             items2.push_back(
