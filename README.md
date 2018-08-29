@@ -23,27 +23,27 @@ Download a release or build the software.
 
 ## Examples
 
-#####Retrieve (GET) and save to file   
+##### Retrieve (GET) and save to file   
 ```$bash
 [http://www.httpbin.org/get] > [/tmp/output.txt]
 ```
 
-#####Retrieve (GET) setting headers
+##### Retrieve (GET) setting headers
 ```$bash
 [http://www.httpbin.org/get "Accept":"application/json"]
 ```
 
-#####GET and append to file  
+##### GET and append to file  
 ```$bash
 [http://www.httpbin.org/get] >> [/tmp/response.txt]
 ```
 
-#####GET and narrow down result
+##### GET and narrow down result
 ```$bash
 [http://www.httpbin.org/get].id  
 ```
 
-#####trinary operator
+##### Trinary operator
 ```$bash
 [http://www.httpbin.org/get] ? [/tmp/success.txt] : "failure" > [/tmp/fail.txt]
 ```
@@ -55,7 +55,7 @@ Download a release or build the software.
        
 ```
 
-#####POST json
+##### POST json
 ```$bash
 {"id":1 , "name":"James Fuller" age="${age}"} | [http://www.httpbin.org/post] ;
 ```
@@ -64,7 +64,7 @@ Download a release or build the software.
 [/tmp/data.json] | [http://www.httpbin.org/post "Content-type":"application/json"] ;
 ```
 
-#####POST xml
+##### POST xml
 ```$bash
 <person id="1"><name>John Smith<name><age>${age}</age></person> | [http://www.httpbin.org/post] ;
 ```
@@ -73,22 +73,22 @@ Download a release or build the software.
 [/tmp/data.xml] | [http://www.httpbin.org/post "Content-type":"application/xml"] ;
 ```
 
-#####POST name=value
+##### POST name=value
 ```$bash
 "id=1&name=James Fuller" | [http://www.httpbin.org/post] ;
 ```
 
-#####POST zip file
+##### POST zip file
 ```$bash
 [/tmp/mydoc.zip] | [http://www.httpbin.org/post "Content-type":"application/zip"] ;
 ```
 
-#####PUT some json
+##### PUT some json
 ```$bash
 {"test:1} = [http://www.httpbin.org/put]
 ```
 
-#####DELETE
+##### DELETE
 ```$bash
 [] = [http://www.httpbin.org/delete]
 ```
@@ -96,7 +96,7 @@ Download a release or build the software.
 [/dev/null] = [http://www.httpbin.org/delete] 
 ```
 
-#####set variable
+##### Set variable
 ```$bash
 $opt = [/.curlscriptrc]
 ```
@@ -109,16 +109,16 @@ $mypayload = [/tmp/payload];
 $mypayload | [http://www.httpbin.org/delete]
 ```
 
-#####transclusion in URI
+##### Transclusion in URI
 ```
 $mypayload | [http://www.httpbin.org/delete/${myid}]
 ```
-#####transclusion in payload
+##### Transclusion in payload
 ```
 {"id":${myid}} | [http://www.httpbin.org/delete/${myid}]
 ```
 
-#####Comparison
+##### Comparison
 ```$bash
 [http://www.httpbin.org/get].url == 'http://www.httpbin.org/get'
 ```
