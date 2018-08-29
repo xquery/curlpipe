@@ -173,6 +173,13 @@ The build will complain if there are other common dependencies missing from your
 
 ### Testing
 
+Tests require [httpbin](http://httpbin.org) - which should be setup on port 81 - running the following docker command
+or however way you feel comfortable installing.
+
+```$bash
+> docker run -p 81:80 kennethreitz/httpbin &
+```
+
 After building usually it is just a matter of running make test target.
 
 ```$bash
