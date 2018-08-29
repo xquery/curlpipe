@@ -17,8 +17,22 @@ Download a release or build the software.
 
 ## Usage
 
+To get help run
+
 ```$bash
-> curlscript -h 
+> curlscript -h
+```
+
+```$bash
+curlscript 0.1.0 | ⓒ 2017-2018 James Fuller <jim.fuller@webcomposite.com> | https://github.com/xquery/curlscript
+
+> curlscript mycurlscript.cs 
+
+    -h | --help  : help
+    -d | --debug : emit debug info ()
+    -i | --info  : emit info
+    -q | --quiet : suppress output to console
+    -f | --file  : alternate curlscript file
 ```
 
 ## Examples
