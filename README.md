@@ -147,7 +147,7 @@ $mypayload | [http://www.httpbin.org/delete/${myid}]
 * Designing a programming language is hard - coherence and an easy to run parse tree are the first goals, please do [raise an issue](https://github.com/xquery/curlscript/issues) if you feel strongly where syntax could change.
 * I find using [CMake](https://cmake.org/) non intuitive ... its enforced usage on this project is an attempt to learn more (otherwise you would see a Makefile here!). 
 * Curlscript is not intended as a drop in replacement for the curl cli and is currently http centric in initial releases.
-* Woefully ignorant of windows platform ... looking at [appveyor](https://www.appveyor.com/) to eventually help solve that.
+* Woefully ignorant of windows platform ... looking at [appveyor](https://www.appveyor.com/) to eventually help solve that ([issue #2](https://github.com/xquery/curlscript/issues/2)).
  
 ## Developing curlscript
 
