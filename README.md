@@ -1,5 +1,5 @@
 # curlscript (develop)
-WARNING - under development (as in everything is probably broken) test
+WARNING - under development (as in everything is probably broken!)
 
 [![Build Status](https://travis-ci.org/xquery/curlscript.svg?branch=develop)](https://travis-ci.org/xquery/curlscript)
 [![Coverage Status](https://coveralls.io/repos/github/xquery/curlscript/badge.svg?branch=develop)](https://coveralls.io/github/xquery/curlscript?branch=develop)
@@ -174,7 +174,7 @@ or you could run directly
 
 Release packages are built using CPack.
 
-Make a release build, ensuring you make a 'release' build and disabling tests.
+Make a release build, ensuring you make a 'release' build and disable tests.
 ```$bash
 > cmake -DCMAKE_BUILD_TYPE=Release -DDISABLE_TESTS=true -DENABLE_MANUAL=OFF -DBUILD_TESTING=OFF 
 > make
