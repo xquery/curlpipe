@@ -4,12 +4,12 @@ WARNING - under development (as in everything is probably broken) test
 [![Build Status](https://travis-ci.org/xquery/curlscript.svg?branch=develop)](https://travis-ci.org/xquery/curlscript)
 [![Coverage Status](https://coveralls.io/repos/github/xquery/curlscript/badge.svg?branch=develop)](https://coveralls.io/github/xquery/curlscript?branch=develop)
 
-[Curl](https://curl.haxx.se/) is a great ~~swiss army knife~~ http client which does much more then  make it easy to work with HTTP, supporting a plethora of protocols addressable with a URI.
+[Curl](https://curl.haxx.se/) is a great ~~swiss army knife~~ http client that does much more then just make it easy to work with HTTP, supporting a plethora of protocols addressable by a URI.
 
 Over the years, the curl command line interface has grown - exposing hundreds of options - most users only ever invoke a subset of features, learning more advanced features over time.
 
 Curlscript is an experiment in exposing much of curl's goodness via a little [DSL](https://en.wikipedia.org/wiki/Domain-specific_language) making it easy to build up
-pipelines of execution using natural semantics rather then 'flag soup'.  
+pipelines of execution using a language with built in primitives and natural semantics rather then 'flag soup'.  
 
 ## Getting started
 
@@ -127,43 +127,59 @@ Comparison
 
 ## Points of Interests
 
-* At this early stage, being intentionally [lazy](http://threevirtues.com/) in defining internals or worrying too much about performance.
-* The curlscript language is defined with an [EBNF](etc/csparser.ebnf) which is used to produce a strict parser.
-* Designing a programming language is hard - for me coherence and a parse tree that is easy to run are my first goals, please do [raise an issue](https://github.com/xquery/curlscript/issues) if you feel strongly where syntax could change.
-* I find using [CMake](https://cmake.org/) non intuitive ... though will never learn it if I do not use it, hence its usage here. 
-* Initially http centric
-* No windows testing (yet)
+* Intentionally [lazy](http://threevirtues.com/) in defining internals or worrying too much about performance at this stage.
+* Curlscript language is defined with an [EBNF](etc/csparser.ebnf) which is used to produce a strict parser.
+* Designing a programming language is hard - coherence and an easy to run parse tree are the first goals, please do [raise an issue](https://github.com/xquery/curlscript/issues) if you feel strongly where syntax could change.
+* I find using [CMake](https://cmake.org/) non intuitive ... its enforced usage on this project is an attempt to learn more (otherwise you would see a Makefile here!). 
+* Curlscript is not intended as a drop in replacement for the curl cli and is currently http centric in initial releases.
+* Woefully ignorant of windows platform ... looking at [appveyor](https://www.appveyor.com/) to eventually help solve that.
  
 ## Developing curlscript
 
-Please [raise an issue](https://github.com/xquery/curlscript/issues) or fork and create a [pr](https://github.com/xquery/curlscript/pulls). 
+Please [raise an issue](https://github.com/xquery/curlscript/issues) or make a contribution by forking the repository and creating a [pr](https://github.com/xquery/curlscript/pulls). 
 
 ### Compiling
 
 To build software, run cmake:
 
 ```$bash
-mkdir build
-cd build
-cmake -DCMAKE_BUILD_TYPE=Debug -DENABLE_MANUAL=OFF -DBUILD_TESTING=OFF 
-make 
-make test
-make install
+> mkdir build
+> cd build
+> cmake -DCMAKE_BUILD_TYPE=Debug -DENABLE_MANUAL=OFF -DBUILD_TESTING=OFF 
+> make 
+> make test
+> make install
 ```
 
-Running cmake should pull down dependencies which requires access to internet. This is problematic 
-approach for those wishing to build without accessing the internet and will change in the near future eg. should be
-able to build and install deps independently.
+Running cmake requires access to the internet to pull down dependencies. This is problematic  approach for 
+those wishing to build on a standalone machine off the network (tracked as [issue 1](https://github.com/xquery/curlscript/issues/1))
 
-Otherwise the build hopefully will complain if there are other common dependencies missing from your platform (ex. openssl).
+The build will complain if there are other common dependencies missing from your platform (ex. openssl).
 
 ### Testing
 
+After building usually it is just a matter of running make test target.
+
+```$bash
+> make test
+```
+
+or you could run directly
+```$bash
+> cd test
+> ./runAllTests
+```
 
 ### Release Package
 
-* edit CMakeLists.txt setting DISABLE_TESTS=true
-* run cpack in cmake build directory
+Release packages are built using CPack.
+
+Make a release build, ensuring you make a 'release' build and disabling tests.
+```$bash
+> cmake -DCMAKE_BUILD_TYPE=Release -DDISABLE_TESTS=true -DENABLE_MANUAL=OFF -DBUILD_TESTING=OFF 
+> make
+```
+Then run cpack in cmake build directory
 ```
 > cpack --config CPackConfig.cmake
 
@@ -177,6 +193,8 @@ This project depends on the following external libs:
 * [googletest](https://github.com/google/googletest): testing.
 * [rapidjson](https://github.com/miloyip/rapidjson): json munging.
 * [pugixml](https://github.com/zeux/pugixml): xml dancing.
+
+These dependencies will have their own dependencies. Please review individual projects for more details.
 
 ## License
 
