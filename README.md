@@ -128,7 +128,7 @@ $mypayload | [http://www.httpbin.org/delete/${myid}]
 
 ## Points of Interests
 
-* Intentionally [lazy](http://threevirtues.com/) in defining internals or worrying too much about performance at this stage.
+* Intentionally [lazy](http://threevirtues.com/) defining internals or worrying too much about performance at this stage.
 * Curlscript language is defined with an [EBNF](etc/csparser.ebnf) which is used to produce a strict parser.
 * Designing a programming language is hard - coherence and an easy to run parse tree are the first goals, please do [raise an issue](https://github.com/xquery/curlscript/issues) if you feel strongly where syntax could change.
 * I find using [CMake](https://cmake.org/) non intuitive ... its enforced usage on this project is an attempt to learn more (otherwise you would see a Makefile here!). 
