@@ -31,8 +31,23 @@ using namespace std;
 
 namespace curlscript {
 
-    vector<expr> generate_ast(string parsed){
+    struct item generate_item(pugi::xml_node &item){
+        struct item cur_item;
+        cur_item.uri.scheme = item.child("URI").child("scheme").text().as_string();
+        cur_item.uri.host = item.child("URI").child("hostport").child("host").child(
+                "nstring").text().as_string();
+        for(pugi::xml_node port: item.child("URI").child("hostport").child("port").children()) {
+            cur_item.uri.port +=port.text().as_string();
+        }
 
+        for(pugi::xml_node path: item.child("URI").children("segment")) {
+            cur_item.uri.path += "/";
+            cur_item.uri.path += path.child("string").text().as_string();
+        }
+        return cur_item;
+    }
+
+    vector<expr> generate_ast(string parsed){
         pugi::xml_document doc;
         doc.load_string(parsed.c_str());
         std::vector<expr> exprs;
@@ -55,19 +70,8 @@ namespace curlscript {
                 if(name.compare("items") == 0){
                     for (pugi::xml_node item: expr_part.children()) {
                         if(item.child("URI")){
-                            struct item cur_item;
-                            cur_item.uri.scheme = item.child("URI").child("scheme").text().as_string();
-                            cur_item.uri.host = item.child("URI").child("hostport").child("host").child(
-                                    "nstring").text().as_string();
-                            for(pugi::xml_node port: item.child("URI").child("hostport").child("port").children()) {
-                                cur_item.uri.port +=port.text().as_string();
-                            }
-
-                            for(pugi::xml_node path: item.child("URI").children("segment")) {
-                                cur_item.uri.path += "/";
-                                cur_item.uri.path += path.child("string").text().as_string();
-                            }
-                            items1.push_back(cur_item);
+                            items1.push_back(
+                                    generate_item(item));
                         }else if(item.child("var")){
                         }
                     }
@@ -75,25 +79,15 @@ namespace curlscript {
                     op = expr_part.first_child().text().as_string();
                     for (pugi::xml_node item: expr_part.child("items")) {
                         if(item.child("URI")){
-                            struct item cur_item;
-                            cur_item.uri.scheme = item.child("URI").child("scheme").text().as_string();
-                            cur_item.uri.host = item.child("URI").child("hostport").child("host").child(
-                                    "nstring").text().as_string();
-                            for(pugi::xml_node port: item.child("URI").child("hostport").child("port").children()) {
-                                cur_item.uri.port +=port.text().as_string();
-                            }
-                            for(pugi::xml_node path: item.child("URI").children("segment")) {
-                                cur_item.uri.path += "/";
-                                cur_item.uri.path += path.child("string").text().as_string();
-                            }
-                            items2.push_back(cur_item);
+                            items2.push_back(
+                                    generate_item(item));
                         }else if(item.child("var")){
                         }
                     }
                 }
-                cur.statements.push_back(make_tuple(items1, op, items2)); }
-            cur.order=count;
-            exprs.push_back(cur);
-            count++;}
+                cur.statements.emplace_back(make_tuple(items1, op, items2)); }
+                cur.order=count;
+                exprs.push_back(cur);
+                count++;}
     return exprs;}
 }

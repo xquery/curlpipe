@@ -131,6 +131,7 @@ Comparison
 * The curlscript language is defined with an [EBNF](etc/csparser.ebnf) which is used to produce a strict parser.
 * Designing a programming language is hard - for me coherence and a parse tree that is easy to run are my first goals, please do [raise an issue](https://github.com/xquery/curlscript/issues) if you feel strongly where syntax could change.
 * I find using [CMake](https://cmake.org/) non intuitive ... though will never learn it if I do not use it, hence its usage here. 
+* Initially http centric
 * No windows testing (yet)
  
 ## Developing curlscript
@@ -139,7 +140,8 @@ Please [raise an issue](https://github.com/xquery/curlscript/issues) or fork and
 
 ### Compiling
 
-Do the cmake thing:
+To build software, run cmake:
+
 ```$bash
 mkdir build
 cd build
@@ -149,11 +151,11 @@ make test
 make install
 ```
 
-Note that running cmake will pull down dependencies and requires access to internet. This is problematic 
+Running cmake should pull down dependencies which requires access to internet. This is problematic 
 approach for those wishing to build without accessing the internet and will change in the near future eg. should be
 able to build and install deps independently.
 
-The build should helpfully complain if there are other common dependencies missing from your platform (ex. openssl).
+Otherwise the build hopefully will complain if there are other common dependencies missing from your platform (ex. openssl).
 
 ### Testing
 
