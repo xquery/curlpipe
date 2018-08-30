@@ -1,6 +1,8 @@
 # curlscript (develop)
 WARNING - under development (as in everything is probably broken!)
 
+A little DSL for curl making it easy to build up http execution pipelines.
+
 [![Build Status](https://travis-ci.org/xquery/curlscript.svg?branch=develop)](https://travis-ci.org/xquery/curlscript)
 [![Coverage Status](https://coveralls.io/repos/github/xquery/curlscript/badge.svg?branch=develop)](https://coveralls.io/github/xquery/curlscript?branch=develop)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](COPYING)
