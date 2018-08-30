@@ -178,8 +178,7 @@ Tests require [httpbin](http://httpbin.org) - which should be setup on port 81 -
 or however way you feel comfortable installing.
 
 ```$bash
-> [file://../data/person.json] | [http://localhost:81/post "Accept":"applicationxml"] `;
-
+>docker run -p 81:80 kennethreitz/httpbin
 ```
 
 After building usually it is just a matter of running make test target.
