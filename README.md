@@ -69,6 +69,7 @@ password mypassword
 
 ## Examples
 
+Find more examples [here](https://github.com/xquery/curlscript/tree/develop/docs/examples).
 
 ##### Retrieve (GET) and save to file   
 ```$bash
@@ -217,7 +218,7 @@ Tests require [httpbin](http://httpbin.org) - which should be setup on port 81 -
 or however way you feel comfortable installing.
 
 ```$bash
->docker run -p 81:80 kennethreitz/httpbin
+> docker run -p 81:80 kennethreitz/httpbin
 ```
 
 After building usually it is just a matter of running make test target.
