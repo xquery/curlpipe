@@ -4,9 +4,9 @@ WARNING - under development (as in everything is probably broken!)
 [![Build Status](https://travis-ci.org/xquery/curlscript.svg?branch=develop)](https://travis-ci.org/xquery/curlscript)
 [![Coverage Status](https://coveralls.io/repos/github/xquery/curlscript/badge.svg?branch=develop)](https://coveralls.io/github/xquery/curlscript?branch=develop)
 
-[Curl](https://curl.haxx.se/) is a great ~~swiss army knife~~ http client that does much more then just make it easy to work with HTTP, supporting a plethora of protocols addressable by a URI.
+[Curl](https://curl.haxx.se/) is a great ~~swiss army knife~~ http client that does much more then just make it easy to work with HTTP, supporting a plethora of URI addressable protocols.
 
-Over the years, the curl command line interface has grown - exposing hundreds of options - most users only ever invoke a subset of features, learning more advanced features over time.
+Over the years, the curl command line interface has grown - exposing hundreds of options with most users only ever invoking a subset of features, learning more advanced features over time.
 
 Curlscript is an experiment in exposing much of curl's goodness via a little [DSL](https://en.wikipedia.org/wiki/Domain-specific_language) making it easy to build up
 pipelines of execution using a language with built in primitives and natural semantics rather then 'flag soup'.  
@@ -151,10 +151,10 @@ password mypassword
 
 ##### Set variable
 ```$bash
-$opt = [/.curlscriptrc]
+$cs.opt = [/.curlscriptrc]
 ```
 ```$bash
-$opt.defaults.header.Accept = "applicationxml"
+$cs.opt.header.Accept = "applicationxml"
 ```
 ```$bash
 $myid = 1;
@@ -188,7 +188,7 @@ $mypayload | [http://www.httpbin.org/delete/${myid}]
 * I find using [CMake](https://cmake.org/) non intuitive ... its enforced usage on this project is an attempt to learn more (otherwise you would see a Makefile here!). 
 * Currently curlscript is http centric in initial releases.
 * Woefully ignorant of windows platform ... looking at [appveyor](https://www.appveyor.com/) to eventually help solve that ([issue #2](https://github.com/xquery/curlscript/issues/2)).
- 
+* Curlscript is a little language and most likely missing features of your 'favourite' language ... in that respect it is designed as an adjunct 
 ## Developing curlscript
 
 Please [raise an issue](https://github.com/xquery/curlscript/issues) or make a contribution by forking the repository and creating a [pr](https://github.com/xquery/curlscript/pulls). 
@@ -258,6 +258,7 @@ Then run cpack in cmake build directory
 
 ### Dependencies
 This project depends on the following external libs:
+* [curl](https://curl.haxx.se/): libcurl (of course!). 
 * [REx Parser Generator](http://www.bottlecaps.de/rex/): Gunther Rademacher <grd@gmx.net> excellant parser generator. 
 * [loguru](https://github.com/emilk/loguru): no fuss logging.
 * [cxxopt](https://github.com/jarro2783/cxxopts): parsing command args.
@@ -269,7 +270,11 @@ Please review these individual projects for more details on their own dependenci
 
 ## Alternatives
 
-[httpie](https://github.com/jakubroztocil/httpie) is an interesting project, 
+These projects provide alternate approaches to solving similar problems that
+curlscript is trying to address.
+
+* [httpie](https://github.com/jakubroztocil/httpie) 
+* [curlrc](https://github.com/benwebber/curlrc)
 
 ## License
 
