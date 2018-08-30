@@ -56,7 +56,7 @@ before_install:
 - cd build
 - mkdir -p docs
 - cmake --version
-- cmake ${CMAKE_OPTIONS} -DCMAKE_CXX_FLAGS=${CXX_FLAGS} -DCMAKE_BUILD_TYPE=Debug -DENABLE_COVERAGE=ON -DCOVERAGE=1 -DENABLE_MANUAL=OFF ..
+- cmake ${CMAKE_OPTIONS} -DCMAKE_CXX_FLAGS=${CXX_FLAGS} -DCMAKE_BUILD_TYPE=Debug -DENABLE_COVERAGE=ON -DCOVERAGE=1 -DENABLE_MANUAL=OFF -DBUILD_TESTING=OFF ..
 
 install:
 - pip2 install --upgrade --user git+git://github.com/eddyxu/cpp-coveralls.git
@@ -64,6 +64,8 @@ install:
 script:
 - make
 - make test
+- cd test
+- ./runAllTests
 #- valgrind --show-leak-kinds=all --leak-check=full --show-reachable=yes --error-limit=no --gen-suppressions=all --suppressions=../minimal.supp test/runAllTests
 
 after_success:
