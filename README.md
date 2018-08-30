@@ -226,7 +226,7 @@ This project depends on the following external libs:
 * [rapidjson](https://github.com/miloyip/rapidjson): json munging.
 * [pugixml](https://github.com/zeux/pugixml): xml dancing.
 
-These dependencies will have their own dependencies. Please review individual projects for more details.
+Please review these individual projects for more details on their own dependencies.
 
 ## License
 
