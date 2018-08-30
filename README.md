@@ -7,7 +7,7 @@ WARNING - under development (as in everything is probably broken!)
 
 [Curl](https://curl.haxx.se/) is a great ~~swiss army knife~~ http client that does much more then just make it easy to work with HTTP, supporting a plethora of URI addressable protocols.
 
-Over the years, the curl command line interface has grown - exposing hundreds of options with most users only ever invoking a subset of features, learning more advanced features over time.
+Over the years, the curl command line interface has grown - exposing many options with most users only ever invoking a subset of features, learning more advanced features over time.
 
 Curlscript is an experiment in exposing much of curl's goodness via a little [DSL](https://en.wikipedia.org/wiki/Domain-specific_language) making it easy to build up
 pipelines of execution using a language with built in primitives and natural semantics rather then 'flag soup'.  
