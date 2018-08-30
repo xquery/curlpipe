@@ -193,6 +193,15 @@ or you could run directly
 > ./runAllTests
 ```
 
+### Generating the Parser
+
+lib/curlscript/csparser.cpp is generated using [REx Parser Generator](http://www.bottlecaps.de/rex/) with the 
+following flags.
+
+```$bash
+-name csparser -tree -cpp -faster
+```
+
 ### Release Package
 
 Release packages are built using CPack.
