@@ -259,7 +259,7 @@ Release packages are built using CPack.
 
 Make a release build, ensuring you make a 'release' build and disable tests.
 ```$bash
-> cmake -DCMAKE_BUILD_TYPE=Release -DDISABLE_TESTS=true -DENABLE_MANUAL=OFF -DBUILD_TESTING=OFF 
+> cmake -DCMAKE_BUILD_TYPE=Release -DCURLSCRIPT_DISABLE_TESTS=true -DENABLE_MANUAL=OFF -DBUILD_TESTING=OFF 
 > make
 ```
 Then run cpack in cmake build directory

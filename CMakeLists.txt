@@ -39,9 +39,9 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall -Wextra -pedantic -O3 
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -lstdc++ -lpthread -ldl")
 
 #
-set(DISABLE_TESTS false)
-set(BUILD_LIB true)
-set(BUILD_TOOL true)
+set(CURLSCRIPT_DISABLE_TESTS false)
+set(CURLSCRIPT_BUILD_LIB true)
+set(CURLSCRIPT_BUILD_TOOL true)
 set(USE_RAPIDJSON true)
 set(USE_PUGIXML true)
 
@@ -90,7 +90,7 @@ include_directories(${pugixml_SOURCE_DIR}/src)
 add_subdirectory(${pugixml_SOURCE_DIR})
 add_subdirectory(${curl_SOURCE_DIR})
 
-if(NOT DISABLE_TESTS)
+if(NOT CURLSCRIPT_DISABLE_TESTS)
     include(CTest)
     enable_testing()
     add_subdirectory(${googletest_SOURCE_DIR} ${googletest_BINARY_DIR})
@@ -98,11 +98,11 @@ if(NOT DISABLE_TESTS)
 endif()
 
 # build targets
-if(BUILD_LIB)
+if(CURLSCRIPT_BUILD_LIB)
     add_subdirectory(lib)
 endif()
 
-if(BUILD_TOOL)
+if(CURLSCRIPT_BUILD_TOOL)
     add_subdirectory(src)
 endif()
 
