@@ -182,6 +182,9 @@ $mypayload | [http://www.httpbin.org/delete/${myid}]
 
 ## Points of Interests
 
+Curlscript is by design a 'little language' and most likely missing features from your 'favourite' language. It is intended as an adjunct to your existing script processing or host language. I list a few
+more potentially non obvious gaps in the current codebase.
+
 * Curlscript is not intended as a drop in replacement for the curl tool (which is already a great [CLI](https://en.wikipedia.org/wiki/Command-line_interface)).
 * Intentionally [lazy](http://threevirtues.com/) defining internals or worrying too much about performance at this stage.
 * Curlscript language is defined with an [EBNF](etc/csparser.ebnf) which is used to produce a strict parser.
@@ -189,7 +192,7 @@ $mypayload | [http://www.httpbin.org/delete/${myid}]
 * I find using [CMake](https://cmake.org/) non intuitive ... its enforced usage on this project is an attempt to learn more (otherwise you would see a Makefile here!). 
 * Currently curlscript is http centric in initial releases.
 * Woefully ignorant of windows platform ... looking at [appveyor](https://www.appveyor.com/) to eventually help solve that ([issue #2](https://github.com/xquery/curlscript/issues/2)).
-* Curlscript is a little language and most likely missing features of your 'favourite' language ... in that respect it is designed as an adjunct 
+
 ## Developing curlscript
 
 Please [raise an issue](https://github.com/xquery/curlscript/issues) or make a contribution by forking the repository and creating a [pr](https://github.com/xquery/curlscript/pulls). 
