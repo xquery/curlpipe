@@ -1,0 +1,1 @@
+[http://www.httpbin.org/get] > [/tmp/output.txt]

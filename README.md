@@ -69,6 +69,7 @@ password mypassword
 
 ## Examples
 
+
 ##### Retrieve (GET) and save to file   
 ```$bash
 [http://www.httpbin.org/get] > [/tmp/output.txt]
