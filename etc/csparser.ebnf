@@ -19,14 +19,13 @@ literal
   ::= '"' astring '"'
 
 URI
-  ::= "[" scheme? ( hostport | segment ) (segment)* headers "]"
+  ::= "[" scheme? hostport? (segment)* headers "]"
 
 header
   ::=  literal ":" literal
 
 headers
   ::= header*
-
 
 host
   ::= nstring

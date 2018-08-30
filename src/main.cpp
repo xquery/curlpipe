@@ -40,11 +40,14 @@ int banner(){
 int usage(){
     banner();
     cout << "\n> curlscript mycurlscript.cs \n\n"
-        << "    -h | --help  : help\n"
-        << "    -d | --debug : emit debug info ()\n"
-        << "    -i | --info  : emit info\n"
-        << "    -q | --quiet : suppress output to console\n"
-        << "    -f | --file  : alternate curlscript file\n" << endl;
+        << "    -h | --help  : Help.\n"
+        << "    -d | --debug : Emit debug info logging.\n"
+        << "    -i | --info  : Emit info logging.\n"
+        << "    -l | --log   : Enable logging to file.\n"
+        << "    -q | --quiet : Suppress output to console.\n"
+        << "    -a | --auth  : Pass a username:password pair as the argument.\n"
+        << "    -A | --auth-type : Specify the auth mechanism (basic|digest).\n"
+        << "    -f | --file  : Supply curlscript file uri.\n" << endl;
     return CS_OK;
 }
 
@@ -54,13 +57,15 @@ cxxopts::Options setopts(){
             ("positional",
              "Positional arguments: these are the arguments that are entered "
              "without an option", cxxopts::value<std::vector<std::string>>())
-            ("d,debug", "Emit debug level logging")
+            ("h,help", "Help.")
+            ("d,debug", "Emit debug info logging")
+            ("i,info", "Emit info logging")
             ("l,log", "Enable logging to file", cxxopts::value<string>())
             ("s,serialiser", "Switch serialiser",cxxopts::value<string>())
-            ("q,quiet", "Disable output")
-            ("h,help", "help")
-            ("i,info", "Emit info level logging")
-            ("f,file", "File name", cxxopts::value<string>());
+            ("q,quiet", "Suppress output to console.")
+            ("a,auth", "Pass a username:password pair as the argument.",cxxopts::value<string>())
+            ("A,auth-type", "Specify the auth mechanism (basic|digest).",cxxopts::value<string>())
+            ("f,file", "Supply curlscript file uri.", cxxopts::value<string>());
     opts.parse_positional({"input", "output", "positional"});
     return opts;
 }

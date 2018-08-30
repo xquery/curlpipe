@@ -36,6 +36,8 @@
 #include <curl/curl.h>
 #include "log.h"
 
+#define SUPPORT_NETRC 1
+
 using namespace std;
 
 CURLM *curlm;
@@ -69,6 +71,9 @@ static size_t writeCallback(void *contents, size_t size, size_t nmemb, void *use
 int http_set_options(CURL *c){
     DLOG_S(INFO) << "set http opts";
     curl_easy_setopt(c, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
+#ifdef SUPPORT_NETRC
+    curl_easy_setopt(c, CURLOPT_NETRC,CURL_NETRC_OPTIONAL);
+#endif
     curl_easy_setopt(c, CURLOPT_VERBOSE, 0L);
     curl_easy_setopt(c, CURLOPT_HEADERFUNCTION, headerCallback);
 #ifndef NDEBUG

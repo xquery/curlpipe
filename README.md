@@ -28,18 +28,54 @@ curlscript 0.1.0 | ⓒ 2017-2018 James Fuller <jim.fuller@webcomposite.com> | ht
 
 > curlscript mycurlscript.cs 
 
-    -h | --help  : help
-    -d | --debug : emit debug info ()
-    -i | --info  : emit info
-    -q | --quiet : suppress output to console
-    -f | --file  : alternate curlscript file
+    -h | --help  : Help.
+    -d | --debug : Emit debug info logging.
+    -i | --info  : Emit info logging.
+    -l | --log   : Enable logging to file.
+    -q | --quiet : Suppress output to console.
+    -a | --auth  : Pass a username:password pair as the argument.
+    -A | --auth-type : Specify the auth mechanism (basic|digest).
+    -f | --file  : Supply curlscript file uri.
 ```
+Curlscript options
+
+| short  | long     | description   |
+|--------|----------|---------------|
+| -h     | --help   | Obtain help   | 
+| -d     | --debug  | Emit debug info logging.|
+| -i     | --info   | Emit info logging.|
+| -l     | --log    | Enable logging to file.|
+| -q     | --quiet  | Suppress output to console.|
+| -f     | --file   | Supply curlscript file uri. |
+
+
+### Authentication
+These flags set the default auth credentials and auth-type to be used with all http calls.
+
+| short  | long        | description   |
+|--------|-------------|---------------|
+| -a     | --auth      |  Pass a username:password pair as the argument.  |  
+| -A     | --auth-type |  Specify the auth mechanism (basic|digest). |
+
+~/.netrc (on windows ~/_netrc) is also supported by curlscript: 
+```$bash
+> cat ~/.netrc
+machine example.org
+login myuser
+password mypassword
+```
+
+ 
 
 ## Examples
 
 ##### Retrieve (GET) and save to file   
 ```$bash
 [http://www.httpbin.org/get] > [/tmp/output.txt]
+```
+##### Retrieve (GET) and save to file   
+```$bash
+[http://www.httpbin.org/get auth=myser:password auth-type=digest] > [/tmp/output3.txt]
 ```
 
 ##### Retrieve (GET) setting headers
@@ -51,7 +87,9 @@ curlscript 0.1.0 | ⓒ 2017-2018 James Fuller <jim.fuller@webcomposite.com> | ht
 ```$bash
 [http://www.httpbin.org/get] >> [/tmp/response.txt]
 ```
-
+```$bash
+[http://www.httpbin.org/get],[http://www.httpbin.org/uuid] >> [/tmp/response.txt]
+```
 ##### GET and narrow down result
 ```$bash
 [http://www.httpbin.org/get].id  
@@ -227,6 +265,10 @@ This project depends on the following external libs:
 * [pugixml](https://github.com/zeux/pugixml): xml dancing.
 
 Please review these individual projects for more details on their own dependencies.
+
+## Alternatives
+
+[httpie](https://github.com/jakubroztocil/httpie) is an interesting project, 
 
 ## License
 
