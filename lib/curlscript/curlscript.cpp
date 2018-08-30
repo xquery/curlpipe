@@ -34,6 +34,7 @@
 #include <map>
 #include <cassert>
 
+#include "curlscript.h"
 #include "log.h"
 #include "helpers.h"
 #include "serializer.h"
@@ -46,7 +47,7 @@ using namespace std;
 
 namespace curlscript{
 
-  int exec(string file_uri, bool quiet) {
+  int exec(const string file_uri, const bool quiet) {
 
       DLOG_S(INFO) << "loading " << file_uri;
       bool indent = false;
@@ -76,7 +77,7 @@ namespace curlscript{
       return 0;
   }
 
-    int exec(string file_uri){
+    int exec(const string file_uri){
         return exec(file_uri, false);
     }
 }

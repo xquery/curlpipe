@@ -28,8 +28,8 @@
 #include <string>
 
 namespace curlscript{
-    int exec(std::string file_uri);
-    int exec(const std::string file_uri, bool quiet);
+    int exec(const std::string file_uri);
+    int exec(const std::string file_uri, const bool quiet);
 }
 
 #endif //CURLSCRIPT_CURLSCRIPT_H
