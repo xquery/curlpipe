@@ -182,8 +182,9 @@ $mypayload | [http://www.httpbin.org/delete/${myid}]
 
 ## Points of Interests
 
-Curlscript is by design a 'little language' and most likely missing features from your 'favourite' language. It is intended as an adjunct to your existing script processing or host language. I list a few
-more potentially non obvious gaps in the current codebase.
+Curlscript is by design a 'little language' and most likely missing features from your 'favourite' language. It is intended as an adjunct to your existing script processing or host language. 
+
+To provide a framework for design thoughts, here are a few possibly non obvious gaps in the current codebase.
 
 * Curlscript is not intended as a drop in replacement for the curl tool (which is already a great [CLI](https://en.wikipedia.org/wiki/Command-line_interface)).
 * Intentionally [lazy](http://threevirtues.com/) defining internals or worrying too much about performance at this stage.
@@ -192,6 +193,12 @@ more potentially non obvious gaps in the current codebase.
 * I find using [CMake](https://cmake.org/) non intuitive ... its enforced usage on this project is an attempt to learn more (otherwise you would see a Makefile here!). 
 * Currently curlscript is http centric in initial releases.
 * Woefully ignorant of windows platform ... looking at [appveyor](https://www.appveyor.com/) to eventually help solve that ([issue #2](https://github.com/xquery/curlscript/issues/2)).
+
+I have blatantly stolen (and deformed) concepts from many places (bash, unix pipes, etc..). The following projects provide alternate approaches to solving similar problems that
+curlscript is trying to address and worth a mention.
+
+* [httpie](https://github.com/jakubroztocil/httpie) 
+* [curlrc](https://github.com/benwebber/curlrc)
 
 ## Developing curlscript
 
@@ -271,14 +278,6 @@ This project depends on the following external libs:
 * [pugixml](https://github.com/zeux/pugixml): xml dancing.
 
 Please review these individual projects for more details on their own dependencies.
-
-## Alternatives
-
-These projects provide alternate approaches to solving similar problems that
-curlscript is trying to address.
-
-* [httpie](https://github.com/jakubroztocil/httpie) 
-* [curlrc](https://github.com/benwebber/curlrc)
 
 ## License
 
