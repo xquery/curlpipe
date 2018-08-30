@@ -10,7 +10,7 @@ WARNING - under development (as in everything is probably broken!)
 Over the years, the curl command line interface has grown - exposing many options with most users only ever invoking a subset of features, learning more advanced features over time.
 
 Curlscript is a utility that exposes much of curl's goodness via a [DSL](https://en.wikipedia.org/wiki/Domain-specific_language) making it easy to build up
-pipelines of execution using a 'little language' with built in primitives and natural semantics rather then 'flag soup'.  
+pipelines of execution using a 'little language' with built in primitives and natural bias for working with http.  
 
 ## Getting started
 
