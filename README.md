@@ -112,7 +112,7 @@ Curlscript defines a series of statement(s). The simplest statement just defines
 ```$bash
 [http://www.httpbin.org/get] ;
 ```
-where the seperator (;) is optional. In addition to a URI, you can construct literal, xml or json data.
+where the seperator (;) is optional. In addition to a URI, there is boolean, literal, xml, or json data types.
 ```$bash
 "literal data" ;
 ```
@@ -122,23 +122,37 @@ where the seperator (;) is optional. In addition to a URI, you can construct lit
 ```$json
 {id:1,name:"Tommy"};
 ```
+
+| data type  | example |description   |
+|------------|---------|--------------|
+| URI        | [http://www.example.org]   | used to POST, PUT or DELETE.| 
+| literal    |  "name=value;name=value"   | redirect output to file.|
+| xml        | <person><name>Tommy</name></person>        | append output to file.|
+| json       | {id:1,name:"Tommy"}        | used to force PUT or DELETE.|
+| boolean    |                            | .|
+
 A statement can then use an operator to perform actions on data.
 ```$bash
 [/tmp/data.json] | [http://httpbin.org/post] 
 ```
+The above will POST /tmp/data.json to the URI. If the URI supports PUT it may use that as well.
+Similarly, the following would POST xml to the URI.
+
 ```$bash
 <person><name>Tommy</name></person> | [http://httpbin.org/post] 
 ```
+or json.
+
 ```$bash
 {id:1,name:"Tommy"} | [http://httpbin.org/post] 
 ```
 
-Statements can be chained together using operators.
+Operators can be chained together to build an execution pipeline.
 
 ```$bash
 [/tmp/data.json] | [http://httpbin.org/post] > [/tmp/output.txt]
 ```
-where the allowable set of operators are:
+The allowable set of operators are:
 
 | operator  | description   |
 |-----------|---------------|
@@ -147,15 +161,17 @@ where the allowable set of operators are:
 | &#62;&#62;| append output to file.|
 | =&#124;   | used to force PUT or DELETE.|
 
+
 Values can be passed into curlscript 
 ```$bash
-> curlscript -Pname=Tommy example.cs 
+> curlscript -Pname=Tommy example.cs -Pid=1
 ```
-and replace tokens (ex ${token}) in both data or URI itself.
+and are used to replace tokens (ex ${token}) in either data or URIs.
 ```$bash
-{id:1, name:"${name}"} | [http://httpbin.org/post]
+{name:"${name}"} | [http://httpbin.org/get/${id}]
 ```
 
+Lastly 
  
 
 ## Examples
