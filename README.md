@@ -106,6 +106,55 @@ Paramaters can be individually passed (and override params if used in conjunctio
 > curlscript -Pid=1 -Pname=Ali G example.cs
 ```
 
+## The curlscript (little) language
+
+Curlscript defines a series of statement(s). The simplest statement just defines retrieval of a URI:
+```$bash
+[http://www.httpbin.org/get] ;
+```
+where the seperator (;) is optional. In addition to a URI, you can construct literal, xml or json data.
+```$bash
+"literal data" ;
+```
+```$xml
+<person><name>Tommy</name></person> ;
+```
+```$json
+{id:1,name:"Tommy"};
+```
+A statement can then use an operator to perform actions on data.
+```$bash
+[/tmp/data.json] | [http://httpbin.org/post] 
+```
+```$bash
+<person><name>Tommy</name></person> | [http://httpbin.org/post] 
+```
+```$bash
+{id:1,name:"Tommy"} | [http://httpbin.org/post] 
+```
+
+Statements can be chained together using operators.
+
+```$bash
+[/tmp/data.json] | [http://httpbin.org/post] > [/tmp/output.txt]
+```
+where the allowable set of operators are:
+
+| operator  | description   |
+|-----------|---------------|
+| &#124;    | used to POST, PUT or DELETE.| 
+| &#62;     | redirect output to file.|
+| &#62;&#62;| append output to file.|
+| =&#124;   | used to force PUT or DELETE.|
+
+Values can be passed into curlscript 
+```$bash
+> curlscript -Pname=Tommy example.cs 
+```
+and replace tokens (ex ${token}) in both data or URI itself.
+```$bash
+{id:1, name:"${name}"} | [http://httpbin.org/post]
+```
 
  
 
