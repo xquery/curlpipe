@@ -40,14 +40,17 @@ int banner(){
 int usage(){
     banner();
     cout << "\n> curlscript mycurlscript.cs \n\n"
-        << "    -h | --help  : Help.\n"
-        << "    -d | --debug : Emit debug info logging.\n"
-        << "    -i | --info  : Emit info logging.\n"
-        << "    -l | --log   : Enable logging to file.\n"
-        << "    -q | --quiet : Suppress output to console.\n"
-        << "    -a | --auth  : Pass a username:password pair as the argument.\n"
+        << "    -h | --help   : Help.\n"
+        << "    -d | --debug  : Emit debug info logging.\n"
+        << "    -i | --info   : Emit info logging.\n"
+        << "    -l | --log    : Enable logging to file.\n"
+        << "    -q | --quiet  : Suppress output to console.\n"
+        << "    -a | --auth   : Pass a username:password pair as the argument.\n"
         << "    -A | --auth-type : Specify the auth mechanism (basic|digest).\n"
-        << "    -f | --file  : Supply curlscript file uri.\n" << endl;
+        << "    -p | --params : Define set of parameters for transclusion with file (json|xml).\n"
+        << "    -P | --param  : Define parameter(s) for transclusion.\n"
+        << "    -f | --file   : Supply curlscript file uri.\n" << endl;
+    
     return CS_OK;
 }
 
@@ -65,6 +68,8 @@ cxxopts::Options setopts(){
             ("q,quiet", "Suppress output to console.")
             ("a,auth", "Pass a username:password pair as the argument.",cxxopts::value<string>())
             ("A,auth-type", "Specify the auth mechanism (basic|digest).",cxxopts::value<string>())
+            ("p,params", "Define set of parameters for transclusion with file (json|xml).",cxxopts::value<string>())
+            ("P,param", "Define parameter(s) for transclusion.",cxxopts::value<string>())
             ("f,file", "Supply curlscript file uri.", cxxopts::value<string>());
     opts.parse_positional({"input", "output", "positional"});
     return opts;

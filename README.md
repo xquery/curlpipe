@@ -28,17 +28,18 @@ To get help run
 curlscript 0.1.0 | ⓒ 2017-2018 James Fuller <jim.fuller@webcomposite.com> | https://github.com/xquery/curlscript
 
 > curlscript mycurlscript.cs 
-
-    -h | --help  : Help.
-    -d | --debug : Emit debug info logging.
-    -i | --info  : Emit info logging.
-    -l | --log   : Enable logging to file.
-    -q | --quiet : Suppress output to console.
-    -a | --auth  : Pass a username:password pair as the argument.
+    -h | --help   : Help.
+    -d | --debug  : Emit debug info logging.
+    -i | --info   : Emit info logging.
+    -l | --log    : Enable logging to file.
+    -q | --quiet  : Suppress output to console.
+    -a | --auth   : Pass a username:password pair as the argument.
     -A | --auth-type : Specify the auth mechanism (basic|digest).
-    -f | --file  : Supply curlscript file uri.
+    -p | --params : Define set of parameters for transclusion with file (json|xml).
+    -P | --param  : Define parameter(s) for transclusion.    
 ```
-Curlscript options
+
+Curlscript options for controlling how much information is emitted during processing.
 
 | short  | long     | description   |
 |--------|----------|---------------|
@@ -47,8 +48,6 @@ Curlscript options
 | -i     | --info   | Emit info logging.|
 | -l     | --log    | Enable logging to file.|
 | -q     | --quiet  | Suppress output to console.|
-| -f     | --file   | Supply curlscript file uri. |
-
 
 ### Authentication
 These flags set the default auth credentials and auth-type to be used with all http calls.
@@ -65,6 +64,48 @@ machine example.org
 login myuser
 password mypassword
 ```
+
+### Parameters
+
+| short  | long     | description   |
+|--------|----------|---------------|
+| -p     | --params | set file containing params (xml|json format).| 
+| -P     | --param  | set a param (ex. -Pid=1).|
+
+
+where data.json is
+```$json
+{"id":1, "name":"Ali G"}
+```
+
+```$bash
+> curlscript -p data.json example.cs
+```
+
+or if xml floats your boat, then data.xml looks like 
+```$xml
+<params>
+<param>
+<name>id</name>
+<value>1</value>
+</param>
+<param>
+<name>name</name>
+<value>Ali G</value>
+</param>
+</params>
+```
+and similarly called
+```$bash
+> curlscript -p data.xml example.cs
+```
+
+Paramaters can be individually passed (and override params if used in conjunction with -p flag).
+
+```$bash
+> curlscript -Pid=1 -Pname=Ali G example.cs
+```
+
 
  
 
