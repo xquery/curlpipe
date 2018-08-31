@@ -16,6 +16,17 @@ pipelines of execution using a 'little language' with built in primitives and na
 
 Download a release or build the software.
 
+Now try it out, define a file (example.cs) 
+
+```$bash
+[http://www.httpbin.org/get] > [/tmp/output.txt]
+```
+and invoke curlscript
+
+```$bash
+> curlscript example.cs
+```
+
 ## Usage
 
 To get help run
@@ -180,6 +191,25 @@ and are used to replace tokens (ex ${token}) in either data or URIs.
 
 ### Conditions
 
+Curlscript implements boolean datatype.
+
+```$bash
+[http://www.httpbin.org/get] == "test"
+```
+
+```$bash
+[http://www.httpbin.org/get] =~ "test"
+```
+
+Which can be used in trinary operator.
+
+```$bash
+[http://www.httpbin.org/get] =~ "test"
+       ? [/tmp/success.txt] 
+       : "failure" > [/tmp/fail.txt]       
+```
+
+This is the only logical structure supported in curlscript.
  
 
 ## Examples
