@@ -47,7 +47,7 @@ using namespace std;
 
 TEST(CurlScriptTestParser,TestCurlScriptFailParser){
     ASTserializer s(true);
-    string input = load_file("data/test3-error.cs");
+    string input = load_file("data/test-api-error1.cs");
     wstring winput =convert(input);
     csparser parser(winput.c_str(), &s);
     EXPECT_THROW(parser.parse_CS(),csparser::ParseException);

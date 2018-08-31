@@ -100,10 +100,6 @@ Find more examples [here](https://github.com/xquery/curlscript/tree/develop/docs
 
 ##### Trinary operator
 ```$bash
-[http://www.httpbin.org/get] ? [/tmp/success.txt] : "failure" > [/tmp/fail.txt]
-```
-
-```$bash
 [http://www.httpbin.org/get] =~ "test"
        ? [/tmp/success.txt] 
        : "failure" > [/tmp/fail.txt]
@@ -139,35 +135,33 @@ Find more examples [here](https://github.com/xquery/curlscript/tree/develop/docs
 ```
 
 ##### PUT some json
+
+will deduce if endpoint supports PUT
 ```$bash
-{"test:1} = [http://www.httpbin.org/put]
+{"test:1} | [http://www.httpbin.org/put]
+```
+
+force an HTTP PUT
+```$bash
+{"test:1} =| [http://www.httpbin.org/put]
 ```
 
 ##### DELETE
+will deduce if endpoint supports DELETE
 ```$bash
-[] = [http://www.httpbin.org/delete]
-```
-```$bash
-[/dev/null] = [http://www.httpbin.org/delete] 
+[] | [http://www.httpbin.org/delete]
 ```
 
-##### Set variable
+force an HTTP DELETE
 ```$bash
-$cs.opt = [/.curlscriptrc]
-```
-```$bash
-$cs.opt.header.Accept = "applicationxml"
-```
-```$bash
-$myid = 1;
-$mypayload = [/tmp/payload];
-$mypayload | [http://www.httpbin.org/delete]
+[/dev/null] =| [http://www.httpbin.org/delete] 
 ```
 
 ##### Transclusion in URI
 ```
-$mypayload | [http://www.httpbin.org/delete/${myid}]
+${mypayload} | [http://www.httpbin.org/delete/${myid}]
 ```
+
 ##### Transclusion in payload
 ```
 {"id":${myid}} | [http://www.httpbin.org/delete/${myid}]

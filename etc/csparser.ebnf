@@ -2,11 +2,9 @@ CS
   ::= Expr* EOF
 
 Expr
-  ::=   ( var Operator ( literal | URI ) | items ( statement (statement)* )? ) Separator?
+  ::=   ( items ( statement (statement)* )? ) Separator?
 
 statement ::= Operator items
-
-var ::= "$"nstring
 
 items ::= item ("," item)*
 
@@ -57,7 +55,7 @@ scheme
   ::= ("https" | "http" | "file") '://'
 
 Operator
-  ::= '|' |  '=' | ">>" | '>' | '!' | '?' | "!=" | "=="
+  ::= '|' |  '=|' | ">>" | '>' | '!' | '?' | "!=" | "=="
 
 nstring ::= alpha (alpha | schar | digit)*
 
