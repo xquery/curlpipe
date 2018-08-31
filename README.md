@@ -112,6 +112,9 @@ Curlscript defines a series of statement(s). The simplest statement just defines
 ```$bash
 [http://www.httpbin.org/get] ;
 ```
+
+### Data types
+
 where the seperator (;) is optional. In addition to a URI, there is boolean, literal, xml, or json data types.
 ```$bash
 "literal data" ;
@@ -131,6 +134,8 @@ where the seperator (;) is optional. In addition to a URI, there is boolean, lit
 | json       | {id:1,name:"Tommy"}        | used to force PUT or DELETE.|
 | boolean    |                            | .|
 
+### Statements
+
 A statement can then use an operator to perform actions on data.
 ```$bash
 [/tmp/data.json] | [http://httpbin.org/post] 
@@ -146,6 +151,7 @@ or json.
 ```$bash
 {id:1,name:"Tommy"} | [http://httpbin.org/post] 
 ```
+### Operators
 
 Operators can be chained together to build an execution pipeline.
 
@@ -161,8 +167,9 @@ The allowable set of operators are:
 | &#62;&#62;| append output to file.|
 | =&#124;   | used to force PUT or DELETE.|
 
+### Parameters
 
-Values can be passed into curlscript 
+Parameters can be passed into curlscript 
 ```$bash
 > curlscript -Pname=Tommy example.cs -Pid=1
 ```
@@ -171,7 +178,8 @@ and are used to replace tokens (ex ${token}) in either data or URIs.
 {name:"${name}"} | [http://httpbin.org/get/${id}]
 ```
 
-Lastly 
+### Conditions
+
  
 
 ## Examples
