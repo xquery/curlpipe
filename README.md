@@ -93,7 +93,7 @@ where data.json is
 > curlscript -p data.json example.cs
 ```
 
-or if xml floats your boat, then data.xml looks like 
+or data.xml looks like 
 ```$xml
 <params>
 <param>
@@ -123,16 +123,20 @@ Curlscript defines a series of statement(s). The simplest statement just defines
 ```$bash
 [http://www.httpbin.org/get] ;
 ```
+where the seperator (;) is optional.
 
 ### Data types
 
-where the seperator (;) is optional. In addition to a URI, there is boolean, literal, xml, or json data types.
+In addition to a URI, curlscript supports boolean, literal, xml, json data types.
 ```$bash
-"literal data" ;
+"name=value;name=value" ;
 ```
+Literal data could also be binary data (for example, a zip file).
+
 ```$xml
 <person><name>Tommy</name></person> ;
 ```
+
 ```$json
 {id:1,name:"Tommy"};
 ```
@@ -143,11 +147,12 @@ where the seperator (;) is optional. In addition to a URI, there is boolean, lit
 | literal    |  "name=value;name=value"   | redirect output to file.|
 | xml        | <person><name>Tommy</name></person>        | append output to file.|
 | json       | {id:1,name:"Tommy"}        | used to force PUT or DELETE.|
-| boolean    |                            | .|
+| boolean    |                            | true or false.|
+| null       |   []                       | a null value.|
 
 ### Statements
 
-A statement can then use an operator to perform actions on data.
+Operators perform actions (or test conditions) on datatypes.
 ```$bash
 [/tmp/data.json] | [http://httpbin.org/post] 
 ```
@@ -162,14 +167,30 @@ or json.
 ```$bash
 {id:1,name:"Tommy"} | [http://httpbin.org/post] 
 ```
+
+The pipe operator can also figure out if it needs to perform a DELETE
+```$bash
+[] | [http://httpbin.org/delete] 
+```
+To force a PUT
+```$bash
+{id:1,name:"Tommy"} =| [http://httpbin.org/put]  
+```
+
+or a DELETE
+```$bash
+[] =| [http://httpbin.org/delete] 
+```
+
 ### Operators
 
-Operators can be chained together to build an execution pipeline.
+Operators can chain together to build execution pipeline of arbritrary length.
 
 ```$bash
-[/tmp/data.json] | [http://httpbin.org/post] > [/tmp/output.txt]
+[/tmp/data.json] | [http://httpbin.org/post] > [/tmp/output.txt] | [http://httpbin.org/post]
 ```
-The allowable set of operators are:
+
+The allowable set of operators that perform HTTP processing are:
 
 | operator  | description   |
 |-----------|---------------|
@@ -191,17 +212,24 @@ and are used to replace tokens (ex ${token}) in either data or URIs.
 
 ### Conditions
 
-Curlscript implements boolean datatype.
+Curlscript implements boolean and null datatype which can be used with conditional operators
+to test data values.
 
 ```$bash
 [http://www.httpbin.org/get] == "test"
 ```
 
 ```$bash
-[http://www.httpbin.org/get] =~ "test"
+[http://www.httpbin.org/get] ~= "test"
 ```
 
-Which can be used in trinary operator.
+Where conditionals can be composited up using AND(&&) or OR(||) operators.
+
+```$bash
+[http://www.httpbin.org/get] ~= "test" && [http://www.httpbin.org/get] != "not test"
+```
+
+Curlscript only supports trinary logic.
 
 ```$bash
 [http://www.httpbin.org/get] =~ "test"
@@ -209,8 +237,20 @@ Which can be used in trinary operator.
        : "failure" > [/tmp/fail.txt]       
 ```
 
-This is the only logical structure supported in curlscript.
+The allowable set of conditional operators are:
+
+| operator  | description        |
+|-----------|--------------------|
+| ==        |  equal             | 
+| !=        |  does not equal    | 
+| ~=        |  regex text        | 
+| &&        |   AND condition    | 
+| &#124;&#124; | OR condition    | 
+
  
+### Include
+
+It is possible to include other curlscript statements from other files.
 
 ## Examples
 
