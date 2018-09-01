@@ -232,7 +232,7 @@ To force a DELETE method
 
 To force a HEAD method use a conditional (explained further down)
 ```$bash
-[http://httpbin.org/delete] != []
+[http://httpbin.org/get] != []
 ```
 
 ### Operators
