@@ -46,8 +46,10 @@ curlpipe 0.1.0 | ⓒ 2017-2018 James Fuller <jim.fuller@webcomposite.com> | http
     -q | --quiet  : Suppress output to console.
     -a | --auth   : Pass a username:password pair as the argument.
     -A | --auth-type : Specify the auth mechanism (basic|digest).
-    -p | --params : Define set of parameters for transclusion with file (json|xml).
-    -P | --param  : Define parameter(s) for transclusion.    
+    -p | --params : Define set of parameters for token replacement (json|xml).
+    -P | --param  : Define parameter(s) for token replacement.
+    -o | --options : Define set of options controlling curlpipe behavior (default is ~/.curlpiperc).
+    -O | --option  : Define option(s) controlling curlpipe behavior.
 ```
 
 Curlpipe flags for controlling how much information is emitted during processing.

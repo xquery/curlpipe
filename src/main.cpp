@@ -47,8 +47,10 @@ int usage(){
         << "    -q | --quiet  : Suppress output to console.\n"
         << "    -a | --auth   : Pass a username:password pair as the argument.\n"
         << "    -A | --auth-type : Specify the auth mechanism (basic|digest).\n"
-        << "    -p | --params : Define set of parameters for transclusion with file (json|xml).\n"
-        << "    -P | --param  : Define parameter(s) for transclusion.\n"
+        << "    -p | --params : Define set of parameters for token replacement (json|xml).\n"
+        << "    -P | --param  : Define parameter(s) for token replacement.\n"
+        << "    -o | --options : Define set of options controlling curlpipe behavior (default is ~/.curlpiperc).\n"
+        << "    -O | --option  : Define option(s) controlling curlpipe behavior.\n"
         << "    -f | --file   : Supply curlpipe file uri.\n" << endl;
     
     return CS_OK;
@@ -68,9 +70,9 @@ cxxopts::Options setopts(){
             ("q,quiet", "Suppress output to console.")
             ("a,auth", "Pass a username:password pair as the argument.",cxxopts::value<string>())
             ("A,auth-type", "Specify the auth mechanism (basic|digest).",cxxopts::value<string>())
-            ("p,params", "Define set of parameters for transclusion with file (json|xml).",cxxopts::value<string>())
-            ("P,param", "Define parameter(s) for transclusion.",cxxopts::value<string>())
-            ("o,options", "Define set of options controlling curlpipe behavior (json|xml).",cxxopts::value<string>())
+            ("p,params", "Define set of parameters for token replacement with file (json|xml).",cxxopts::value<string>())
+            ("P,param", "Define parameter(s) for token replacement.",cxxopts::value<string>())
+            ("o,options", "Define set of options controlling curlpipe behavior (default is ~/.curlpiperc).",cxxopts::value<string>())
             ("O,option", "Define option(s) controlling curlpipe behavior.",cxxopts::value<string>())
             ("f,file", "Supply curlpipe file uri.", cxxopts::value<string>());
     opts.parse_positional({"input", "output", "positional"});
