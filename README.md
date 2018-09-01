@@ -74,7 +74,7 @@ The following flags set the default auth credentials and auth-type used by curlp
 | -a     | --auth      |  Pass a username:password pair as the argument.  |  
 | -A     | --auth-type |  Specify the auth mechanism (basic|digest). |
 
-~/.netrc (on windows ~/_netrc) is also supported by curlpipe: 
+~/.netrc (on windows ~/_netrc) is also supported by curlpipe (by dint of libcurl support): 
 ```$bash
 > cat ~/.netrc
 machine example.org
