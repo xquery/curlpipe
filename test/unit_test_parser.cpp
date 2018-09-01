@@ -27,24 +27,6 @@
 
 using namespace std;
 
-//TEST(CurlScriptTestParser,TestCurlScriptParser){
-//    XMLSerializer s(true);
-//    string input = load_file("data/test3.cs");
-//    wstring winput =convert(input);
-//    csparser parser(winput.c_str(), &s);
-//    try
-//    {
-//        parser.parse_CS();
-//    }
-//    catch (csparser::ParseException &pe)
-//    {
-//        FAIL();
-//    }
-//    EXPECT_EQ(s.getParsed(), "<?xml version=\"1.0\" encoding=\"UTF-8\"?><CS><Expr><items><item><URI><TOKEN>[</TOKEN><scheme><TOKEN>https</TOKEN><TOKEN>://</TOKEN></scheme><hostport><host><nstring><alpha>w</alpha><alpha>w</alpha><alpha>w</alpha><schar>.</schar><alpha>w</alpha><alpha>e</alpha><alpha>b</alpha><alpha>c</alpha><alpha>o</alpha><alpha>m</alpha><alpha>p</alpha><alpha>o</alpha><alpha>s</alpha><alpha>i</alpha><alpha>t</alpha><alpha>e</alpha><schar>.</schar><alpha>c</alpha><alpha>o</alpha><alpha>m</alpha></nstring></host></hostport><path/><TOKEN>]</TOKEN></URI></item></items>  <Operator><TOKEN>&gt;</TOKEN></Operator> <item><URI><TOKEN>[</TOKEN><scheme><TOKEN>file</TOKEN><TOKEN>://</TOKEN></scheme><path><segment><TOKEN>/</TOKEN><string><character><alpha>a</alpha></character><character><schar>.</schar></character><character><alpha>t</alpha></character><character><alpha>x</alpha></character><character><alpha>t</alpha></character></string></segment></path><TOKEN>]</TOKEN></URI></item></Expr>\n"
-//                             "<Expr><items><item><URI><TOKEN>[</TOKEN><scheme><TOKEN>https</TOKEN><TOKEN>://</TOKEN></scheme><hostport><host><nstring><alpha>w</alpha><alpha>w</alpha><alpha>w</alpha><schar>.</schar><alpha>w</alpha><alpha>e</alpha><alpha>b</alpha><alpha>c</alpha><alpha>o</alpha><alpha>m</alpha><alpha>p</alpha><alpha>o</alpha><alpha>s</alpha><alpha>i</alpha><alpha>t</alpha><alpha>e</alpha><schar>.</schar><alpha>c</alpha><alpha>o</alpha><alpha>m</alpha></nstring></host></hostport><path/><TOKEN>]</TOKEN></URI></item></items> <Operator><TOKEN>|</TOKEN></Operator> <item><URI><TOKEN>[</TOKEN><scheme><TOKEN>file</TOKEN><TOKEN>://</TOKEN></scheme><path><segment><TOKEN>/</TOKEN><string><character><alpha>b</alpha></character><character><schar>.</schar></character><character><alpha>t</alpha></character><character><alpha>x</alpha></character><character><alpha>t</alpha></character></string></segment></path><TOKEN>]</TOKEN></URI></item></Expr>\n"
-//                             "<EOF/></CS>");
-//}
-
 TEST(CurlPipeTestParser,TestCurlPipeFailParser){
     ASTserializer s(true);
     string input = load_file("data/test-api-error1.cp");

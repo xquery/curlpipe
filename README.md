@@ -12,7 +12,7 @@ pipelines of execution using a 'little language' with built in primitives and na
 
 ## Getting started
 
-[Download](https://github.com/xquery/curlscript/releases) the latest release or build the software.
+[Download](https://github.com/xquery/curlpipe/releases) the latest release or build the software.
 
 To try it out, define a file (example.cp) 
 
