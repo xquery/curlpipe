@@ -1,31 +1,31 @@
-# curlpipe (develop)
-WARNING - under development (as in everything is probably broken!)
-
-A little DSL for curl making it easy to build up http execution pipelines.
+# curlpipe (WARNING - under development as in everything is probably broken!)
 
 [![Build Status](https://travis-ci.org/xquery/curlpipe.svg?branch=develop)](https://travis-ci.org/xquery/curlpipe)
 [![Coverage Status](https://coveralls.io/repos/github/xquery/curlpipe/badge.svg?branch=develop)](https://coveralls.io/github/xquery/curlpipe?branch=develop)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](COPYING)
 
-[Curl](https://curl.haxx.se/) is a great ~~swiss army knife~~ http client that does much more then just make it easy to work with HTTP, supporting a plethora of URI addressable protocols. Over the years, the curl command line interface has grown - exposing many options with most users only ever invoking a subset of features, learning more advanced features over time.
 
-[curlpipe](https://github.com/xquery/curlpipe) is a utility that exposes much of curl's goodness via a [DSL](https://en.wikipedia.org/wiki/Domain-specific_language) making it easy to build up
+Curlpipe is a little DSL making it easy to build up http execution pipelines.
+
+Curlpipe uses [Curl](https://curl.haxx.se/) under the covers, curl is a great ~~swiss army knife~~ http client that does much more then just make it easy to work with HTTP, supporting a plethora of URI addressable protocols. Over the years, the curl command line interface has grown - exposing many options with most users only ever invoking a subset of features, learning more advanced features over time. [Curlpipe](https://github.com/xquery/curlpipe) is a utility that exposes much of curl's goodness via a [DSL](https://en.wikipedia.org/wiki/Domain-specific_language) making it easy to build up
 pipelines of execution using a 'little language' with built in primitives and natural bias for working with http.  
 
 ## Getting started
 
-Download a release or build the software.
+[Download](https://github.com/xquery/curlscript/releases) the latest release or build the software.
 
-Now try it out, define a file (example.cp) 
+To try it out, define a file (example.cp) 
 
 ```$bash
 [http://www.httpbin.org/get] > [/tmp/output.txt]
 ```
-and invoke curlpipe
+and invoke curlpipe supplying that file as its only argument.
 
 ```$bash
 > curlpipe example.cp
 ```
+
+If everything worked out allright you should now observe the output from the URI saved to a file.
 
 ## Usage
 
@@ -50,7 +50,7 @@ curlpipe 0.1.0 | ⓒ 2017-2018 James Fuller <jim.fuller@webcomposite.com> | http
     -P | --param  : Define parameter(s) for transclusion.    
 ```
 
-curlpipe options for controlling how much information is emitted during processing.
+Curlpipe options for controlling how much information is emitted during processing.
 
 | short  | long     | description   |
 |--------|----------|---------------|
@@ -61,7 +61,7 @@ curlpipe options for controlling how much information is emitted during processi
 | -q     | --quiet  | Suppress output to console.|
 
 ### Authentication
-These flags set the default auth credentials and auth-type to be used with all http calls.
+The following flags set the default auth credentials and auth-type used by curlpipe.
 
 | short  | long        | description   |
 |--------|-------------|---------------|
@@ -78,17 +78,19 @@ password mypassword
 
 ### Parameters
 
+Parameters maybe passed to curlpipe, replacing tokens in the curlpipe script.
+
 | short  | long     | description   |
 |--------|----------|---------------|
 | -p     | --params | set file containing params (xml|json format).| 
 | -P     | --param  | set a param (ex. -Pid=1).|
 
-
-where data.json is
+Parameters can be passed in via a file, for example, using data.json:
 ```$json
 {"id":1, "name":"Ali G"}
 ```
 
+The call to curlpipe would be
 ```$bash
 > curlpipe -p data.json example.cp
 ```
@@ -111,23 +113,41 @@ and similarly called
 > curlpipe -p data.xml example.cp
 ```
 
-Paramaters can be individually passed (and override params if used in conjunction with -p flag).
+Paramaters may also be individually defined, overidding params if used in conjunction with above -p flag.
 
 ```$bash
 > curlpipe -Pid=1 -Pname=Ali G example.cp
 ```
+### Options
 
-## The curlpipe (little) language
+Options maybe passed to curlpipe, setting default behavior.
 
-curlpipe defines a series of statement(s). The simplest statement just defines retrieval of a URI:
+| short  | long     | description   |
+|--------|----------|---------------|
+| -o     | --options | set file containing curlpipe options (xml|json format).| 
+| -O     | --option  | set an option (ex. -Pid=1).|
+
+Curlpipe looks for a ~/.curlpiperc file containing options.
+
+Parameters can be passed in via a file, for example, using data.json:
+```$json
+{"id":1, "name":"Ali G"}
+```
+
+
+## The curlpipe language
+
+Curlpipe defines a series of statement(s). The simplest statement defines retrieval of a URI:
 ```$bash
 [http://www.httpbin.org/get] ;
 ```
 where the seperator (;) is optional.
 
+When this is run the output of dereferencing the URI is sent to stdout (con).
+
 ### Data types
 
-In addition to a URI, curlpipe supports boolean, literal, binary, xml, json and null data types.
+In addition to a URI, curlpipe also supports boolean, literal, binary, xml, json and null data types.
 
 | data type  | example |description   |
 |------------|---------|--------------|
@@ -139,12 +159,13 @@ In addition to a URI, curlpipe supports boolean, literal, binary, xml, json and 
 | boolean    |    ? ?                     | true or false.|
 | null       |   []                       | an empty/null value.|
 
-
+Literal string data can be used to pass in name value pairs (using application/x-www-form-urlencoded content type): 
 ```$bash
 "name=value;name=value" ;
 ```
-Literal data could also be binary data (for example, a zip file).
+Binary data (for example, a zip file) is also supported.
 
+Support for common formats, like XML and json. 
 ```$xml
 <person><name>Tommy</name></person> ;
 ```
@@ -153,32 +174,46 @@ Literal data could also be binary data (for example, a zip file).
 {id:1,name:"Tommy"};
 ```
 
-
 ### Statements
 
-Operators perform actions (or test conditions) on datatypes.
+A single curlpipe statement can be comprised of either
+
+* a datatype
+* dataype operator datatype
+
+Operators perform actions (or test conditions) on datatypes. The following example shows how the contents of
+/temp/data.json is sent to a HTTP endpoint supporting POST method.
 ```$bash
 [/tmp/data.json] | [http://httpbin.org/post] 
 ```
-The above will POST /tmp/data.json to the URI. If the URI supports PUT it may use that as well.
-Similarly, the following would POST xml to the URI.
+If the endpoint URI supports PUT it may opt to use that. 
+
+The following would POST xml to the URI.
 
 ```$bash
 <person><name>Tommy</name></person> | [http://httpbin.org/post] 
 ```
-or json.
+or now with a json datatype.
 
 ```$bash
 {id:1,name:"Tommy"} | [http://httpbin.org/post] 
 ```
 
-The pipe operator can also figure out if it needs to perform a DELETE
+The pipe operator can be used to perform an HTTP DELETE
 ```$bash
 [] | [http://httpbin.org/delete] 
 ```
-To force a PUT
+
+Like the PUT the pipe operator will deduce if the endpoint supports DELETE. This built in behavior is enabled
+by curlpipe options (which can be set when invoking curlpipe).
+
+Otherwise one is always free to force a PUT
 ```$bash
 {id:1,name:"Tommy"} =| [http://httpbin.org/put]  
+```
+To force a DELETE
+```$bash
+[] =| [http://httpbin.org/delete] 
 ```
 
 To force a DELETE
@@ -256,6 +291,17 @@ The set of conditional operators are:
 | &&        |  AND chain condition    | 
 | &#124;&#124; | OR chain condition    | 
 
+### Options
+
+Curlpipe defines a lot of internal options, all of which can be set
+
+| operator  | description        |
+|-----------|--------------------|
+| ==        |  equal             | 
+| !=        |  does not equal    | 
+| ~=        |  regex text        | 
+| &&        |  AND chain condition    | 
+| &#124;&#124; | OR chain condition    | 
  
 ### Include
 
