@@ -225,24 +225,19 @@ Otherwise one is always free to force a PUT
 ```$bash
 {id:1,name:"Tommy"} =| [http://httpbin.org/put]  
 ```
-To force a DELETE
+To force a DELETE method
 ```$bash
 [] =| [http://httpbin.org/delete] 
 ```
 
-To force a DELETE
-```$bash
-[] =| [http://httpbin.org/delete] 
-```
-
-To force a HEAD use a conditional (explained further down)
+To force a HEAD method use a conditional (explained further down)
 ```$bash
 [http://httpbin.org/delete] != []
 ```
 
 ### Operators
 
-Operators chain together to build execution pipeline of arbritrary length.
+Operators chain together to build execution pipeline of arbitrary length.
 
 ```$bash
 [/tmp/data.json] | [http://httpbin.org/post] > [/tmp/output.txt] | [http://httpbin.org/post]
@@ -256,6 +251,7 @@ The set of processing operators are:
 | &#62;     | redirect output to file.|
 | &#62;&#62;| append output to file.|
 | =&#124;   | used to force PUT or DELETE.|
+
 
 ### Parameters
 
@@ -307,20 +303,14 @@ The set of conditional operators are:
 
 ### Options
 
-Curlpipe defines a lot of internal options, all of which can be set
+Curlpipe defines the following options
 
-| operator  | description        |
-|-----------|--------------------|
-| ==        |  equal             | 
-| !=        |  does not equal    | 
-| ~=        |  regex text        | 
-| &&        |  AND chain condition    | 
-| &#124;&#124; | OR chain condition    | 
+| option  | description        |
+|---------|--------------------|
+|         |  tba               | 
+|         |  tba               | 
+|         |  tba               | 
  
-### Include
-
-It is possible to include other curlpipe statements from other files.
-
 ## Examples
 
 Find more examples [here](https://github.com/xquery/curlpipe/tree/develop/docs/examples).
