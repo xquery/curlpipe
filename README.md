@@ -1,4 +1,6 @@
-# curlpipe (WARNING - under development as in everything is probably broken!)
+# Curlpipe - DSL for making http execution pipelines.
+
+(WARNING - under development as in everything is probably broken!)
 
 [![Build Status](https://travis-ci.org/xquery/curlpipe.svg?branch=develop)](https://travis-ci.org/xquery/curlpipe)
 [![Coverage Status](https://coveralls.io/repos/github/xquery/curlpipe/badge.svg?branch=develop)](https://coveralls.io/github/xquery/curlpipe?branch=develop)
@@ -9,6 +11,8 @@ Curlpipe is a little DSL making it easy to build up http execution pipelines. Cu
 
 Over the years, the curl command line interface has grown - exposing many options with most users only ever invoking a subset of features, learning more advanced features over time. [Curlpipe](https://github.com/xquery/curlpipe) is a utility that exposes much of curl's goodness via a [DSL](https://en.wikipedia.org/wiki/Domain-specific_language) making it easy to build up
 pipelines of execution using a 'little language' with built in primitives and natural bias for working with http.  
+
+[Getting Started](#getting-started) | [Usage](#usage) | [Language](#the-curlpipe-language) | [Examples](#examples) | [Points of Interest](#points-of-interests) | [Developing](#developing-curlpipe)
 
 ## Getting started
 
