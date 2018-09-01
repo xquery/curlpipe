@@ -184,13 +184,13 @@ or a DELETE
 
 ### Operators
 
-Operators can chain together to build execution pipeline of arbritrary length.
+Operators chain together to build execution pipeline of arbritrary length.
 
 ```$bash
 [/tmp/data.json] | [http://httpbin.org/post] > [/tmp/output.txt] | [http://httpbin.org/post]
 ```
 
-The allowable set of operators that perform HTTP processing are:
+The set of processing operators are:
 
 | operator  | description   |
 |-----------|---------------|
@@ -205,12 +205,12 @@ Parameters can be passed into curlscript
 ```$bash
 > curlscript -Pname=Tommy example.cs -Pid=1
 ```
-and are used to replace tokens (ex ${token}) in either data or URIs.
+and used for token replacement (ex. ${token}) in either data or URIs.
 ```$bash
 {name:"${name}"} | [http://httpbin.org/get/${id}]
 ```
 
-### Conditions
+### Conditional Logic
 
 Curlscript implements boolean and null datatype which can be used with conditional operators
 to test data values.
@@ -229,7 +229,7 @@ Where conditionals can be composited up using AND(&&) or OR(||) operators.
 [http://www.httpbin.org/get] ~= "test" && [http://www.httpbin.org/get] != "not test"
 ```
 
-Curlscript only supports trinary logic.
+Curlscript only supports trinary logic, in the following form.
 
 ```$bash
 [http://www.httpbin.org/get] =~ "test"
@@ -237,15 +237,15 @@ Curlscript only supports trinary logic.
        : "failure" > [/tmp/fail.txt]       
 ```
 
-The allowable set of conditional operators are:
+The set of conditional operators are:
 
 | operator  | description        |
 |-----------|--------------------|
 | ==        |  equal             | 
 | !=        |  does not equal    | 
 | ~=        |  regex text        | 
-| &&        |   AND condition    | 
-| &#124;&#124; | OR condition    | 
+| &&        |  AND chain condition    | 
+| &#124;&#124; | OR chain condition    | 
 
  
 ### Include
