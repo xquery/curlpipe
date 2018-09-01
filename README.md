@@ -127,7 +127,19 @@ where the seperator (;) is optional.
 
 ### Data types
 
-In addition to a URI, curlpipe supports boolean, literal, xml, json and null data types.
+In addition to a URI, curlpipe supports boolean, literal, binary, xml, json and null data types.
+
+| data type  | example |description   |
+|------------|---------|--------------|
+| URI        | [http://www.example.org]   | used to POST, PUT or DELETE.| 
+| literal    |  "name=value;name=value"   | literal data value.|
+| binary     |  ex. zip file              | binary data value.|
+| xml        | <person><name>Tommy</name></person>        | well formed xml data.|
+| json       | {id:1,name:"Tommy"}        | json data.|
+| boolean    |    ? ?                     | true or false.|
+| null       |   []                       | an empty/null value.|
+
+
 ```$bash
 "name=value;name=value" ;
 ```
@@ -141,14 +153,6 @@ Literal data could also be binary data (for example, a zip file).
 {id:1,name:"Tommy"};
 ```
 
-| data type  | example |description   |
-|------------|---------|--------------|
-| URI        | [http://www.example.org]   | used to POST, PUT or DELETE.| 
-| literal    |  "name=value;name=value"   | literal data value.|
-| xml        | <person><name>Tommy</name></person>        | well formed xml data.|
-| json       | {id:1,name:"Tommy"}        | json data.|
-| boolean    |                            | true or false.|
-| null       |   []                       | an empty/null value.|
 
 ### Statements
 
