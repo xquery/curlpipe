@@ -16,7 +16,7 @@ pipelines of execution using a 'little language' with built in primitives and na
 
 Download a release or build the software.
 
-Now try it out, define a file (example.cs) 
+Now try it out, define a file (example.cp) 
 
 ```$bash
 [http://www.httpbin.org/get] > [/tmp/output.txt]
@@ -24,7 +24,7 @@ Now try it out, define a file (example.cs)
 and invoke curlpipe
 
 ```$bash
-> curlpipe example.cs
+> curlpipe example.cp
 ```
 
 ## Usage
@@ -38,7 +38,7 @@ To get help run
 ```$bash
 curlpipe 0.1.0 | ⓒ 2017-2018 James Fuller <jim.fuller@webcomposite.com> | https://github.com/xquery/curlpipe
 
-> curlpipe mycurlpipe.cs 
+> curlpipe mycurlpipe.cp 
     -h | --help   : Help.
     -d | --debug  : Emit debug info logging.
     -i | --info   : Emit info logging.
@@ -90,7 +90,7 @@ where data.json is
 ```
 
 ```$bash
-> curlpipe -p data.json example.cs
+> curlpipe -p data.json example.cp
 ```
 
 or data.xml looks like 
@@ -108,13 +108,13 @@ or data.xml looks like
 ```
 and similarly called
 ```$bash
-> curlpipe -p data.xml example.cs
+> curlpipe -p data.xml example.cp
 ```
 
 Paramaters can be individually passed (and override params if used in conjunction with -p flag).
 
 ```$bash
-> curlpipe -Pid=1 -Pname=Ali G example.cs
+> curlpipe -Pid=1 -Pname=Ali G example.cp
 ```
 
 ## The curlpipe (little) language
@@ -127,7 +127,7 @@ where the seperator (;) is optional.
 
 ### Data types
 
-In addition to a URI, curlpipe supports boolean, literal, xml, json data types.
+In addition to a URI, curlpipe supports boolean, literal, xml, json and null data types.
 ```$bash
 "name=value;name=value" ;
 ```
@@ -144,11 +144,11 @@ Literal data could also be binary data (for example, a zip file).
 | data type  | example |description   |
 |------------|---------|--------------|
 | URI        | [http://www.example.org]   | used to POST, PUT or DELETE.| 
-| literal    |  "name=value;name=value"   | redirect output to file.|
-| xml        | <person><name>Tommy</name></person>        | append output to file.|
-| json       | {id:1,name:"Tommy"}        | used to force PUT or DELETE.|
+| literal    |  "name=value;name=value"   | literal data value.|
+| xml        | <person><name>Tommy</name></person>        | well formed xml data.|
+| json       | {id:1,name:"Tommy"}        | json data.|
 | boolean    |                            | true or false.|
-| null       |   []                       | a null value.|
+| null       |   []                       | an empty/null value.|
 
 ### Statements
 
@@ -177,9 +177,14 @@ To force a PUT
 {id:1,name:"Tommy"} =| [http://httpbin.org/put]  
 ```
 
-or a DELETE
+To force a DELETE
 ```$bash
 [] =| [http://httpbin.org/delete] 
+```
+
+To force a HEAD use a conditional (explained further down)
+```$bash
+[http://httpbin.org/delete] != []
 ```
 
 ### Operators
@@ -203,7 +208,7 @@ The set of processing operators are:
 
 Parameters can be passed into curlpipe 
 ```$bash
-> curlpipe -Pname=Tommy example.cs -Pid=1
+> curlpipe -Pname=Tommy example.cp -Pid=1
 ```
 and used for token replacement (ex. ${token}) in either data or URIs.
 ```$bash
