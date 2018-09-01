@@ -7,8 +7,8 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 # build the binary
 add_executable(runAllTests unit_test_main.cpp)
 
-# link gtest and curlscript lib
-target_link_libraries(runAllTests gtest gmock_main libcurlscript)
+# link gtest and curlpipe lib
+target_link_libraries(runAllTests gtest gmock_main libcurlpipe)
 
 # ensure this target gets run with generic runTests target
 add_test(NAME runAllTests COMMAND runAllTests)

@@ -1,5 +1,5 @@
 ###############################################################################
-# curlscript - https://github.com/xquery/curlscript
+# curlpipe - https://github.com/xquery/curlscript
 ###############################################################################
 # Copyright (c) 2017-2018 James Fuller <jim.fuller@webcomposite.com>
 #
@@ -23,8 +23,8 @@
 ###############################################################################
 
 file(GLOB SRC_FILES *.cpp)
-add_executable(curlscript ${SRC_FILES})
-target_link_libraries(curlscript libcurlscript)
-install(TARGETS curlscript
+add_executable(curlpipe ${SRC_FILES})
+target_link_libraries(curlpipe libcurlpipe)
+install(TARGETS curlpipe
         RUNTIME DESTINATION bin
         COMPONENT application)

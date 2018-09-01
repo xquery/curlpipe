@@ -1,5 +1,5 @@
 /******************************************************************************
- * curlscript - https://github.com/xquery/curlscript
+ * curlpipe - https://github.com/xquery/curlpipe
  ******************************************************************************
  * Copyright (c) 2017-2018 James Fuller <jim.fuller@webcomposite.com>
  *
@@ -22,8 +22,8 @@
  * IN THE SOFTWARE.
 ******************************************************************************/
 
-#ifndef CURLSCRIPT_UTF8ENCODER_H
-#define CURLSCRIPT_UTF8ENCODER_H
+#ifndef CURLPIPE_UTF8ENCODER_H
+#define CURLPIPE_UTF8ENCODER_H
 
 #include <cstddef>
 #include <cstdio>
@@ -111,4 +111,4 @@ public:
     }
 };
 
-#endif
+#endif //CURLPIPE_UTF8ENCODER_H

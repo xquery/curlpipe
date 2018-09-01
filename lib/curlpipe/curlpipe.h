@@ -22,14 +22,14 @@
  * IN THE SOFTWARE.
 ******************************************************************************/
 
-#include <curlpipe/curlpipe.h>
-#include <gtest/gtest.h>
+#ifndef CURLPIPE_CURLPIPE_H
+#define CURLPIPE_CURLPIPE_H
 
-using namespace curlpipe;
+#include <string>
 
-TEST(CurlPipeTest,TestApi) {
-    EXPECT_EQ(exec("data/test-api-data.cp", true),0);
-    EXPECT_DEATH(exec("data/nonexistingfile.cp"), "file");
-//    EXPECT_DEATH(exec("data/test-api-error1.cp"), "file");
-
+namespace curlpipe{
+    int exec(const std::string file_uri);
+    int exec(const std::string file_uri, const bool quiet);
 }
+
+#endif //CURLPIPE_CURLPIPE_H

@@ -1,5 +1,5 @@
 /******************************************************************************
- * curlscript - https://github.com/xquery/curlscript
+ * curlpipe - https://github.com/xquery/curlpipe
  ******************************************************************************
  * Copyright (c) 2017-2018 James Fuller <jim.fuller@webcomposite.com>
  *
@@ -22,7 +22,7 @@
  * IN THE SOFTWARE.
 ******************************************************************************/
 
-#include "unit_test_curlscript.cpp"
+#include "unit_test_curlpipe.cpp"
 #include "unit_test_api.cpp"
 #include "unit_test_parser.cpp"
 

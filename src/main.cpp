@@ -1,5 +1,5 @@
 /******************************************************************************
- * curlscript - https://github.com/xquery/curlscript
+ * curlpipe - https://github.com/xquery/curlpipe
  ******************************************************************************
  * Copyright (c) 2017-2018 James Fuller <jim.fuller@webcomposite.com>
  *
@@ -28,18 +28,18 @@
 #include <functional>
 #include <iostream>
 
-#include <curlscript/curlscript.cpp>
+#include <curlpipe/curlpipe.cpp>
 
 using namespace std;
 
 int banner(){
-    cout << "curlscript " << get_version() << " | ⓒ 2017-2018 James Fuller <jim.fuller@webcomposite.com> | https://github.com/xquery/curlscript" << endl;
+    cout << "curlpipe " << get_version() << " | ⓒ 2017-2018 James Fuller <jim.fuller@webcomposite.com> | https://github.com/xquery/curlpipe" << endl;
     return CS_OK;
 }
 
 int usage(){
     banner();
-    cout << "\n> curlscript mycurlscript.cs \n\n"
+    cout << "\n> curlpipe mycurlpipe.cp \n\n"
         << "    -h | --help   : Help.\n"
         << "    -d | --debug  : Emit debug info logging.\n"
         << "    -i | --info   : Emit info logging.\n"
@@ -49,13 +49,13 @@ int usage(){
         << "    -A | --auth-type : Specify the auth mechanism (basic|digest).\n"
         << "    -p | --params : Define set of parameters for transclusion with file (json|xml).\n"
         << "    -P | --param  : Define parameter(s) for transclusion.\n"
-        << "    -f | --file   : Supply curlscript file uri.\n" << endl;
+        << "    -f | --file   : Supply curlpipe file uri.\n" << endl;
     
     return CS_OK;
 }
 
 cxxopts::Options setopts(){
-    cxxopts::Options opts("curlscript", "http scripting with curl.");
+    cxxopts::Options opts("curlpipe", "http pipelines with curl.");
     opts.add_options()
             ("positional",
              "Positional arguments: these are the arguments that are entered "
@@ -70,7 +70,7 @@ cxxopts::Options setopts(){
             ("A,auth-type", "Specify the auth mechanism (basic|digest).",cxxopts::value<string>())
             ("p,params", "Define set of parameters for transclusion with file (json|xml).",cxxopts::value<string>())
             ("P,param", "Define parameter(s) for transclusion.",cxxopts::value<string>())
-            ("f,file", "Supply curlscript file uri.", cxxopts::value<string>());
+            ("f,file", "Supply curlpipe file uri.", cxxopts::value<string>());
     opts.parse_positional({"input", "output", "positional"});
     return opts;
 }
@@ -106,13 +106,13 @@ int main(int argc, char** argv ){
         DLOG_S(INFO) << "set positional opt";
         auto& v = result["positional"].as<std::vector<std::string>>();
         for (const auto& s : v) {
-            curlscript::exec(s, result["quiet"].count());}
+            curlpipe::exec(s, result["quiet"].count());}
     } else{
         if(result["file"].count() == 1){
             DLOG_S(INFO) << "set file opt";
-            curlscript::exec(result["file"].as<string>(), result["quiet"].count());
+            curlpipe::exec(result["file"].as<string>(), result["quiet"].count());
         }else{
-            LOG_S(ERROR) << "must supply curlscript file.";
+            LOG_S(ERROR) << "must supply curlpipe file.";
             return EXIT_FAILURE; }}
 
     DLOG_S(INFO) << "finished processing, dumping output to stdout.";

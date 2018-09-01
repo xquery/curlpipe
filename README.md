@@ -1,15 +1,15 @@
-# curlscript (develop)
+# curlpipe (develop)
 WARNING - under development (as in everything is probably broken!)
 
 A little DSL for curl making it easy to build up http execution pipelines.
 
-[![Build Status](https://travis-ci.org/xquery/curlscript.svg?branch=develop)](https://travis-ci.org/xquery/curlscript)
-[![Coverage Status](https://coveralls.io/repos/github/xquery/curlscript/badge.svg?branch=develop)](https://coveralls.io/github/xquery/curlscript?branch=develop)
+[![Build Status](https://travis-ci.org/xquery/curlpipe.svg?branch=develop)](https://travis-ci.org/xquery/curlpipe)
+[![Coverage Status](https://coveralls.io/repos/github/xquery/curlpipe/badge.svg?branch=develop)](https://coveralls.io/github/xquery/curlpipe?branch=develop)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](COPYING)
 
 [Curl](https://curl.haxx.se/) is a great ~~swiss army knife~~ http client that does much more then just make it easy to work with HTTP, supporting a plethora of URI addressable protocols. Over the years, the curl command line interface has grown - exposing many options with most users only ever invoking a subset of features, learning more advanced features over time.
 
-[Curlscript](https://github.com/xquery/curlscript) is a utility that exposes much of curl's goodness via a [DSL](https://en.wikipedia.org/wiki/Domain-specific_language) making it easy to build up
+[curlpipe](https://github.com/xquery/curlpipe) is a utility that exposes much of curl's goodness via a [DSL](https://en.wikipedia.org/wiki/Domain-specific_language) making it easy to build up
 pipelines of execution using a 'little language' with built in primitives and natural bias for working with http.  
 
 ## Getting started
@@ -21,10 +21,10 @@ Now try it out, define a file (example.cs)
 ```$bash
 [http://www.httpbin.org/get] > [/tmp/output.txt]
 ```
-and invoke curlscript
+and invoke curlpipe
 
 ```$bash
-> curlscript example.cs
+> curlpipe example.cs
 ```
 
 ## Usage
@@ -32,13 +32,13 @@ and invoke curlscript
 To get help run
 
 ```$bash
-> curlscript -h
+> curlpipe -h
 ```
 
 ```$bash
-curlscript 0.1.0 | ⓒ 2017-2018 James Fuller <jim.fuller@webcomposite.com> | https://github.com/xquery/curlscript
+curlpipe 0.1.0 | ⓒ 2017-2018 James Fuller <jim.fuller@webcomposite.com> | https://github.com/xquery/curlpipe
 
-> curlscript mycurlscript.cs 
+> curlpipe mycurlpipe.cs 
     -h | --help   : Help.
     -d | --debug  : Emit debug info logging.
     -i | --info   : Emit info logging.
@@ -50,7 +50,7 @@ curlscript 0.1.0 | ⓒ 2017-2018 James Fuller <jim.fuller@webcomposite.com> | ht
     -P | --param  : Define parameter(s) for transclusion.    
 ```
 
-Curlscript options for controlling how much information is emitted during processing.
+curlpipe options for controlling how much information is emitted during processing.
 
 | short  | long     | description   |
 |--------|----------|---------------|
@@ -68,7 +68,7 @@ These flags set the default auth credentials and auth-type to be used with all h
 | -a     | --auth      |  Pass a username:password pair as the argument.  |  
 | -A     | --auth-type |  Specify the auth mechanism (basic|digest). |
 
-~/.netrc (on windows ~/_netrc) is also supported by curlscript: 
+~/.netrc (on windows ~/_netrc) is also supported by curlpipe: 
 ```$bash
 > cat ~/.netrc
 machine example.org
@@ -90,7 +90,7 @@ where data.json is
 ```
 
 ```$bash
-> curlscript -p data.json example.cs
+> curlpipe -p data.json example.cs
 ```
 
 or data.xml looks like 
@@ -108,18 +108,18 @@ or data.xml looks like
 ```
 and similarly called
 ```$bash
-> curlscript -p data.xml example.cs
+> curlpipe -p data.xml example.cs
 ```
 
 Paramaters can be individually passed (and override params if used in conjunction with -p flag).
 
 ```$bash
-> curlscript -Pid=1 -Pname=Ali G example.cs
+> curlpipe -Pid=1 -Pname=Ali G example.cs
 ```
 
-## The curlscript (little) language
+## The curlpipe (little) language
 
-Curlscript defines a series of statement(s). The simplest statement just defines retrieval of a URI:
+curlpipe defines a series of statement(s). The simplest statement just defines retrieval of a URI:
 ```$bash
 [http://www.httpbin.org/get] ;
 ```
@@ -127,7 +127,7 @@ where the seperator (;) is optional.
 
 ### Data types
 
-In addition to a URI, curlscript supports boolean, literal, xml, json data types.
+In addition to a URI, curlpipe supports boolean, literal, xml, json data types.
 ```$bash
 "name=value;name=value" ;
 ```
@@ -201,9 +201,9 @@ The set of processing operators are:
 
 ### Parameters
 
-Parameters can be passed into curlscript 
+Parameters can be passed into curlpipe 
 ```$bash
-> curlscript -Pname=Tommy example.cs -Pid=1
+> curlpipe -Pname=Tommy example.cs -Pid=1
 ```
 and used for token replacement (ex. ${token}) in either data or URIs.
 ```$bash
@@ -212,7 +212,7 @@ and used for token replacement (ex. ${token}) in either data or URIs.
 
 ### Conditional Logic
 
-Curlscript implements boolean and null datatype which can be used with conditional operators
+curlpipe implements boolean and null datatype which can be used with conditional operators
 to test data values.
 
 ```$bash
@@ -229,7 +229,7 @@ Where conditionals can be composited up using AND(&&) or OR(||) operators.
 [http://www.httpbin.org/get] ~= "test" && [http://www.httpbin.org/get] != "not test"
 ```
 
-Curlscript only supports trinary logic, in the following form.
+curlpipe only supports trinary logic, in the following form.
 
 ```$bash
 [http://www.httpbin.org/get] =~ "test"
@@ -250,11 +250,11 @@ The set of conditional operators are:
  
 ### Include
 
-It is possible to include other curlscript statements from other files.
+It is possible to include other curlpipe statements from other files.
 
 ## Examples
 
-Find more examples [here](https://github.com/xquery/curlscript/tree/develop/docs/examples).
+Find more examples [here](https://github.com/xquery/curlpipe/tree/develop/docs/examples).
 
 ##### Retrieve (GET) and save to file   
 ```$bash
@@ -361,27 +361,27 @@ ${mypayload} | [http://www.httpbin.org/delete/${myid}]
 
 ## Points of Interests
 
-Curlscript is by design a 'little language' and most likely missing features from your 'favourite' language. It is intended as an adjunct to your existing script processing or host language. 
+curlpipe is by design a 'little language' and most likely missing features from your 'favourite' language. It is intended as an adjunct to your existing script processing or host language. 
 
 To provide a framework for design thoughts, here are a few possibly non obvious gaps in the current codebase.
 
-* Curlscript is not intended as a drop in replacement for the curl tool (which is already a great [CLI](https://en.wikipedia.org/wiki/Command-line_interface)).
+* curlpipe is not intended as a drop in replacement for the curl tool (which is already a great [CLI](https://en.wikipedia.org/wiki/Command-line_interface)).
 * Intentionally [lazy](http://threevirtues.com/) defining internals or worrying too much about performance at this stage.
-* Curlscript language is defined with an [EBNF](etc/csparser.ebnf) which is used to produce a strict parser.
-* Designing a programming language is hard - coherence and an easy to run AST are the first goals, please do [raise an issue](https://github.com/xquery/curlscript/issues) if you feel strongly where syntax could change.
+* curlpipe language is defined with an [EBNF](etc/csparser.ebnf) which is used to produce a strict parser.
+* Designing a programming language is hard - coherence and an easy to run AST are the first goals, please do [raise an issue](https://github.com/xquery/curlpipe/issues) if you feel strongly where syntax could change.
 * I find using [CMake](https://cmake.org/) non intuitive ... its enforced usage on this project is an attempt to learn more (otherwise you would see a Makefile here!). 
-* Currently curlscript is http centric in initial releases.
-* Woefully ignorant of windows platform ... looking at [appveyor](https://www.appveyor.com/) to eventually help solve that ([issue #2](https://github.com/xquery/curlscript/issues/2)).
+* Currently curlpipe is http centric in initial releases.
+* Woefully ignorant of windows platform ... looking at [appveyor](https://www.appveyor.com/) to eventually help solve that ([issue #2](https://github.com/xquery/curlpipe/issues/2)).
 
 I have blatantly stolen (and deformed) concepts from many places (bash, unix pipes, etc..). The following projects provide alternate approaches to solving similar problems that
-curlscript is trying to address and worth a mention.
+curlpipe is trying to address and worth a mention.
 
 * [httpie](https://github.com/jakubroztocil/httpie) 
 * [curlrc](https://github.com/benwebber/curlrc)
 
-## Developing curlscript
+## Developing curlpipe
 
-Please [raise an issue](https://github.com/xquery/curlscript/issues) or make a contribution by forking the repository and creating a [pr](https://github.com/xquery/curlscript/pulls). 
+Please [raise an issue](https://github.com/xquery/curlpipe/issues) or make a contribution by forking the repository and creating a [pr](https://github.com/xquery/curlpipe/pulls). 
 
 ### Compiling
 
@@ -397,7 +397,7 @@ To build software, run cmake:
 ```
 
 Running cmake requires access to the internet to pull down dependencies. This is problematic  approach for 
-those wishing to build on a standalone machine off the network (tracked as [issue 1](https://github.com/xquery/curlscript/issues/1))
+those wishing to build on a standalone machine off the network (tracked as [issue 1](https://github.com/xquery/curlpipe/issues/1))
 
 The build will complain if there are other common dependencies missing from your platform (ex. openssl).
 
@@ -424,7 +424,7 @@ or you could run directly
 
 ### Generating the Parser
 
-lib/curlscript/csparser.cpp is generated using [REx Parser Generator](http://www.bottlecaps.de/rex/) with the 
+lib/curlpipe/csparser.cpp is generated using [REx Parser Generator](http://www.bottlecaps.de/rex/) with the 
 following flags.
 
 ```$bash
@@ -437,7 +437,7 @@ Release packages are built using CPack.
 
 Make a release build, ensuring you make a 'release' build and disable tests.
 ```$bash
-> cmake -DCMAKE_BUILD_TYPE=Release -DCURLSCRIPT_DISABLE_TESTS=true -DENABLE_MANUAL=OFF -DBUILD_TESTING=OFF 
+> cmake -DCMAKE_BUILD_TYPE=Release -Dcurlpipe_DISABLE_TESTS=true -DENABLE_MANUAL=OFF -DBUILD_TESTING=OFF 
 > make
 ```
 Then run cpack in cmake build directory
@@ -460,7 +460,7 @@ Please review these individual projects for more details on their own dependenci
 
 ## License
 
-curlscript is provided under the [MIT License](COPYING)
+curlpipe is provided under the [MIT License](COPYING)
 
 MIT License
 

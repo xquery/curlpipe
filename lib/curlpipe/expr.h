@@ -1,5 +1,5 @@
 /******************************************************************************
- * curlscript - https://github.com/xquery/curlscript
+ * curlpipe - https://github.com/xquery/curlpipe
  ******************************************************************************
  * Copyright (c) 2017-2018 James Fuller <jim.fuller@webcomposite.com>
  *
@@ -22,62 +22,47 @@
  * IN THE SOFTWARE.
 ******************************************************************************/
 
-#include <cstdio>
-#include <cwchar>
-#include <cmath>
-#include <iostream>
-#include <sstream>
-#include <fstream>
-#include <cstring>
-#include <cstdlib>
-#include <vector>
-#include <map>
-#include <cassert>
+#ifndef CURLPIPE_EXPR_H
+#define CURLPIPE_EXPR_H
 
-#include "curlscript.h"
-#include "log.h"
-#include "helpers.h"
-#include "serializer.h"
-#include "ast.cpp"
-#include "eval.cpp"
-
-#define CS_OK 0;
+#include <string>
 
 using namespace std;
 
-namespace curlscript{
+namespace curlpipe {
 
-  int exec(const string file_uri, const bool quiet) {
+    struct var {
+        string var_name;
+    };
 
-      DLOG_S(INFO) << "loading " << file_uri;
-      bool indent = false;
+    struct uri {
+        string scheme;
+        string host;
+        string port;
+        string path;
+        string get_uri() {
+            string uri;
+            uri += scheme;
+            uri += host;
+            if(!port.empty()){
+                uri += ":" + port;
+            };
+            uri += path;
+            return uri;}
+    };
 
-      ASTserializer s(indent);
-      wstring winput =convert(load_file(file_uri));
+    struct item {
+        struct var;
+        struct uri uri;
+    };
 
-      csparser parser(winput.c_str(), &s);
-      try {
-          DLOG_S(INFO) << "serializing to xml representation";
-          parser.parse_CS(); }
-      catch (csparser::ParseException &pe) {
-          LOG_S(ERROR) << "parser error, " << convert(pe.getMessage());
-          return EXIT_FAILURE; }
-
-      DLOG_S(INFO) << s.getParsed();
-      vector<expr> exprs = generate_ast(s.getParsed());
-
-      std::ostringstream output;
-      DLOG_S(INFO) << "evaluate AST";
-      eval_exprs(exprs, output);
-
-      if(!quiet){
-          cout << output.str();
-      }
-
-      return 0;
-  }
-
-    int exec(const string file_uri){
-        return exec(file_uri, false);
-    }
+    struct expr {
+        string uid;
+        int order;
+        string var_name;
+        string var_value;
+        vector <tuple<vector<item>,string,vector<item>>> statements;
+    };
 }
+
+#endif //CURLPIPE_EXPR_H

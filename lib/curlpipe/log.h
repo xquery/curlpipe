@@ -1,5 +1,5 @@
 /******************************************************************************
- * curlscript - https://github.com/xquery/curlscript
+ * curlpipe - https://github.com/xquery/curlpipe
  ******************************************************************************
  * Copyright (c) 2017-2018 James Fuller <jim.fuller@webcomposite.com>
  *
@@ -22,13 +22,26 @@
  * IN THE SOFTWARE.
 ******************************************************************************/
 
-#include <curlscript/curlscript.h>
-#include <gtest/gtest.h>
+#ifndef CURLPIPE_LOG_H
+#define CURLPIPE_LOG_H
 
-using namespace std;
+#ifndef LOGURU_IMPLEMENTATION
+#define LOGURU_IMPLEMENTATION   1
 
-TEST(CurlScriptTest,TestCurlScript){
-    EXPECT_EQ(curlscript::exec("data/basic.cs", true),0);
-    EXPECT_DEATH(curlscript::exec("nonexistingfile"),"");
-    EXPECT_DEATH(curlscript::exec(""),"");
-}
+#define CURLPIPE_VERSION_MAJOR 0
+#define CURLPIPE_VERSION_MINOR 1
+#define CURLPIPE_VERSION_PATCH 0
+
+#define LOGURU_WITH_STREAMS     1
+#define LOGURU_FILENAME_WIDTH   16
+#define LOGURU_REDEFINE_ASSERT  1
+
+#ifndef NDEBUG
+    #define LOGURU_STACKTRACES      1
+    #define LOGURU_RTTI             1
+#endif
+
+#include <loguru.hpp>
+#endif
+
+#endif //CURLPIPE_LOG_H

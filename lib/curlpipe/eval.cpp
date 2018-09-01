@@ -1,5 +1,5 @@
 /******************************************************************************
- * curlscript - https://github.com/xquery/curlscript
+ * curlpipe - https://github.com/xquery/curlpipe
  ******************************************************************************
  * Copyright (c) 2017-2018 James Fuller <jim.fuller@webcomposite.com>
  *
@@ -47,7 +47,7 @@
 
 using namespace std;
 
-namespace curlscript {
+namespace curlpipe {
 
     void eval_exprs(vector<expr> exprs, std::ostringstream &output){
 

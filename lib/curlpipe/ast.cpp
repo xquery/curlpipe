@@ -1,5 +1,5 @@
 /******************************************************************************
- * curlscript - https://github.com/xquery/curlscript
+ * curlpipe - https://github.com/xquery/curlpipe
  ******************************************************************************
  * Copyright (c) 2017-2018 James Fuller <jim.fuller@webcomposite.com>
  *
@@ -29,7 +29,7 @@
 
 using namespace std;
 
-namespace curlscript {
+namespace curlpipe {
 
     struct item generate_item(pugi::xml_node &item){
         struct item cur_item;

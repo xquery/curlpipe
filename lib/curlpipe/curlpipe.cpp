@@ -1,5 +1,5 @@
 /******************************************************************************
- * curlscript - https://github.com/xquery/curlscript
+ * curlpipe - https://github.com/xquery/curlpipe
  ******************************************************************************
  * Copyright (c) 2017-2018 James Fuller <jim.fuller@webcomposite.com>
  *
@@ -22,26 +22,62 @@
  * IN THE SOFTWARE.
 ******************************************************************************/
 
-#ifndef CURLSCRIPT_LOG_H
-#define CURLSCRIPT_LOG_H
+#include <cstdio>
+#include <cwchar>
+#include <cmath>
+#include <iostream>
+#include <sstream>
+#include <fstream>
+#include <cstring>
+#include <cstdlib>
+#include <vector>
+#include <map>
+#include <cassert>
 
-#ifndef LOGURU_IMPLEMENTATION
-#define LOGURU_IMPLEMENTATION   1
+#include "curlpipe.h"
+#include "log.h"
+#include "helpers.h"
+#include "serializer.h"
+#include "ast.cpp"
+#include "eval.cpp"
 
-#define CURLSCRIPT_VERSION_MAJOR 0
-#define CURLSCRIPT_VERSION_MINOR 1
-#define CURLSCRIPT_VERSION_PATCH 0
+#define CS_OK 0;
 
-#define LOGURU_WITH_STREAMS     1
-#define LOGURU_FILENAME_WIDTH   16
-#define LOGURU_REDEFINE_ASSERT  1
+using namespace std;
 
-#ifndef NDEBUG
-    #define LOGURU_STACKTRACES      1
-    #define LOGURU_RTTI             1
-#endif
+namespace curlpipe{
 
-#include <loguru.hpp>
-#endif
+  int exec(const string file_uri, const bool quiet) {
 
-#endif //CURLSCRIPT_LOG_H
+      DLOG_S(INFO) << "loading " << file_uri;
+      bool indent = false;
+
+      ASTserializer s(indent);
+      wstring winput =convert(load_file(file_uri));
+
+      csparser parser(winput.c_str(), &s);
+      try {
+          DLOG_S(INFO) << "serializing to xml representation";
+          parser.parse_CS(); }
+      catch (csparser::ParseException &pe) {
+          LOG_S(ERROR) << "parser error, " << convert(pe.getMessage());
+          return EXIT_FAILURE; }
+
+      DLOG_S(INFO) << s.getParsed();
+      vector<expr> exprs = generate_ast(s.getParsed());
+
+      std::ostringstream output;
+      DLOG_S(INFO) << "evaluate AST";
+      eval_exprs(exprs, output);
+
+      if(!quiet){
+          cout << output.str();
+      }
+
+      return 0;
+  }
+
+    int exec(const string file_uri){
+        return exec(file_uri, false);
+    }
+}

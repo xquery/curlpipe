@@ -1,5 +1,5 @@
 ###############################################################################
-# curlscript - https://github.com/xquery/curlscript
+# curlpipe - https://github.com/xquery/curlscript
 ###############################################################################
 # Copyright (c) 2017-2018 James Fuller <jim.fuller@webcomposite.com>
 #
@@ -22,12 +22,12 @@
 # IN THE SOFTWARE.
 ###############################################################################
 
-set(LIB_NAME libcurlscript)
+set(LIB_NAME libcurlpipe)
 
-file(GLOB SRC_FILES curlscript/*.cpp curlscript/*.h* curlscript/curlscript.h)
+file(GLOB SRC_FILES curlpipe/*.cpp curlpipe/*.h* curlpipe/curlpipe.h)
 configure_file (
         "${CMAKE_CURRENT_SOURCE_DIR}/version.h.in"
-        "${CMAKE_CURRENT_SOURCE_DIR}/curlscript/version.h")
+        "${CMAKE_CURRENT_SOURCE_DIR}/curlpipe/version.h")
 add_library(${LIB_NAME} STATIC ${SRC_FILES})
 target_link_libraries(${LIB_NAME} -lpthread -ldl libcurl pugixml)
 set_target_properties(${LIB_NAME} PROPERTIES LINKER_LANGUAGE CXX)
@@ -40,4 +40,4 @@ install(TARGETS ${LIB_NAME}
         RUNTIME DESTINATION bin
         COMPONENT library)
 
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/curlscript/curlscript.h DESTINATION include/curlscript)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/curlpipe/curlpipe.h DESTINATION include/curlpipe)

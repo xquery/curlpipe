@@ -1,5 +1,5 @@
 /******************************************************************************
- * curlscript - https://github.com/xquery/curlscript
+ * curlpipe - https://github.com/xquery/curlpipe
  ******************************************************************************
  * Copyright (c) 2017-2018 James Fuller <jim.fuller@webcomposite.com>
  *
@@ -22,14 +22,13 @@
  * IN THE SOFTWARE.
 ******************************************************************************/
 
-#ifndef CURLSCRIPT_CURLSCRIPT_H
-#define CURLSCRIPT_CURLSCRIPT_H
+#include <curlpipe/curlpipe.h>
+#include <gtest/gtest.h>
 
-#include <string>
+using namespace std;
 
-namespace curlscript{
-    int exec(const std::string file_uri);
-    int exec(const std::string file_uri, const bool quiet);
+TEST(CurlPipeTest,TestCurlPipe){
+    EXPECT_EQ(curlpipe::exec("data/basic.cp", true),0);
+    EXPECT_DEATH(curlpipe::exec("nonexistingfile.cp"),"");
+    EXPECT_DEATH(curlpipe::exec(""),"");
 }
-
-#endif //CURLSCRIPT_CURLSCRIPT_H

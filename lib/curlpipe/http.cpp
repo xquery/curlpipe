@@ -1,5 +1,5 @@
 /******************************************************************************
- * curlscript - https://github.com/xquery/curlscript
+ * curlpipe - https://github.com/xquery/curlpipe
  ******************************************************************************
  * Copyright (c) 2017-2018 James Fuller <jim.fuller@webcomposite.com>
  *
@@ -80,7 +80,7 @@ int http_set_options(CURL *c){
     curl_easy_setopt(c, CURLOPT_VERBOSE, 1L);
 #endif
     curl_easy_setopt(c, CURLOPT_HEADER, 0L);
-    curl_easy_setopt(c, CURLOPT_USERAGENT, "curlscript via curl/7.19.6");
+    curl_easy_setopt(c, CURLOPT_USERAGENT, "curlpipe via curl/7.19.6");
     curl_easy_setopt(c, CURLOPT_FAILONERROR, 1L);
     curl_easy_setopt(c, CURLOPT_FOLLOWLOCATION, 1L);
     curl_easy_setopt(c, CURLOPT_NOPROGRESS, 1L);

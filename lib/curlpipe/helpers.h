@@ -1,5 +1,5 @@
 /******************************************************************************
- * curlscript - https://github.com/xquery/curlscript
+ * curlpipe - https://github.com/xquery/curlpipe
  ******************************************************************************
  * Copyright (c) 2017-2018 James Fuller <jim.fuller@webcomposite.com>
  *
@@ -22,8 +22,8 @@
  * IN THE SOFTWARE.
 ******************************************************************************/
 
-#ifndef CURLSCRIPT_HELPERS_H
-#define CURLSCRIPT_HELPERS_H
+#ifndef CURLPIPE_HELPERS_H
+#define CURLPIPE_HELPERS_H
 
 #include <iostream>
 #include <sstream>
@@ -35,7 +35,7 @@ using namespace std;
 
 string get_version(){
     std::ostringstream s;
-    s <<  CURLSCRIPT_VERSION_MAJOR << "." << CURLSCRIPT_VERSION_MINOR << "." << CURLSCRIPT_VERSION_PATCH;
+    s <<  CURLPIPE_VERSION_MAJOR << "." << CURLPIPE_VERSION_MINOR << "." << CURLPIPE_VERSION_PATCH;
     return s.str();
 }
 
@@ -114,4 +114,4 @@ inline std::string convert(std::wstring wstring)
     return str;
 };
 
-#endif
+#endif //CURLPIPE_HELPERS_H

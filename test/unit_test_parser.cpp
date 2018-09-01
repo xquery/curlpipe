@@ -1,5 +1,5 @@
 /******************************************************************************
- * curlscript - https://github.com/xquery/curlscript
+ * curlpipe - https://github.com/xquery/curlpipe
  ******************************************************************************
  * Copyright (c) 2017-2018 James Fuller <jim.fuller@webcomposite.com>
  *
@@ -22,7 +22,7 @@
  * IN THE SOFTWARE.
 ******************************************************************************/
 
-#include <curlscript/curlscript.cpp> 
+#include <curlpipe/curlpipe.cpp>
 #include <gtest/gtest.h>
 
 using namespace std;
@@ -45,9 +45,9 @@ using namespace std;
 //                             "<EOF/></CS>");
 //}
 
-TEST(CurlScriptTestParser,TestCurlScriptFailParser){
+TEST(CurlPipeTestParser,TestCurlPipeFailParser){
     ASTserializer s(true);
-    string input = load_file("data/test-api-error1.cs");
+    string input = load_file("data/test-api-error1.cp");
     wstring winput =convert(input);
     csparser parser(winput.c_str(), &s);
     EXPECT_THROW(parser.parse_CS(),csparser::ParseException);

@@ -1,5 +1,5 @@
 ###############################################################################
-# curlscript - https://github.com/xquery/curlscript
+# curlpipe - https://github.com/xquery/curlpipe
 ###############################################################################
 # Copyright (c) 2017-2018 James Fuller <jim.fuller@webcomposite.com>
 #
@@ -26,12 +26,12 @@ cmake_minimum_required(VERSION 3.5.1)
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake-modules;${CMAKE_MODULE_PATH}")
 include(cmake-modules/DownloadProject.cmake)
 
-project(curlscript CXX)
+project(curlpipe CXX)
 set(CMAKE_CXX_STANDARD 14)
 
-set(CURLSCRIPT_VERSION_MAJOR 0)
-set(CURLSCRIPT_VERSION_MINOR 1)
-set(CURLSCRIPT_VERSION_PATCH 0)
+set(CURLPIPE_VERSION_MAJOR 0)
+set(CURLPIPE_VERSION_MINOR 1)
+set(CURLPIPE_VERSION_PATCH 0)
 
 # build flags
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
@@ -39,9 +39,9 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall -Wextra -pedantic -O3 
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -lstdc++ -lpthread -ldl")
 
 #
-set(CURLSCRIPT_DISABLE_TESTS false)
-set(CURLSCRIPT_BUILD_LIB true)
-set(CURLSCRIPT_BUILD_TOOL true)
+set(CURLPIPE_DISABLE_TESTS false)
+set(CURLPIPE_BUILD_LIB true)
+set(CURLPIPE_BUILD_TOOL true)
 set(USE_RAPIDJSON true)
 set(USE_PUGIXML true)
 
@@ -90,7 +90,7 @@ include_directories(${pugixml_SOURCE_DIR}/src)
 add_subdirectory(${pugixml_SOURCE_DIR})
 add_subdirectory(${curl_SOURCE_DIR})
 
-if(NOT CURLSCRIPT_DISABLE_TESTS)
+if(NOT CURLPIPE_DISABLE_TESTS)
     include(CTest)
     enable_testing()
     add_subdirectory(${googletest_SOURCE_DIR} ${googletest_BINARY_DIR})
@@ -98,11 +98,11 @@ if(NOT CURLSCRIPT_DISABLE_TESTS)
 endif()
 
 # build targets
-if(CURLSCRIPT_BUILD_LIB)
+if(CURLPIPE_BUILD_LIB)
     add_subdirectory(lib)
 endif()
 
-if(CURLSCRIPT_BUILD_TOOL)
+if(CURLPIPE_BUILD_TOOL)
     add_subdirectory(src)
 endif()
 
@@ -118,17 +118,17 @@ endif ()
 # define package
 # must set DISABLE_TESTS=true to generate package
 set(CPACK_ARCHIVE_COMPONENT_INSTALL ON)
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "curlscript")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "curlpipe")
 set(CPACK_PACKAGE_VENDOR "James Fuller")
 set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
 set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/COPYING")
 set(CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
 set(CPACK_RESOURCE_FILE_WELCOME "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
 
-set(CPACK_PACKAGE_VERSION "${CURLSCRIPT_VERSION_MAJOR}.${CURLSCRIPT_VERSION_MINOR}.${CURLSCRIPT_VERSION_PATCH}")
-set (CPACK_PACKAGE_VERSION_MAJOR "${CURLSCRIPT_VERSION_MAJOR}")
-set (CPACK_PACKAGE_VERSION_MINOR "${CURLSCRIPT_VERSION_MINOR}")
-set(CPACK_PACKAGE_VERSION_PATCH "${CURLSCRIPT_VERSION_PATCH}")
+set(CPACK_PACKAGE_VERSION "${CURLPIPE_VERSION_MAJOR}.${CURLPIPE_VERSION_MINOR}.${CURLPIPE_VERSION_PATCH}")
+set(CPACK_PACKAGE_VERSION_MAJOR "${CURLPIPE_VERSION_MAJOR}")
+set(CPACK_PACKAGE_VERSION_MINOR "${CURLPIPE_VERSION_MINOR}")
+set(CPACK_PACKAGE_VERSION_PATCH "${CURLPIPE_VERSION_PATCH}")
 
 set(CPACK_SOURCE_IGNORE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/build/;${CMAKE_SOURCE_DIR}/.git/")
 
