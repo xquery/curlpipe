@@ -50,7 +50,7 @@ curlpipe 0.1.0 | ⓒ 2017-2018 James Fuller <jim.fuller@webcomposite.com> | http
     -P | --param  : Define parameter(s) for transclusion.    
 ```
 
-Curlpipe options for controlling how much information is emitted during processing.
+Curlpipe flags for controlling how much information is emitted during processing.
 
 | short  | long     | description   |
 |--------|----------|---------------|
@@ -127,12 +127,19 @@ Options maybe passed to curlpipe, setting default behavior.
 | -o     | --options | set file containing curlpipe options (xml|json format).| 
 | -O     | --option  | set an option (ex. -Pid=1).|
 
-Curlpipe looks for a ~/.curlpiperc file containing options.
+Curlpipe looks for a ~/.curlpiperc file containing options. Alternately you can set the location 
+of this file with the -o flag. Here is an example:
 
-Parameters can be passed in via a file, for example, using data.json:
-```$json
-{"id":1, "name":"Ali G"}
+```$bash
+default.headers.content-type= Application/xml
 ```
+
+The set of options curlpipe exposes are
+
+| option | example  | description   |
+|--------|----------|---------------|
+|        |          | a file containing curlpipe options.| 
+|        |          | set an option (ex. -Pdefault.headers.content-type=Application/xml).|
 
 
 ## The curlpipe language

@@ -70,6 +70,8 @@ cxxopts::Options setopts(){
             ("A,auth-type", "Specify the auth mechanism (basic|digest).",cxxopts::value<string>())
             ("p,params", "Define set of parameters for transclusion with file (json|xml).",cxxopts::value<string>())
             ("P,param", "Define parameter(s) for transclusion.",cxxopts::value<string>())
+            ("o,options", "Define set of options controlling curlpipe behavior (json|xml).",cxxopts::value<string>())
+            ("O,option", "Define option(s) controlling curlpipe behavior.",cxxopts::value<string>())
             ("f,file", "Supply curlpipe file uri.", cxxopts::value<string>());
     opts.parse_positional({"input", "output", "positional"});
     return opts;
