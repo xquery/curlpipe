@@ -457,7 +457,7 @@ To build software, run cmake:
 Running cmake requires access to the internet to pull down dependencies. This is problematic  approach for 
 those wishing to build on a standalone machine off the network (tracked as [issue 1](https://github.com/xquery/curlpipe/issues/1))
 
-The build will complain if there are other common dependencies missing from your platform (ex. openssl).
+The build should complain if any other dependencies are missing (ex. openssl). Please review third party [dependencies](#dependencies) for any other build requirements.
 
 ### Testing
 
@@ -493,12 +493,14 @@ following flags.
 
 Release packages are built using CPack.
 
-Make a release build, ensuring you make a 'release' build and disable tests.
+Make a release build.
 ```$bash
-> cmake -DCMAKE_BUILD_TYPE=Release -Dcurlpipe_DISABLE_TESTS=true -DENABLE_MANUAL=OFF -DBUILD_TESTING=OFF 
+> mkdir build
+> cd build
+> cmake -DCMAKE_BUILD_TYPE=Release -DENABLE_MANUAL=OFF -DBUILD_TESTING=OFF ..
 > make
 ```
-Then run cpack in cmake build directory
+Then run cpack.
 ```
 > cpack --config CPackConfig.cmake
 
