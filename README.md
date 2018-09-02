@@ -448,7 +448,7 @@ To build software, run cmake:
 ```$bash
 > mkdir build
 > cd build
-> cmake -DCMAKE_BUILD_TYPE=Debug -DENABLE_MANUAL=OFF -DBUILD_TESTING=OFF 
+> cmake -DCMAKE_BUILD_TYPE=Debug -DENABLE_MANUAL=OFF -DBUILD_TESTING=OFF ..
 > make 
 > make test
 > make install
