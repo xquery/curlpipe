@@ -126,27 +126,21 @@ Paramaters may also be individually defined, overidding params if used in conjun
 ### Options
 
 By default, curlpipe looks for a ~/.curlpiperc file (on windows _curlpiperc) containing options that control curlpipe
-processing behavior.
+processing behavior. An example ~/.curlpiperc file is [here](https://github.com/xquery/curlpipe/blob/develop/etc/.curlpiperc) 
 
 | short  | long     | description   |
 |--------|----------|---------------|
 | -o     | --options | set file containing curlpipe options (xml|json format).| 
 | -O     | --option  | set an option (ex. -Pid=1).|
 
-Alternately you can set the location of this file with the -o flag. Here is an example:
+Alternately you can set the location of this file with the -o flag.
 
-```$bash
-default.headers.content-type= Application/xml
-```
-
-Options can be overriden at the command line using the -O flag.
-
-The set of options curlpipe exposes are:
+Options can be overriden at the command line using the -O flag. The set of options curlpipe exposes are:
 
 | option | example  | description   |
 |--------|----------|---------------|
-|        |          | a file containing curlpipe options.| 
-|        |          | set an option (ex. -Pdefault.headers.content-type=Application/xml).|
+|        |          | TBA.| 
+|        |          | TBA.|
 
 
 ## The curlpipe language
