@@ -184,17 +184,20 @@ Support for common formats, like XML and json.
 
 ### Statements
 
-A single curlpipe statement can be comprised of either
+A single curlpipe statement can be comprised of
 
-* a datatype
-* dataype operator datatype
+```
+(datatype | datatype operator datatype)
+```
 
-Operators perform actions (or test conditions) on datatypes. The following example shows how the contents of
-/temp/data.json is sent to a HTTP endpoint supporting POST method.
+either a datatype or a datatype + operator + datatype where operators perform actions (or test conditions) on datatypes. 
+
+The following example illustrates how the contents of /temp/data.json is sent to a HTTP endpoint supporting POST method.
 ```$bash
 [/tmp/data.json] | [http://httpbin.org/post] 
 ```
-If the endpoint URI supports PUT it may opt to use that. 
+If the endpoint URI supports PUT it may opt to use that. If the endpoint does not support these methods then the appropriate
+http error code is thrown.
 
 The following would POST xml to the URI.
 
