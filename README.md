@@ -125,7 +125,8 @@ Paramaters may also be individually defined, overidding params if used in conjun
 ```
 ### Options
 
-By default, curlpipe looks for a ~/.curlpiperc file (on windows _curlpiperc) containing options.
+By default, curlpipe looks for a ~/.curlpiperc file (on windows _curlpiperc) containing options that control curlpipe
+processing behavior.
 
 | short  | long     | description   |
 |--------|----------|---------------|
