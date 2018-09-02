@@ -7,13 +7,10 @@
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](COPYING)
 
 
-Curlpipe is a little [DSL](https://en.wikipedia.org/wiki/Domain-specific_language) making it easy to build up http execution pipelines. 
+[Curlpipe](https://github.com/xquery/curlpipe) is a little [DSL](https://en.wikipedia.org/wiki/Domain-specific_language) making it easy to build up http execution pipelines using a 'little language' with built in primitives with a natural bias towards working with http. 
 
 Curlpipe uses [libcurl](https://curl.haxx.se/) under the covers, curl is a great ~~swiss army knife~~ http client that does much more then just make it easy to work with HTTP, supporting a plethora of URI addressable protocols.  Over the years, the curl command line interface has grown - exposing many options with most users only ever invoking a subset of features, learning more advanced features over time.
  
-[Curlpipe](https://github.com/xquery/curlpipe) is a utility that exposes much of curl's goodness via a [DSL](https://en.wikipedia.org/wiki/Domain-specific_language) making it easy to build up
-pipelines of execution using a 'little language' with built in primitives and natural bias for working with http.  
-
 [Getting Started](#getting-started) | [Usage](#usage) | [Language](#the-curlpipe-language) | [Examples](#examples) | [Points of Interest](#points-of-interests) | [Developing](#developing-curlpipe) | [License](#license)
 
 ## Getting started
