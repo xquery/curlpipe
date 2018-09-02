@@ -44,7 +44,7 @@ int usage(){
         << "    -d | --debug  : Emit debug info logging.\n"
         << "    -i | --info   : Emit info logging.\n"
         << "    -l | --log    : Enable logging to file.\n"
-        << "    -q | --quiet  : Suppress output to console.\n"
+        << "    -q | --quiet  : Suppress output to stdout (console).\n"
         << "    -a | --auth   : Pass a username:password pair as the argument.\n"
         << "    -A | --auth-type : Specify the auth mechanism (basic|digest).\n"
         << "    -p | --params : Define set of parameters for token replacement (json|xml).\n"
@@ -67,7 +67,7 @@ cxxopts::Options setopts(){
             ("i,info", "Emit info logging")
             ("l,log", "Enable logging to file", cxxopts::value<string>())
             ("s,serialiser", "Switch serialiser",cxxopts::value<string>())
-            ("q,quiet", "Suppress output to console.")
+            ("q,quiet", "Suppress output to stdout (console).")
             ("a,auth", "Pass a username:password pair as the argument.",cxxopts::value<string>())
             ("A,auth-type", "Specify the auth mechanism (basic|digest).",cxxopts::value<string>())
             ("p,params", "Define set of parameters for token replacement with file (json|xml).",cxxopts::value<string>())

@@ -46,7 +46,7 @@ curlpipe 0.1.0 | ⓒ 2017-2018 James Fuller <jim.fuller@webcomposite.com> | http
     -d | --debug  : Emit debug info logging.
     -i | --info   : Emit info logging.
     -l | --log    : Enable logging to file.
-    -q | --quiet  : Suppress output to console.
+    -q | --quiet  : Suppress output to stdout (console).
     -a | --auth   : Pass a username:password pair as the argument.
     -A | --auth-type : Specify the auth mechanism (basic|digest).
     -p | --params : Define set of parameters for token replacement (json|xml).
@@ -63,7 +63,7 @@ Curlpipe flags for controlling how much information is emitted during processing
 | -d     | --debug  | Emit debug info logging.|
 | -i     | --info   | Emit info logging.|
 | -l     | --log    | Enable logging to file.|
-| -q     | --quiet  | Suppress output to console.|
+| -q     | --quiet  | Suppress output to stdout (console).|
 
 ### Authentication
 The following flags set the default auth credentials and auth-type used by curlpipe.
