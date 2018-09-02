@@ -155,7 +155,7 @@ When this is run the output of dereferencing the URI is sent to stdout (con).
 
 ### Data types
 
-In addition to a URI, curlpipe also supports boolean, literal, binary, xml, json and null data types.
+In addition to a URI, curlpipe supports boolean, literal, binary, xml, json and null data types.
 
 | data type  | example |description   |
 |------------|---------|--------------|
