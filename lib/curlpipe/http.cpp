@@ -110,6 +110,9 @@ string http_get(string url){
         curl_easy_setopt(c, CURLOPT_URL, url.c_str());
         curl_easy_setopt(c, CURLOPT_WRITEDATA, &readBuffer);
 
+        CURLU *h = curl_url();
+        curl_url_cleanup(h);
+
         curl_multi_add_handle(curlm, c);
 
         CURLMcode code;

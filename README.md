@@ -284,8 +284,8 @@ curlpipe only supports trinary logic, in the following form.
 
 ```$bash
 [http://www.httpbin.org/get] =~ "test"
-       ? [/tmp/success.txt] 
-       : "failure" > [/tmp/fail.txt]       
+       ? > [/tmp/success.txt] 
+       : 2> [/tmp/fail.txt]       
 ```
 
 The set of conditional operators are:
