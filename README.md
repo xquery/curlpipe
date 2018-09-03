@@ -280,7 +280,14 @@ Where conditionals can be composited up using AND(&&) or OR(||) operators.
 [http://www.httpbin.org/get] ~= "test" && [http://www.httpbin.org/get] != "not test"
 ```
 
-curlpipe only supports trinary logic, in the following form.
+curlpipe supports boolean logic, in the following form.
+
+```$bash
+[http://www.httpbin.org/get] =~ "test" > [/tmp/matches.txt]
+```
+where the file is only written if the match is a success.
+
+Additionally, curlpipe supports trinary logic, in the following form.
 
 ```$bash
 [http://www.httpbin.org/get] =~ "test"
