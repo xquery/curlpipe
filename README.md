@@ -309,11 +309,9 @@ The set of conditional operators are:
 
 Curlpipe defines the following options
 
-| option  | description        |
-|---------|--------------------|
-|         |  tba               | 
-|         |  tba               | 
-|         |  tba               | 
+| option  | type | default |description        |
+|---------|------|---------|-------------------|
+| deduce-methods-on-pipe | boolean   | true |will detect if URI supports PUT or DELETE when using pipe operator.| 
  
 ## Examples
 
@@ -345,11 +343,16 @@ Find more examples [here](https://github.com/xquery/curlpipe/tree/develop/docs/e
 [http://www.httpbin.org/get].id  
 ```
 
+##### conditional operation
+```$bash
+[http://www.httpbin.org/get] =~ "test" > [/tmp/matches.txt]
+```
+
 ##### Trinary operator
 ```$bash
 [http://www.httpbin.org/get] =~ "test"
-       ? [/tmp/success.txt] 
-       : "failure" > [/tmp/fail.txt]
+       ? > [/tmp/success.txt] 
+       : > [/tmp/fail/fail.txt]
        
 ```
 
@@ -436,7 +439,7 @@ To provide a framework for design thoughts, here are a few possibly non obvious 
 * Currently curlpipe is http centric in initial releases.
 * Woefully ignorant of windows platform ... looking at [appveyor](https://www.appveyor.com/) to eventually help solve that ([issue #2](https://github.com/xquery/curlpipe/issues/2)).
 
-I have blatantly stolen (and deformed) concepts from many places (bash, unix pipes, etc..). The following projects provide alternate approaches to solving similar problems that
+I have blatantly stolen (and deformed) concepts from many places (bash, unix pipes, prolog, etc..). The following projects provide alternate approaches to solving similar problems that
 curlpipe is trying to address and worth a mention.
 
 * [httpie](https://github.com/jakubroztocil/httpie) 
