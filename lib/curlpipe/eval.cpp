@@ -85,11 +85,23 @@ namespace curlpipe {
                                     }
                                 }
                                 if(op == "|"){
-                                    for (auto & item : std::get<2>(statement)) {
-                                        out =http_post(item.uri.get_uri(),out);
+                                    for (auto & item2 : std::get<2>(statement)) {
+                                        if(out.empty()){
+                                            out =http_delete(item2.uri.get_uri());
+                                        }else{
+                                            out =http_post(item2.uri.get_uri(),out);
+                                        }
                                     }
                                 }
-                            }
+                                if(op == "=|"){
+                                    for (auto & item2 : std::get<2>(statement)) {
+                                        if(out.empty()){
+                                            out =http_delete(item2.uri.get_uri());
+                                        }else{
+                                            out =http_put(item2.uri.get_uri(),out);
+                                        }
+                                    }
+                                }                            }
                             return out;});
                 DLOG_S(INFO) << "end exec expr" ; });
 

@@ -165,3 +165,72 @@ string http_post(string url, string payload){
     }
     return ss.str();
 }
+
+string http_delete(string url){
+
+    DLOG_S(INFO) << "perform HTTP DELETE " << url;
+
+    std::ostringstream ss;
+    string readBuffer;
+
+    int handle_count;
+    CURL *c = NULL;
+    c = curl_easy_init();
+
+    if (c) {
+        http_set_options(c);
+        curl_easy_setopt(c, CURLOPT_CUSTOMREQUEST, "DELETE");
+        curl_easy_setopt(c, CURLOPT_URL, url.c_str());
+        curl_easy_setopt(c, CURLOPT_WRITEDATA, &readBuffer);
+
+        curl_multi_add_handle(curlm, c);
+
+        CURLMcode code;
+        DLOG_S(INFO) << "perform HTTP DELETE";
+        while (1) {
+            code = curl_multi_perform(curlm, &handle_count);
+            if (handle_count == 0) {
+                ss << readBuffer;
+                curl_multi_remove_handle(curlm, c);
+                curl_easy_cleanup(c);
+                break;
+            }
+        }
+    }
+    return ss.str();
+}
+
+string http_put(string url, string payload){
+
+    DLOG_S(INFO) << "perform HTTP PUT " << url;
+
+    std::ostringstream ss;
+    string readBuffer;
+
+    int handle_count;
+    CURL *c = NULL;
+    c = curl_easy_init();
+
+    if (c) {
+        http_set_options(c);
+        curl_easy_setopt(c, CURLOPT_PUT, 1L);
+        curl_easy_setopt(c, CURLOPT_URL, url.c_str());
+        curl_easy_setopt(c, CURLOPT_WRITEDATA, &readBuffer);
+        curl_easy_setopt(c, CURLOPT_POSTFIELDS, payload.c_str());
+
+        curl_multi_add_handle(curlm, c);
+
+        CURLMcode code;
+        DLOG_S(INFO) << "perform HTTP PUT";
+        while (1) {
+            code = curl_multi_perform(curlm, &handle_count);
+            if (handle_count == 0) {
+                ss << readBuffer;
+                curl_multi_remove_handle(curlm, c);
+                curl_easy_cleanup(c);
+                break;
+            }
+        }
+    }
+    return ss.str();
+}
