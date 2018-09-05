@@ -17,7 +17,7 @@ Curlpipe uses [libcurl](https://curl.haxx.se/) under the covers, curl is a great
 
 [Download](https://github.com/xquery/curlpipe/releases) the latest release for your platform or [build](#compiling) the software.
 
-To try it out, first define a file (example.cp) 
+To try it out, define a file (example.cp) 
 
 ```$bash
 [http://www.httpbin.org/get] > [/tmp/output.txt]
@@ -26,6 +26,12 @@ and invoke curlpipe, supplying that file as its only argument.
 
 ```$bash
 > curlpipe example.cp
+```
+
+or just pipe in:
+
+```$bash
+echo '[http://www.httpbin.org/get] > [/tmp/output.txt]' | curlpipe
 ```
 
 You should now observe the output from the URI saved to a file.
