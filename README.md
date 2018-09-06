@@ -36,6 +36,23 @@ and invoke curlpipe, supplying that file as its only argument.
 
 You should now observe the output from the URI saved to a file.
 
+In addition, the command line has a few cute tricks eg. it will figure out to do a POST, PUT or DELETE when doing piping into stdout.
+
+Perform a POST
+```$bash
+cat /tmp/data.json | curlpipe http://httpbin.org/post
+```
+
+Perform a PUT
+```$bash
+cat /tmp/data.json | curlpipe http://httpbin.org/put
+```
+
+Perform a delete
+```$bash
+cat /dev/null | curlpipe http://httpbin.org/delete
+```
+
 ## Usage
 
 To get help run

@@ -25,4 +25,3 @@
 [] =| [http://localhost:81/delete]
 
 // perform PUT
-[http://localhost:81/get] =| [http://localhost:81/put]
