@@ -36,7 +36,7 @@ and invoke curlpipe, supplying that file as its only argument.
 
 You should now observe the output from the URI saved to a file.
 
-In addition, the command line has a few cute tricks eg. it will figure out to do a POST, PUT or DELETE when doing piping into stdout.
+In addition, the command line has a few cute tricks eg. it will figure out to do a POST, PUT or DELETE when piping stdin.
 
 Perform a POST
 ```$bash
