@@ -34,17 +34,31 @@
 #include <cassert>
 
 #include <curl/curl.h>
+#include <curl/multi.h>
 #include "log.h"
 
 #define SUPPORT_NETRC 1
 
+#ifdef _WIN32
+#define WAITMS(x) Sleep(x)
+#else
+/* Portable sleep for platforms other than Windows. */
+#define WAITMS(x)                               \
+  struct timeval wait = { 0, (x) * 1000 };      \
+  (void)select(0, NULL, NULL, NULL, &wait);
+#endif
+
 using namespace std;
 
 CURLM *curlm;
+struct CURLMsg *m;
+int http_status_code;
+struct curl_slist *headers = NULL;
 
 int init_http(){
     DLOG_S(INFO) << "init http";
     curlm = curl_multi_init();
+    headers = curl_slist_append(headers, "Accept:text/html,application/xhtml+xml,application/xml,application/json;q=0.9,*/*;q=0.8");
     return CURLE_OK;
 }
 
@@ -55,13 +69,10 @@ int cleanup_http(){
     return CURLE_OK;
 }
 
-static size_t headerCallback(void *ptr, size_t size, size_t nmemb,
-                                   void *stream)
-{
+static size_t headerCallback(void *ptr, size_t size, size_t nmemb, void *stream){
     DLOG_S(INFO) << "response header:" << (char *)ptr;
     return size * nmemb;
 }
-
 
 static size_t writeCallback(void *contents, size_t size, size_t nmemb, void *userp) {
     ((std::string *) userp)->append((char *) contents, size * nmemb);
@@ -88,6 +99,55 @@ int http_set_options(CURL *c){
     return CURLE_OK;
 }
 
+int exec(){
+    int still_running = -1;
+    curl_multi_perform(curlm, &still_running);
+    CURLMcode mc;
+    int numfds;
+    while (still_running) {
+        mc = curl_multi_wait(curlm, NULL, 0, 1000, &numfds);
+        if(mc != CURLM_OK) {
+            LOG_S(ERROR) << "curl_multi_wait() failed, code " << mc;
+            break;
+        }
+        curl_multi_perform(curlm, &still_running);
+    }
+
+    CURL *eh = nullptr;
+    CURLMsg *msg = nullptr;
+    CURLcode return_code;
+    int msgs_left = 0;
+    while ((msg = curl_multi_info_read(curlm, &msgs_left))) {
+        if (msg->msg == CURLMSG_DONE) {
+            eh = msg->easy_handle;
+            http_status_code=0;
+            const char *url;
+
+            curl_easy_getinfo(eh, CURLINFO_RESPONSE_CODE, &http_status_code);
+            curl_easy_getinfo(eh, CURLINFO_EFFECTIVE_URL, &url);
+
+            return_code = msg->data.result;
+            if(return_code!=CURLE_OK) {
+                LOG_S(ERROR) << "url: " << url;
+                LOG_S(ERROR) << "http status code: " << http_status_code;
+                LOG_S(ERROR) << "error code: " << msg->data.result;
+                continue;
+            }
+
+            if(http_status_code==200) {
+                DLOG_S(INFO) << "HTTP Status Code: " << http_status_code;
+            } else {
+                LOG_S(ERROR) << "HTTP Status Code: " << http_status_code;
+            }
+
+            curl_multi_remove_handle(curlm, eh);
+            curl_easy_cleanup(eh);
+        }else{
+            LOG_S(ERROR) << "error: after curl_multi_info_read(), CURLMsg=" << msg->msg;}
+    }
+    return 0;
+}
+
 string http_get(string url){
 
     DLOG_S(INFO) << "doing HTTP GET " << url;
@@ -97,37 +157,31 @@ string http_get(string url){
 
     int handle_count;
     CURL *c = NULL;
-    struct curl_slist *headers = NULL;
 
     c = curl_easy_init();
 
     if (c) {
         http_set_options(c);
-        headers = curl_slist_append(headers, "Content-Type: application/json");
-        curl_easy_setopt(c, CURLOPT_HTTPHEADER, headers);
 
+        curl_easy_setopt(c, CURLOPT_HTTPHEADER, headers);
         curl_easy_setopt(c, CURLOPT_HTTPGET, 1L);
         curl_easy_setopt(c, CURLOPT_URL, url.c_str());
         curl_easy_setopt(c, CURLOPT_WRITEDATA, &readBuffer);
 
-        CURLU *h = curl_url();
-        curl_url_cleanup(h);
+//        CURLU *h = curl_url();
+//        curl_url_cleanup(h);
 
         curl_multi_add_handle(curlm, c);
 
-        CURLMcode code;
         DLOG_S(INFO) << "perform HTTP GET";
-        while (1) {
-            code = curl_multi_perform(curlm, &handle_count);
-            if (handle_count == 0) {
-                ss << readBuffer;
-                curl_slist_free_all(headers);
-                curl_multi_remove_handle(curlm, c);
-                curl_easy_cleanup(c);
-                break;
-            }
+        int result = exec();
+        if(result==0){
+            ss << readBuffer;
+        }else{
+            //error
         }
     }
+
     return ss.str();
 }
 
@@ -138,7 +192,6 @@ string http_post(string url, string payload){
     std::ostringstream ss;
     string readBuffer;
 
-    int handle_count;
     CURL *c = NULL;
     c = curl_easy_init();
 
@@ -151,16 +204,12 @@ string http_post(string url, string payload){
 
         curl_multi_add_handle(curlm, c);
 
-        CURLMcode code;
         DLOG_S(INFO) << "perform HTTP POST";
-        while (1) {
-            code = curl_multi_perform(curlm, &handle_count);
-            if (handle_count == 0) {
-                ss << readBuffer;
-                curl_multi_remove_handle(curlm, c);
-                curl_easy_cleanup(c);
-                break;
-            }
+        int result = exec();
+        if(result==0){
+            ss << readBuffer;
+        }else{
+            //error
         }
     }
     return ss.str();
@@ -173,7 +222,6 @@ string http_delete(string url){
     std::ostringstream ss;
     string readBuffer;
 
-    int handle_count;
     CURL *c = NULL;
     c = curl_easy_init();
 
@@ -185,16 +233,12 @@ string http_delete(string url){
 
         curl_multi_add_handle(curlm, c);
 
-        CURLMcode code;
         DLOG_S(INFO) << "perform HTTP DELETE";
-        while (1) {
-            code = curl_multi_perform(curlm, &handle_count);
-            if (handle_count == 0) {
-                ss << readBuffer;
-                curl_multi_remove_handle(curlm, c);
-                curl_easy_cleanup(c);
-                break;
-            }
+        int result = exec();
+        if(result==0){
+            ss << readBuffer;
+        }else{
+            //error
         }
     }
     return ss.str();
@@ -207,7 +251,6 @@ string http_put(string url, string payload){
     std::ostringstream ss;
     string readBuffer;
 
-    int handle_count;
     CURL *c = NULL;
     c = curl_easy_init();
 
@@ -220,16 +263,12 @@ string http_put(string url, string payload){
 
         curl_multi_add_handle(curlm, c);
 
-        CURLMcode code;
         DLOG_S(INFO) << "perform HTTP PUT";
-        while (1) {
-            code = curl_multi_perform(curlm, &handle_count);
-            if (handle_count == 0) {
-                ss << readBuffer;
-                curl_multi_remove_handle(curlm, c);
-                curl_easy_cleanup(c);
-                break;
-            }
+        int result = exec();
+        if(result==0){
+            ss << readBuffer;
+        }else{
+            //error
         }
     }
     return ss.str();

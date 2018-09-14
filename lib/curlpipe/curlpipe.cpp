@@ -71,13 +71,11 @@ namespace curlpipe{
       eval_exprs(exprs, output);
 
       if(!quiet){
-          cout << output.str();
-      }
-
+          cout << output.str(); }
       return 0;
   }
 
-    int exec(const string file_uri){
-        return exec(file_uri, false);
-    }
+  int exec(const string file_uri){
+      return exec(file_uri, false);
+  }
 }
