@@ -39,18 +39,19 @@ int banner(){
 
 int usage(){
     banner();
-    cout << "\n> curlpipe mycurlpipe.cp \n\n"
+    cout << "\nUsage: curlpipe [options...] <file>\n\n";
+    cout << "   ex. > curlpipe -PmyPort=8001 -PmyHost=localhost mycurlpipe.cp \n\n"
         << "    -h | --help   : Help.\n"
-        << "    -d | --debug  : Emit debug info logging.\n"
-        << "    -i | --info   : Emit info logging.\n"
+        << "    -d | --debug  : Emit debug info.\n"
+        << "    -i | --info   : Emit info.\n"
         << "    -l | --log    : Enable logging to file.\n"
         << "    -q | --quiet  : Suppress output to stdout (console).\n"
         << "    -a | --auth   : Pass a username:password pair as the argument.\n"
         << "    -A | --auth-type : Specify the auth mechanism (basic|digest).\n"
         << "    -p | --params : Define set of parameters for token replacement (json|xml).\n"
         << "    -P | --param  : Define parameter(s) for token replacement.\n"
-        << "    -o | --options : Define set of options controlling curlpipe behavior (default is ~/.curlpiperc).\n"
-        << "    -O | --option  : Define option(s) controlling curlpipe behavior.\n"
+        << "    -o | --options : Define set of curlpipe options (default is ~/.curlpiperc).\n"
+        << "    -O | --option  : Define curlpipe option(s).\n"
         << "    -f | --file   : Supply curlpipe file uri.\n" << endl;
     
     return CS_OK;
@@ -63,8 +64,8 @@ cxxopts::Options setopts(){
              "Positional arguments: these are the arguments that are entered "
              "without an option", cxxopts::value<std::vector<std::string>>())
             ("h,help", "Help.")
-            ("d,debug", "Emit debug info logging")
-            ("i,info", "Emit info logging")
+            ("d,debug", "Emit debug info.")
+            ("i,info", "Emit info.")
             ("l,log", "Enable logging to file", cxxopts::value<string>())
             ("s,serialiser", "Switch serialiser",cxxopts::value<string>())
             ("q,quiet", "Suppress output to stdout (console).")
@@ -72,8 +73,8 @@ cxxopts::Options setopts(){
             ("A,auth-type", "Specify the auth mechanism (basic|digest).",cxxopts::value<string>())
             ("p,params", "Define set of parameters for token replacement with file (json|xml).",cxxopts::value<string>())
             ("P,param", "Define parameter(s) for token replacement.",cxxopts::value<string>())
-            ("o,options", "Define set of options controlling curlpipe behavior (default is ~/.curlpiperc).",cxxopts::value<string>())
-            ("O,option", "Define option(s) controlling curlpipe behavior.",cxxopts::value<string>())
+            ("o,options", "Define set of curlpipe options (default is ~/.curlpiperc).",cxxopts::value<string>())
+            ("O,option", "Define curlpipe option(s).",cxxopts::value<string>())
             ("f,file", "Supply curlpipe file uri.", cxxopts::value<string>());
     opts.parse_positional({"input", "output", "positional"});
     return opts;

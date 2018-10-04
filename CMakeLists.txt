@@ -70,7 +70,7 @@ download_project(PROJ                pugixml
         )
 download_project(PROJ                loguru
         GIT_REPOSITORY      https://github.com/emilk/loguru.git
-        GIT_TAG             master
+        GIT_TAG              v1.8.0
         ${UPDATE_DISCONNECTED_IF_AVAILABLE}
         )
 download_project(PROJ                cxxopts
