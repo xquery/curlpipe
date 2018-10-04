@@ -50,7 +50,7 @@ set(USE_PUGIXML true)
 
 download_project(PROJ                curl
         GIT_REPOSITORY      https://github.com/curl/curl.git
-        GIT_TAG             07f09093ac32c94b759bff402fecc8f08eed76ae
+        GIT_TAG             master
         ${UPDATE_DISCONNECTED_IF_AVAILABLE}
         )
 download_project(PROJ                googletest
