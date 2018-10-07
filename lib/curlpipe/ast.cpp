@@ -33,7 +33,12 @@ namespace curlpipe {
 
     struct item generate_item(pugi::xml_node &item){
         struct item cur_item;
-        cur_item.uri.scheme = item.child("URI").child("scheme").text().as_string();
+        int rc;
+        string scheme;
+        scheme =  item.child("URI").child("scheme").text().as_string();
+        cur_item.uri.scheme = scheme.substr(0,scheme.find(":"));
+//        cur_item.uri.scheme = item.child("URI").child("scheme").text().as_string();
+
         cur_item.uri.host = item.child("URI").child("hostport").child("host").child(
                 "nstring").text().as_string();
         for(pugi::xml_node port: item.child("URI").child("hostport").child("port").children()) {
@@ -44,6 +49,7 @@ namespace curlpipe {
             cur_item.uri.path += "/";
             cur_item.uri.path += path.child("string").text().as_string();
         }
+        cur_item.uri.set_curl_uri();
         DLOG_S(INFO) << "      uri:" << cur_item.uri.get_uri();
         return cur_item;
     }

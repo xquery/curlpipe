@@ -69,7 +69,9 @@ namespace curlpipe {
                             if(op.empty()){
                                 for (auto & item : std::get<0>(statement)) {
                                     DLOG_S(INFO) << "item uri:" << item.uri.get_uri();
-                                    out += http_get(item.uri.get_uri());
+                                    if(!item.uri.get_uri().empty()){
+                                        out += http_get(item.uri.urlp);
+                                    }
                                 }
                             }else{
                                 string op = (string)std::get<1>(statement);
@@ -87,18 +89,18 @@ namespace curlpipe {
                                 if(op == "|"){
                                     for (auto & item2 : std::get<2>(statement)) {
                                         if(out.empty()){
-                                            out =http_delete(item2.uri.get_uri());
+                                            out =http_delete(item2.uri.urlp);
                                         }else{
-                                            out =http_post(item2.uri.get_uri(),out);
+                                            out =http_post(item2.uri.urlp,out);
                                         }
                                     }
                                 }
                                 if(op == "=|"){
                                     for (auto & item2 : std::get<2>(statement)) {
                                         if(out.empty()){
-                                            out =http_delete(item2.uri.get_uri());
+                                            out =http_delete(item2.uri.urlp);
                                         }else{
-                                            out =http_put(item2.uri.get_uri(),out);
+                                            out =http_put(item2.uri.urlp,out);
                                         }
                                     }
                                 }                            }

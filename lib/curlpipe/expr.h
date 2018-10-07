@@ -26,6 +26,7 @@
 #define CURLPIPE_EXPR_H
 
 #include <string>
+#include <curl/curl.h>
 
 using namespace std;
 
@@ -40,6 +41,24 @@ namespace curlpipe {
         string host;
         string port;
         string path;
+        CURLU *urlp;
+        CURLU* set_curl_uri() {
+            int rc;
+            urlp = curl_url();
+            rc = curl_url_set(urlp, CURLUPART_HOST, host.c_str(), 0);
+            rc = curl_url_set(urlp, CURLUPART_SCHEME, scheme.c_str(), 0);
+            rc = curl_url_set(urlp, CURLUPART_PORT, port.c_str(), 0);
+            rc = curl_url_set(urlp, CURLUPART_PATH, path.c_str(), 0);
+        };
+        CURLU* get_curl_uri() {
+            int rc;
+            CURLU *urlp = curl_url();
+            rc = curl_url_set(urlp, CURLUPART_HOST, host.c_str(), 0);
+            rc = curl_url_set(urlp, CURLUPART_SCHEME, scheme.c_str(), 0);
+            rc = curl_url_set(urlp, CURLUPART_PORT, port.c_str(), 0);
+            rc = curl_url_set(urlp, CURLUPART_PATH, path.c_str(), 0);
+            return urlp;
+        };
         string get_uri() {
             string uri;
             uri += scheme;
@@ -48,7 +67,7 @@ namespace curlpipe {
                 uri += ":" + port;
             };
             uri += path;
-            return uri;}
+            return uri;};
     };
 
     struct item {

@@ -20,7 +20,6 @@
 [http://localhost:81/get] | [http://localhost:81/post] | [http://localhost:81/post] > [/tmp/test3.json]
 
 // perform DELETE
-[http://localhost:81/delete]
 [] | [http://localhost:81/delete]
 [] =| [http://localhost:81/delete]
 

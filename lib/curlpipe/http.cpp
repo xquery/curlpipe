@@ -52,7 +52,7 @@ using namespace std;
 
 CURLM *curlm;
 struct CURLMsg *m;
-int http_status_code;
+int http_status_code,rc;
 struct curl_slist *headers = NULL;
 
 int init_http(){
@@ -148,9 +148,7 @@ int exec(){
     return 0;
 }
 
-string http_get(string url){
-
-    DLOG_S(INFO) << "doing HTTP GET " << url;
+string http_get(CURLU *urlp){
 
     std::ostringstream ss;
     string readBuffer;
@@ -162,14 +160,15 @@ string http_get(string url){
 
     if (c) {
         http_set_options(c);
+        char *url;
+        rc = curl_url_get(urlp, CURLUPART_URL, &url, 0);
+        curl_url_cleanup(urlp);
+        DLOG_S(INFO) << "doing HTTP GET " << url;
 
         curl_easy_setopt(c, CURLOPT_HTTPHEADER, headers);
         curl_easy_setopt(c, CURLOPT_HTTPGET, 1L);
-        curl_easy_setopt(c, CURLOPT_URL, url.c_str());
+        curl_easy_setopt(c, CURLOPT_URL, url);
         curl_easy_setopt(c, CURLOPT_WRITEDATA, &readBuffer);
-
-//        CURLU *h = curl_url();
-//        curl_url_cleanup(h);
 
         curl_multi_add_handle(curlm, c);
 
@@ -185,9 +184,7 @@ string http_get(string url){
     return ss.str();
 }
 
-string http_post(string url, string payload){
-
-    DLOG_S(INFO) << "perform HTTP POST " << url;
+string http_post(CURLU *urlp, string payload){
 
     std::ostringstream ss;
     string readBuffer;
@@ -197,8 +194,13 @@ string http_post(string url, string payload){
 
     if (c) {
         http_set_options(c);
+        char *url;
+        rc = curl_url_get(urlp, CURLUPART_URL, &url, 0);
+        curl_url_cleanup(urlp);
+        DLOG_S(INFO) << "perform HTTP POST " << url;
+
         curl_easy_setopt(c, CURLOPT_POST, 1L);
-        curl_easy_setopt(c, CURLOPT_URL, url.c_str());
+        curl_easy_setopt(c, CURLOPT_URL, url);
         curl_easy_setopt(c, CURLOPT_WRITEDATA, &readBuffer);
         curl_easy_setopt(c, CURLOPT_POSTFIELDS, payload.c_str());
 
@@ -215,9 +217,7 @@ string http_post(string url, string payload){
     return ss.str();
 }
 
-string http_delete(string url){
-
-    DLOG_S(INFO) << "perform HTTP DELETE " << url;
+string http_delete(CURLU *urlp){
 
     std::ostringstream ss;
     string readBuffer;
@@ -227,8 +227,13 @@ string http_delete(string url){
 
     if (c) {
         http_set_options(c);
+        char *url;
+        rc = curl_url_get(urlp, CURLUPART_URL, &url, 0);
+        curl_url_cleanup(urlp);
+        DLOG_S(INFO) << "perform HTTP DELETE " << url;
+
         curl_easy_setopt(c, CURLOPT_CUSTOMREQUEST, "DELETE");
-        curl_easy_setopt(c, CURLOPT_URL, url.c_str());
+        curl_easy_setopt(c, CURLOPT_URL, url);
         curl_easy_setopt(c, CURLOPT_WRITEDATA, &readBuffer);
 
         curl_multi_add_handle(curlm, c);
@@ -244,9 +249,7 @@ string http_delete(string url){
     return ss.str();
 }
 
-string http_put(string url, string payload){
-
-    DLOG_S(INFO) << "perform HTTP PUT " << url;
+string http_put(CURLU *urlp, string payload){
 
     std::ostringstream ss;
     string readBuffer;
@@ -256,8 +259,12 @@ string http_put(string url, string payload){
 
     if (c) {
         http_set_options(c);
+        char *url;
+        rc = curl_url_get(urlp, CURLUPART_URL, &url, 0);
+        curl_url_cleanup(urlp);
+        DLOG_S(INFO) << "perform HTTP PUT " << url;
         curl_easy_setopt(c, CURLOPT_PUT, 1L);
-        curl_easy_setopt(c, CURLOPT_URL, url.c_str());
+        curl_easy_setopt(c, CURLOPT_URL, url);
         curl_easy_setopt(c, CURLOPT_WRITEDATA, &readBuffer);
         curl_easy_setopt(c, CURLOPT_POSTFIELDS, payload.c_str());
 
