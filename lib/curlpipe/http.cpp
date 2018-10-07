@@ -162,7 +162,6 @@ string http_get(CURLU *urlp){
         http_set_options(c);
         char *url;
         rc = curl_url_get(urlp, CURLUPART_URL, &url, 0);
-        curl_url_cleanup(urlp);
         DLOG_S(INFO) << "doing HTTP GET " << url;
 
         curl_easy_setopt(c, CURLOPT_HTTPHEADER, headers);
@@ -196,7 +195,6 @@ string http_post(CURLU *urlp, string payload){
         http_set_options(c);
         char *url;
         rc = curl_url_get(urlp, CURLUPART_URL, &url, 0);
-        curl_url_cleanup(urlp);
         DLOG_S(INFO) << "perform HTTP POST " << url;
 
         curl_easy_setopt(c, CURLOPT_POST, 1L);
@@ -229,7 +227,6 @@ string http_delete(CURLU *urlp){
         http_set_options(c);
         char *url;
         rc = curl_url_get(urlp, CURLUPART_URL, &url, 0);
-        curl_url_cleanup(urlp);
         DLOG_S(INFO) << "perform HTTP DELETE " << url;
 
         curl_easy_setopt(c, CURLOPT_CUSTOMREQUEST, "DELETE");
@@ -261,7 +258,6 @@ string http_put(CURLU *urlp, string payload){
         http_set_options(c);
         char *url;
         rc = curl_url_get(urlp, CURLUPART_URL, &url, 0);
-        curl_url_cleanup(urlp);
         DLOG_S(INFO) << "perform HTTP PUT " << url;
         curl_easy_setopt(c, CURLOPT_PUT, 1L);
         curl_easy_setopt(c, CURLOPT_URL, url);

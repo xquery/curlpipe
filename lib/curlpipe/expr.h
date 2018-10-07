@@ -42,7 +42,10 @@ namespace curlpipe {
         string port;
         string path;
         CURLU *urlp;
-        CURLU* set_curl_uri() {
+        void cleanup(){
+            curl_url_cleanup(urlp);
+        };
+        void set_curl_uri() {
             int rc;
             urlp = curl_url();
             rc = curl_url_set(urlp, CURLUPART_HOST, host.c_str(), 0);

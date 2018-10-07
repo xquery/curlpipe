@@ -72,6 +72,7 @@ namespace curlpipe {
                                     if(!item.uri.get_uri().empty()){
                                         out += http_get(item.uri.urlp);
                                     }
+                                    item.uri.cleanup();
                                 }
                             }else{
                                 string op = (string)std::get<1>(statement);
@@ -93,6 +94,7 @@ namespace curlpipe {
                                         }else{
                                             out =http_post(item2.uri.urlp,out);
                                         }
+                                        item2.uri.cleanup();
                                     }
                                 }
                                 if(op == "=|"){
@@ -102,8 +104,10 @@ namespace curlpipe {
                                         }else{
                                             out =http_put(item2.uri.urlp,out);
                                         }
+                                        item2.uri.cleanup();
                                     }
-                                }                            }
+                                }
+                            }
                             return out;});
                 DLOG_S(INFO) << "end exec expr" ; });
 
