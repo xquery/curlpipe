@@ -1,0 +1,19 @@
+version: '2'
+
+services:
+
+  httpbin:
+    image: kennethreitz/httpbin
+    ports:
+    - 81:80
+
+  proxy:
+    image: fsouza/docker-ssl-proxy
+    environment:
+      DOMAIN: localhost
+      TARGET_HOST: httpbin
+    links:
+    - httpbin
+    ports:
+    - 443:443
+

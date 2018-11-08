@@ -47,7 +47,7 @@ notifications:
   email: false
 
 before_install:
-- docker run -p 81:80 kennethreitz/httpbin &
+- docker-compose up -d
 - export CMAKE_OPTIONS=${CMAKE_OPTIONS}" "${ENV_CMAKE_OPTIONS}
 - export CXX_FLAGS=${CXX_FLAGS}" "${ENV_CXX_FLAGS}
 - echo $LANG
