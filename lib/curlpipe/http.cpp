@@ -90,7 +90,7 @@ int http_set_options(CURL *c){
     curl_easy_setopt(c, CURLOPT_VERBOSE, 1L);
 #endif
     curl_easy_setopt(c, CURLOPT_HEADER, 0L);
-    curl_easy_setopt(c, CURLOPT_USERAGENT, "curlpipe via curl/7.19.6");
+    curl_easy_setopt(c, CURLOPT_USERAGENT, "curlpipe via curl");
     curl_easy_setopt(c, CURLOPT_FAILONERROR, 1L);
     curl_easy_setopt(c, CURLOPT_FOLLOWLOCATION, 1L);
     curl_easy_setopt(c, CURLOPT_NOPROGRESS, 1L);

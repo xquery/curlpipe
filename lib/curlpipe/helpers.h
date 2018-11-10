@@ -112,6 +112,6 @@ inline std::string convert(std::wstring wstring)
 {
     std::string str( wstring.begin(), wstring.end() );
     return str;
-};
+}
 
 #endif //CURLPIPE_HELPERS_H
