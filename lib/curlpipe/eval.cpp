@@ -79,13 +79,12 @@ namespace curlpipe {
                                 DLOG_S(INFO) << "op:" << op;
                                 if(op == ">"){
                                     for (auto & item : std::get<2>(statement)) {
-                                        save_file(item.uri.get_uri(),out);
+                                        save_file(item.uri.get_uri().substr(7),out);
                                     }
                                 }
                                 if(op == ">>"){
                                     for (auto & item : std::get<2>(statement)) {
-                                        DLOG_S(INFO) << "AAAAAAAA URI::" << item.uri.get_uri();
-                                        //append_file(item.uri.get_uri(),out);
+                                        append_file(item.uri.get_uri().substr(7),out);
                                     }
                                 }
                                 if(op == "|"){
@@ -115,8 +114,5 @@ namespace curlpipe {
         DLOG_S(INFO) << "#expr:" << exprs.size();
         cleanup_http();
         DLOG_S(INFO) << "end exec expressions";
-
     }
-
-
 }

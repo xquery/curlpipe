@@ -82,10 +82,9 @@ inline string load_file(string file_uri){
 }
 
 int save_file(string file_uri, string data){
-    DLOG_S(INFO) << "saving output to " << file_uri.substr(7) ;
-    DLOG_S(INFO) << data ;
+    DLOG_S(INFO) << "saving output to " << file_uri ;
     ofstream outfile;
-    outfile.open(file_uri.substr(7), ios::out);
+    outfile.open(file_uri, ios::out);
     outfile << "" + data;
     outfile.close();
     return 0;
@@ -93,8 +92,9 @@ int save_file(string file_uri, string data){
 
 int append_file(string file_uri, string data)
 {
+    DLOG_S(INFO) << "appending output to " << file_uri ;
     ofstream file;
-    file.open(file_uri.substr(7), std::ios::out | std::ios::app);
+    file.open(file_uri, std::ios::out | std::ios::app);
     if (file.fail())
         throw std::ios_base::failure(std::strerror(errno));
     file.exceptions(file.exceptions() | std::ios::failbit | std::ifstream::badbit);

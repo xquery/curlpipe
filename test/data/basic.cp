@@ -14,7 +14,7 @@
 [http://localhost:81/bytes/35] > [/tmp/test2.json]
 
 // GET and append to file
-[http://localhost:81/bytes/44] >> [/tmp/test2.json]
+[http://localhost:81/bytes/44] >> [file:///tmp/test2.json]
 
 // GET and post and post and save file
 [http://localhost:81/get] | [http://localhost:81/post] | [http://localhost:81/post] > [/tmp/test3.json]
