@@ -37,40 +37,18 @@ namespace curlpipe {
     };
 
     struct uri {
-        string scheme;
-        string host;
-        string port;
-        string path;
-        CURLU *urlp;
+        CURLU *urlp = curl_url();
         void cleanup(){
             curl_url_cleanup(urlp);
         };
-        void set_curl_uri() {
-            int rc;
-            urlp = curl_url();
-            rc = curl_url_set(urlp, CURLUPART_HOST, host.c_str(), 0);
-            rc = curl_url_set(urlp, CURLUPART_SCHEME, scheme.c_str(), 0);
-            rc = curl_url_set(urlp, CURLUPART_PORT, port.c_str(), 0);
-            rc = curl_url_set(urlp, CURLUPART_PATH, path.c_str(), 0);
-        };
         CURLU* get_curl_uri() {
-            int rc;
-            CURLU *urlp = curl_url();
-            rc = curl_url_set(urlp, CURLUPART_HOST, host.c_str(), 0);
-            rc = curl_url_set(urlp, CURLUPART_SCHEME, scheme.c_str(), 0);
-            rc = curl_url_set(urlp, CURLUPART_PORT, port.c_str(), 0);
-            rc = curl_url_set(urlp, CURLUPART_PATH, path.c_str(), 0);
             return urlp;
         };
         string get_uri() {
-            string uri;
-            uri += scheme;
-            uri += host;
-            if(!port.empty()){
-                uri += ":" + port;
-            };
-            uri += path;
-            return uri;};
+            char *uris;
+            curl_url_get(urlp, CURLUPART_URL, &uris, 0);
+            string sURI(uris);
+            return sURI;};
     };
 
     struct item {

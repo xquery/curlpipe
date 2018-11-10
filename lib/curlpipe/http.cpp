@@ -34,7 +34,6 @@
 #include <cassert>
 
 #include <curl/curl.h>
-#include <curl/multi.h>
 #include "log.h"
 
 #define SUPPORT_NETRC 1

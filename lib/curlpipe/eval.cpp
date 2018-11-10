@@ -84,7 +84,8 @@ namespace curlpipe {
                                 }
                                 if(op == ">>"){
                                     for (auto & item : std::get<2>(statement)) {
-                                        append_file(item.uri.get_uri(),out);
+                                        DLOG_S(INFO) << "AAAAAAAA URI::" << item.uri.get_uri();
+                                        //append_file(item.uri.get_uri(),out);
                                     }
                                 }
                                 if(op == "|"){
