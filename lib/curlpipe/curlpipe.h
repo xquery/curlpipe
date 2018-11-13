@@ -30,6 +30,8 @@
 namespace curlpipe{
     int exec(const std::string file_uri);
     int exec(const std::string file_uri, const bool quiet);
+    int execScript(const std::string file_uri, const bool quiet);
+
 }
 
 #endif //CURLPIPE_CURLPIPE_H

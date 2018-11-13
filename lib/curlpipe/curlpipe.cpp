@@ -50,30 +50,35 @@ namespace curlpipe{
   int exec(const string file_uri, const bool quiet) {
 
       DLOG_S(INFO) << "loading " << file_uri;
-      bool indent = false;
-
-      ASTserializer s(indent);
-      wstring winput =convert(load_file(file_uri));
-
-      csparser parser(winput.c_str(), &s);
-      try {
-          DLOG_S(INFO) << "serializing to xml representation";
-          parser.parse_CS(); }
-      catch (csparser::ParseException &pe) {
-          LOG_S(ERROR) << "parser error, " << convert(pe.getMessage());
-          return EXIT_FAILURE; }
-
-      DLOG_S(INFO) << s.getParsed();
-      vector<expr> exprs = generate_ast(s.getParsed());
-
-      std::ostringstream output;
-      DLOG_S(INFO) << "evaluate AST";
-      eval_exprs(exprs, output);
-
-      if(!quiet){
-          cout << output.str(); }
-      return 0;
+      return execScript(load_file(file_uri),quiet);
   }
+
+    int execScript(const string script, const bool quiet) {
+
+        bool indent = false;
+
+        ASTserializer s(indent);
+        wstring winput =convert(script);
+
+        csparser parser(winput.c_str(), &s);
+        try {
+            DLOG_S(INFO) << "serializing to xml representation";
+            parser.parse_CS(); }
+        catch (csparser::ParseException &pe) {
+            LOG_S(ERROR) << "parser error, " << convert(pe.getMessage());
+            return EXIT_FAILURE; }
+
+        DLOG_S(INFO) << s.getParsed();
+        vector<expr> exprs = generate_ast(s.getParsed());
+
+        std::ostringstream output;
+        DLOG_S(INFO) << "evaluate AST";
+        eval_exprs(exprs, output);
+
+        if(!quiet){
+            cout << output.str(); }
+        return 0;
+    }
 
   int exec(const string file_uri){
       return exec(file_uri, false);

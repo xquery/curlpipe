@@ -117,12 +117,13 @@ int main(int argc, char** argv ){
             DLOG_S(INFO) << "set file opt";
             curlpipe::exec(result["file"].as<string>(), result["quiet"].count());
         }else{
+
+            string script;
             string lineInput;
-            if( std::cin.rdbuf()->in_avail()){
-                while (cin >> lineInput) {
-                    DLOG_S(INFO)  << lineInput;
-                }
+            while (cin >> lineInput) {
+                script += lineInput;
             }
+            curlpipe::execScript(script, result["quiet"].count());
             LOG_S(ERROR) << "must supply curlpipe file.";
             return EXIT_FAILURE; }}
 
