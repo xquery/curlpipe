@@ -1,3 +1,9 @@
-setup httpbin for tool tests
+To setup httpbin for tool tests either
+
+1) run docker-compose from top level dir (which will setup both http/https)
+
+> docker-compose -d up
+
+2) or run
 >docker run -p 81:80 kennethreitz/httpbin
 

@@ -77,14 +77,18 @@ namespace curlpipe {
                             }else{
                                 string op = (string)std::get<1>(statement);
                                 DLOG_S(INFO) << "op:" << op;
+
+                                // my kingdom for a switch on string literal!
                                 if(op == ">"){
-                                    for (auto & item : std::get<2>(statement)) {
-                                        save_file(item.uri.get_uri().substr(7),out);
+                                    for (auto & item2 : std::get<2>(statement)) {
+                                        save_file(item2.uri.get_uri().substr(7),out);
+                                        item2.uri.cleanup();
                                     }
                                 }
                                 if(op == ">>"){
-                                    for (auto & item : std::get<2>(statement)) {
-                                        append_file(item.uri.get_uri().substr(7),out);
+                                    for (auto & item2 : std::get<2>(statement)) {
+                                        append_file(item2.uri.get_uri().substr(7),out);
+                                        item2.uri.cleanup();
                                     }
                                 }
                                 if(op == "|"){

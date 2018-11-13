@@ -41,9 +41,6 @@ namespace curlpipe {
         void cleanup(){
             curl_url_cleanup(urlp);
         };
-        CURLU* get_curl_uri() {
-            return urlp;
-        };
         string get_uri() {
             char *uris;
             curl_url_get(urlp, CURLUPART_URL, &uris, 0);

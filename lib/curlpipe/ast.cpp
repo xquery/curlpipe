@@ -34,31 +34,36 @@ namespace curlpipe {
 
     struct item generate_item(pugi::xml_node &item){
         struct item cur_item;
-        int rc;
+        CURLUcode rc;
         string scheme = item.child("URI").child("scheme").text().as_string();
 
         if(scheme.find(":") && !scheme.empty()){
             scheme = scheme.substr(0,scheme.find(":"));
-            curl_url_set(cur_item.uri.urlp, CURLUPART_SCHEME, scheme.c_str(),0);
+            rc = curl_url_set(cur_item.uri.urlp, CURLUPART_SCHEME, scheme.c_str(),0);
         }else{
-            curl_url_set(cur_item.uri.urlp, CURLUPART_SCHEME, "file",0);
+            rc = curl_url_set(cur_item.uri.urlp, CURLUPART_SCHEME, "file",0);
         }
 
-        curl_url_set(cur_item.uri.urlp, CURLUPART_HOST, item.child("URI").child("hostport").child("host").child(
+        rc = curl_url_set(cur_item.uri.urlp, CURLUPART_HOST, item.child("URI").child("hostport").child("host").child(
                 "nstring").text().as_string(),0);
 
         string port;
         for(pugi::xml_node ports: item.child("URI").child("hostport").child("port").children()) {
             port += ports.text().as_string();
         }
-        curl_url_set(cur_item.uri.urlp, CURLUPART_PORT, port.c_str(), 0);
+        rc = curl_url_set(cur_item.uri.urlp, CURLUPART_PORT, port.c_str(), 0);
 
         string path = "";
         for(pugi::xml_node segment: item.child("URI").children("segment")) {
             path += "/";
             path += segment.child("string").text().as_string();
         }
-        curl_url_set(cur_item.uri.urlp, CURLUPART_PATH, path.c_str(), 0);
+
+        if(!path.empty()){
+            rc = curl_url_set(cur_item.uri.urlp, CURLUPART_PATH, path.c_str(), 0);
+        }else{
+            DLOG_S(INFO) << "      url path is empty";
+        }
 
         DLOG_S(INFO) << "      uri:" << cur_item.uri.get_uri();
         return cur_item;
