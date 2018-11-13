@@ -20,7 +20,7 @@ Curlpipe uses [libcurl](https://curl.haxx.se/) under the covers, curl is a great
 To try it out, 
 
 ```$bash
-echo '[http://www.httpbin.org/get] > [/tmp/output.txt]' | curlpipe
+echo "[http://www.httpbin.org/get] > [/tmp/output.txt]" | curlpipe
 ```
 
 or define a file (example.cp) 
@@ -35,23 +35,6 @@ and invoke curlpipe, supplying that file as its only argument.
 ```
 
 You should now observe the output from the URI saved to a file.
-
-In addition, the command line has a few cute tricks eg. it will figure out to do a POST, PUT or DELETE when piping stdin.
-
-Perform a POST
-```$bash
-cat /tmp/data.json | curlpipe http://httpbin.org/post
-```
-
-Perform a PUT
-```$bash
-cat /tmp/data.json | curlpipe http://httpbin.org/put
-```
-
-Perform a delete
-```$bash
-cat /dev/null | curlpipe http://httpbin.org/delete
-```
 
 ## Usage
 
