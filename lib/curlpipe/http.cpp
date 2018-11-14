@@ -94,6 +94,8 @@ int http_set_options(CURL *c, CURLU *urlp){
     curl_easy_setopt(c, CURLOPT_VERBOSE, 1L);
 #endif
     curl_easy_setopt(c, CURLOPT_HEADER, 0L);
+    curl_easy_setopt(c, CURLOPT_HTTPHEADER, headers);
+
     curl_easy_setopt(c, CURLOPT_USERAGENT, "curlpipe via curl");
     curl_easy_setopt(c, CURLOPT_FAILONERROR, 1L);
     curl_easy_setopt(c, CURLOPT_FOLLOWLOCATION, 1L);
@@ -163,9 +165,7 @@ string http_get(CURLU *urlp){
 
     if (c) {
         http_set_options(c, urlp);
-
-
-        curl_easy_setopt(c, CURLOPT_HTTPHEADER, headers);
+        headers = NULL;
         curl_easy_setopt(c, CURLOPT_HTTPGET, 1L);
         curl_easy_setopt(c, CURLOPT_WRITEDATA, &readBuffer);
 
@@ -193,6 +193,19 @@ string http_post(CURLU *urlp, string payload){
 
     if (c) {
         http_set_options(c,urlp);
+
+        //ungodly hack (for now)
+        headers = NULL;
+        if(payload.find("{") == 0){
+            headers = curl_slist_append(headers, "Content-Type:application/json");
+        }else if(payload.find("<") == 0){
+            headers = curl_slist_append(headers, "Content-Type:application/xml");
+        }else if(payload.find("&") != std::string::npos){
+            headers = curl_slist_append(headers, "Content-Type:application/x-www-form-urlencoded");
+        }else {
+            headers = curl_slist_append(headers, "Content-Type:text/plain");
+        }
+        curl_easy_setopt(c, CURLOPT_HTTPHEADER, headers);
 
         curl_easy_setopt(c, CURLOPT_POST, 1L);
 
@@ -246,8 +259,24 @@ string http_put(CURLU *urlp, string payload){
     CURL *c = NULL;
     c = curl_easy_init();
 
+
     if (c) {
         http_set_options(c,urlp);
+
+        //ungodly hack (for now)
+        headers = NULL;
+        if(payload.find("{") == 0){
+            headers = curl_slist_append(headers, "Content-Type:application/json");
+        }else if(payload.find("<") == 0){
+            headers = curl_slist_append(headers, "Content-Type:application/xml");
+
+        }else if(payload.find("&") != std::string::npos){
+            headers = curl_slist_append(headers, "Content-Type:application/x-www-form-urlencoded");
+        }else {
+            headers = curl_slist_append(headers, "Content-Type:text/plain");
+        }
+        curl_easy_setopt(c, CURLOPT_HTTPHEADER, headers);
+
         curl_easy_setopt(c, CURLOPT_CUSTOMREQUEST, "PUT");
 
         curl_easy_setopt(c, CURLOPT_WRITEDATA, &readBuffer);

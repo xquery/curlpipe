@@ -6,7 +6,7 @@
 [http://localhost:81/uuid "Accept":"applicationxml"], [http://localhost:81/uuid] > [/tmp/output2.json]
 
 // retrieve file
-[file:///tmp/output.json]
+[http://localhost:81/get]
 
 // GET and post and save file
 [http://localhost:81/get] | [http://localhost:81/post "Accept":"applicationxml"] > [file:///tmp/test1.json] ;
