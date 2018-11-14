@@ -1,1 +1,1 @@
-[http://localhost:81] > [file://tmp/output1.json]
+"{'test':1}" | [http://localhost:81/post]

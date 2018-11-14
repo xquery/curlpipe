@@ -68,11 +68,16 @@ namespace curlpipe {
                             string op = std::get<1>(statement);
                             if(op.empty()){
                                 for (auto & item : std::get<0>(statement)) {
-                                    DLOG_S(INFO) << "item uri:" << item.uri.get_uri();
-                                    if(!item.uri.get_uri().empty()){
-                                        out += http_get(item.uri.urlp);
+                                    if(!item.literal.empty()){
+                                        DLOG_S(INFO) << "item literal:" << item.literal;
+                                        out += item.literal;
+                                    }else{
+                                        DLOG_S(INFO) << "item uri:" << item.uri.get_uri();
+                                        if(!item.uri.get_uri().empty()){
+                                            out += http_get(item.uri.urlp);
+                                        }
+                                        item.uri.cleanup();
                                     }
-                                    item.uri.cleanup();
                                 }
                             }else{
                                 string op = (string)std::get<1>(statement);

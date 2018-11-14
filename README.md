@@ -28,6 +28,7 @@ or define a file (example.cp)
 ```$bash
 [http://www.httpbin.org/get] > [/tmp/output.txt]
 ```
+
 and invoke curlpipe, supplying that file as its only argument.
 
 ```$bash
@@ -35,6 +36,12 @@ and invoke curlpipe, supplying that file as its only argument.
 ```
 
 You should now observe the output from the URI saved to a file.
+
+It is easy to send data eg.
+
+```$bash
+"name=Jasmine&age=1" | [http://www.httpbin.org/post]
+```
 
 ## Usage
 
@@ -175,17 +182,17 @@ In addition to a URI, curlpipe supports boolean, literal, binary, xml, json and 
 
 Literal string data can be used to pass in name value pairs (using application/x-www-form-urlencoded content type): 
 ```$bash
-"name=value;name=value" ;
+"name=value&name=value" ;
 ```
 Binary data (for example, a zip file) is also supported.
 
 Support for common formats, like XML and json. 
 ```$xml
-<person><name>Tommy</name></person> ;
+"<person><name>Tommy</name></person>" ;
 ```
 
 ```$json
-{id:1,name:"Tommy"};
+"{id:1,name:'Tommy;}";
 ```
 
 ### Statements
@@ -205,15 +212,19 @@ The following example illustrates how the contents of /temp/data.json is sent to
 If the endpoint URI supports PUT it may opt to use that. If the endpoint does not support these methods then the appropriate
 http error code is thrown.
 
+```$bash
+"name=Jim&age=21" | [http://httpbin.org/post] 
+```
+
 The following would POST xml to the URI.
 
 ```$bash
-<person><name>Tommy</name></person> | [http://httpbin.org/post] 
+"<person><name>Tommy</name></person>" | [http://httpbin.org/post] 
 ```
 or now with a json datatype.
 
 ```$bash
-{id:1,name:"Tommy"} | [http://httpbin.org/post] 
+"{id:1,name:'Tommy'}" | [http://httpbin.org/post] 
 ```
 
 The pipe operator can be used to perform an HTTP DELETE
@@ -226,7 +237,7 @@ by curlpipe options (which can be set when invoking curlpipe).
 
 Otherwise one is always free to force a PUT
 ```$bash
-{id:1,name:"Tommy"} =| [http://httpbin.org/put]  
+"{id:1,name:'Tommy'}" =| [http://httpbin.org/put]  
 ```
 To force a DELETE method
 ```$bash

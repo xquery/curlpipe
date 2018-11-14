@@ -17,6 +17,11 @@
 // GET and append to file
 [http://localhost:81/bytes/44] >> [file:///tmp/test2.json]
 
+// POST data
+"test=1&a=2" | [http://localhost:81/post]
+"<test>1</test>" | [http://localhost:81/post]
+"{'test':1}" | [http://localhost:81/post]
+
 // GET and post and post and save file
 [http://localhost:81/get] | [http://localhost:81/post] | [http://localhost:81/post] > [/tmp/test3.json]
 

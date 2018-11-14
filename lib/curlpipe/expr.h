@@ -50,6 +50,7 @@ namespace curlpipe {
 
     struct item {
         struct var;
+        string literal;
         struct uri uri;
     };
 
