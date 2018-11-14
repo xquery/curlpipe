@@ -15,7 +15,8 @@ Curlpipe uses [libcurl](https://curl.haxx.se/) under the covers, curl is a great
 
 ## Getting started
 
-[Download](https://github.com/xquery/curlpipe/releases) the latest release for your platform or [build](#compiling) the software.
+Eventually you will be able to [Download](https://github.com/xquery/curlpipe/releases) the latest release for your platform but today you are on the bleeding edge and
+ must [build](#compiling) the software.
 
 To try it out, 
 
