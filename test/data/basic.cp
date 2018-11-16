@@ -7,6 +7,8 @@
 
 // retrieve file
 [http://localhost:81/get]
+[http://localhost:81/get#test]
+[http://localhost:81/get#test?test=1]
 
 // GET and post and save file
 [http://localhost:81/get] | [http://localhost:81/post "Accept":"applicationxml"] > [file:///tmp/test1.json] ;

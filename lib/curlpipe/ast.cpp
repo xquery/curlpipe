@@ -58,7 +58,7 @@ namespace curlpipe {
             string path = "";
             for(pugi::xml_node segment: item.child("URI").children("segment")) {
                 path += "/";
-                path += segment.child("string").text().as_string();
+                path += segment.child("astring").text().as_string();
             }
 
             if(!path.empty()){
@@ -67,6 +67,26 @@ namespace curlpipe {
                 DLOG_S(INFO) << "      url path is empty";
             }
 
+            string fragment = "";
+            for(pugi::xml_node fragments: item.child("URI").children("fragment")) {
+                fragment = fragments.child("astring").text().as_string();;
+            }
+            if(!fragment.empty()){
+                rc = curl_url_set(cur_item.uri.urlp, CURLUPART_FRAGMENT, fragment.c_str(), 0);
+            }else{
+                DLOG_S(INFO) << "      url fragement is empty";
+            }
+
+            string query = "";
+            for(pugi::xml_node querys: item.child("URI").children("query")) {
+                query = querys.child("astring").text().as_string();
+
+            }
+            if(!query.empty()){
+                rc = curl_url_set(cur_item.uri.urlp, CURLUPART_QUERY, query.c_str(), 0);
+            }else {
+                DLOG_S(INFO) << "      url query is empty";
+            }
             DLOG_S(INFO) << "      uri:" << cur_item.uri.get_uri();
         }
 

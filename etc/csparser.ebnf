@@ -17,7 +17,7 @@ literal
   ::= '"' astring '"'
 
 URI
-  ::= "[" scheme? hostport? (segment)* headers "]"
+  ::= "[" scheme? hostport? (segment)* fragment? query? headers "]"
 
 header
   ::=  literal ":" literal
@@ -35,13 +35,13 @@ hostport
   ::= host (":" port)?
 
 segment
-  ::= path_delim string path_delim?
+  ::= path_delim astring path_delim?
 
 query
-  ::= '?' string
+  ::= '?' astring
 
 fragment
-  ::= '#' string
+  ::= '#' astring
 
 comments ::= "//" astring (astring)*
 
@@ -55,16 +55,12 @@ scheme
   ::= ("https" | "http" | "file") '://'
 
 Operator
-  ::= '|' |  '=|' | ">>" | '>' | '!' | '?' | "!=" | "==" | "=&" | "=" | "==" | ":"
+  ::= '|' |  '=|' | ">>" | '>' | '!' | "!=" | "==" | "=&" | "=" | "==" | ":"
 
 nstring ::= alpha (alpha | schar | digit)*
 
-string ::= character (character)*
-
 astring ::= all (all)*
 all ::= Operator | alpha | digit | schar
-
-character ::= alpha | digit | schar
 
 schar ::= "_" | "." | "<" | ">" | "</" | "'"  | "," | ";" | "&" | "{" | "}"
 
