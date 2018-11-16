@@ -1,1 +1,1 @@
-"{'test':1}" | [http://localhost:81/post]
+[http://localhost:81/uuid "Accept":"application/json"] > [file://tmp/output.json]

@@ -74,7 +74,7 @@ namespace curlpipe {
                                     }else{
                                         DLOG_S(INFO) << "item uri:" << item.uri.get_uri();
                                         if(!item.uri.get_uri().empty()){
-                                            out += http_get(item.uri.urlp);
+                                            out += http_get(item.uri.urlp, item.headers);
                                         }
                                         item.uri.cleanup();
                                     }
@@ -99,9 +99,9 @@ namespace curlpipe {
                                 if(op == "|"){
                                     for (auto & item2 : std::get<2>(statement)) {
                                         if(out.empty()){
-                                            out =http_delete(item2.uri.urlp);
+                                            out =http_delete(item2.uri.urlp, item2.headers);
                                         }else{
-                                            out =http_post(item2.uri.urlp,out);
+                                            out =http_post(item2.uri.urlp, out, item2.headers);
                                         }
                                         item2.uri.cleanup();
                                     }
@@ -109,9 +109,9 @@ namespace curlpipe {
                                 if(op == "=|"){
                                     for (auto & item2 : std::get<2>(statement)) {
                                         if(out.empty()){
-                                            out =http_delete(item2.uri.urlp);
+                                            out =http_delete(item2.uri.urlp, item2.headers);
                                         }else{
-                                            out =http_put(item2.uri.urlp,out);
+                                            out =http_put(item2.uri.urlp,out, item2.headers);
                                         }
                                         item2.uri.cleanup();
                                     }

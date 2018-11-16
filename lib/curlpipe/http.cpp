@@ -57,7 +57,7 @@ struct curl_slist *headers = NULL;
 int init_http(){
     DLOG_S(INFO) << "init http";
     curlm = curl_multi_init();
-    headers = curl_slist_append(headers, "Accept:text/html,application/xhtml+xml,application/xml,application/json;q=0.9,*/*;q=0.8");
+    headers = curl_slist_append(headers, "");
     return CURLE_OK;
 }
 
@@ -78,7 +78,7 @@ static size_t writeCallback(void *contents, size_t size, size_t nmemb, void *use
     return size * nmemb;
 }
 
-int http_set_options(CURL *c, CURLU *urlp){
+int http_set_options(CURL *c, CURLU *urlp, vector <tuple<string,string>> httpheaders){
     DLOG_S(INFO) << "set http opts";
     char *url;
     rc = curl_url_get(urlp, CURLUPART_URL, &url, 0);
@@ -94,6 +94,13 @@ int http_set_options(CURL *c, CURLU *urlp){
     curl_easy_setopt(c, CURLOPT_VERBOSE, 1L);
 #endif
     curl_easy_setopt(c, CURLOPT_HEADER, 0L);
+
+    for ( const auto& i : httpheaders ) {
+        string header =  get<0>(i) + ": " + get<1>(i);
+        DLOG_S(INFO) << "set http header: " << header;
+        curl_slist_append(headers, header.c_str());
+    }
+
     curl_easy_setopt(c, CURLOPT_HTTPHEADER, headers);
 
     curl_easy_setopt(c, CURLOPT_USERAGENT, "curlpipe via curl");
@@ -153,7 +160,7 @@ int exec(){
     return 0;
 }
 
-string http_get(CURLU *urlp){
+string http_get(CURLU *urlp, vector <tuple<string,string>> httpheaders){
 
     std::ostringstream ss;
     string readBuffer;
@@ -164,7 +171,7 @@ string http_get(CURLU *urlp){
     c = curl_easy_init();
 
     if (c) {
-        http_set_options(c, urlp);
+        http_set_options(c, urlp, httpheaders);
         headers = NULL;
         curl_easy_setopt(c, CURLOPT_HTTPGET, 1L);
         curl_easy_setopt(c, CURLOPT_WRITEDATA, &readBuffer);
@@ -183,7 +190,7 @@ string http_get(CURLU *urlp){
     return ss.str();
 }
 
-string http_post(CURLU *urlp, string payload){
+string http_post(CURLU *urlp, string payload, vector <tuple<string,string>> httpheaders){
 
     std::ostringstream ss;
     string readBuffer;
@@ -192,7 +199,7 @@ string http_post(CURLU *urlp, string payload){
     c = curl_easy_init();
 
     if (c) {
-        http_set_options(c,urlp);
+        http_set_options(c,urlp, httpheaders);
 
         //ungodly hack (for now)
         headers = NULL;
@@ -225,7 +232,7 @@ string http_post(CURLU *urlp, string payload){
     return ss.str();
 }
 
-string http_delete(CURLU *urlp){
+string http_delete(CURLU *urlp, vector <tuple<string,string>> httpheaders){
 
     std::ostringstream ss;
     string readBuffer;
@@ -234,7 +241,7 @@ string http_delete(CURLU *urlp){
     c = curl_easy_init();
 
     if (c) {
-        http_set_options(c,urlp);
+        http_set_options(c,urlp, httpheaders);
         curl_easy_setopt(c, CURLOPT_CUSTOMREQUEST, "DELETE");
         curl_easy_setopt(c, CURLOPT_WRITEDATA, &readBuffer);
 
@@ -251,7 +258,7 @@ string http_delete(CURLU *urlp){
     return ss.str();
 }
 
-string http_put(CURLU *urlp, string payload){
+string http_put(CURLU *urlp, string payload, vector <tuple<string,string>> httpheaders){
 
     std::ostringstream ss;
     string readBuffer;
@@ -261,7 +268,7 @@ string http_put(CURLU *urlp, string payload){
 
 
     if (c) {
-        http_set_options(c,urlp);
+        http_set_options(c,urlp, httpheaders);
 
         //ungodly hack (for now)
         headers = NULL;

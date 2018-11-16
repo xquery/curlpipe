@@ -2,7 +2,7 @@ CS
   ::= Expr* EOF
 
 Expr
-  ::=   ( items ( statement (statement)* )? ) Separator?
+  ::=   comments? ( items ( statement (statement)* )? ) Separator?
 
 statement ::= Operator items
 
@@ -35,7 +35,7 @@ hostport
   ::= host (":" port)?
 
 segment
-  ::= path_delim astring path_delim?
+  ::= path_delim pstring path_delim?
 
 query
   ::= '?' astring
@@ -43,10 +43,10 @@ query
 fragment
   ::= '#' astring
 
-comments ::= "//" astring (astring)*
+comments ::= "//" pstring (pstring)*
 
 whitespace
-         ::=  S^WS | comments
+         ::=  S^WS
           /* ws: definition */
 
 <?TOKENS?>
@@ -58,9 +58,10 @@ Operator
   ::= '|' |  '=|' | ">>" | '>' | '!' | "!=" | "==" | "=&" | "=" | "==" | ":"
 
 nstring ::= alpha (alpha | schar | digit)*
-
+pstring ::= pall (pall)*
+pall ::= Operator | alpha | digit | schar
 astring ::= all (all)*
-all ::= Operator | alpha | digit | schar
+all ::= Operator | alpha | digit | schar | path_delim
 
 schar ::= "_" | "." | "<" | ">" | "</" | "'"  | "," | ";" | "&" | "{" | "}"
 

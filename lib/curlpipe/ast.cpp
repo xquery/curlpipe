@@ -58,7 +58,7 @@ namespace curlpipe {
             string path = "";
             for(pugi::xml_node segment: item.child("URI").children("segment")) {
                 path += "/";
-                path += segment.child("astring").text().as_string();
+                path += segment.child("pstring").text().as_string();
             }
 
             if(!path.empty()){
@@ -88,6 +88,13 @@ namespace curlpipe {
                 DLOG_S(INFO) << "      url query is empty";
             }
             DLOG_S(INFO) << "      uri:" << cur_item.uri.get_uri();
+
+            for(pugi::xml_node headers: item.child("URI").child("headers").children("header")) {
+                string name = headers.child("literal").child("astring").text().as_string();
+                string value = headers.child("literal").next_sibling("literal").child("astring").text().as_string();
+                DLOG_S(INFO) << "      header " << name << ":"<< value;
+                cur_item.headers.push_back(make_tuple(name,value));
+            }
         }
 
         if(item.child("literal")) {
