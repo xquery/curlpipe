@@ -1,1 +1,1 @@
-[https://localhost:443/get "User-Agent":"test ua"]
+[http://localhost:81/basic-auth/test/test]

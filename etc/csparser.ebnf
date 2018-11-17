@@ -32,7 +32,13 @@ port
   ::= digit (digit)*
 
 hostport
-  ::= host (":" port)?
+  ::= (userpass "@")? host (":" port)?
+
+userpass
+  ::= user ":"
+
+user ::= nstring
+pass ::= astring
 
 segment
   ::= path_delim pstring path_delim?
@@ -60,6 +66,7 @@ Operator
 nstring ::= alpha (alpha | schar | digit)*
 pstring ::= pall (pall)*
 pall ::= Operator | alpha | digit | schar
+
 astring ::= all (all | S )*
 all ::= Operator | alpha | digit | schar | path_delim
 

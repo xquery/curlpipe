@@ -109,9 +109,11 @@ int http_set_options(CURL *c, CURLU *urlp, vector <tuple<string,string>> httphea
     curl_easy_setopt(c, CURLOPT_NOPROGRESS, 1L);
     curl_easy_setopt(c, CURLOPT_WRITEFUNCTION, writeCallback);
 
-    //temp settings
+    //REMOVE
     curl_easy_setopt(c, CURLOPT_SSL_VERIFYPEER, 0L);
     curl_easy_setopt(c, CURLOPT_SSL_VERIFYHOST, 0L);
+//    curl_easy_setopt(c, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+//    curl_easy_setopt(c, CURLOPT_USERPWD, "test:test");
 
     return CURLE_OK;
 }
