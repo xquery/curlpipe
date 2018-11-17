@@ -60,7 +60,7 @@ Operator
 nstring ::= alpha (alpha | schar | digit)*
 pstring ::= pall (pall)*
 pall ::= Operator | alpha | digit | schar
-astring ::= all (all)*
+astring ::= all (all | S )*
 all ::= Operator | alpha | digit | schar | path_delim
 
 schar ::= "_" | "." | "<" | ">" | "</" | "'"  | "," | ";" | "&" | "{" | "}" | "-"
