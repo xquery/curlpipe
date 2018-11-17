@@ -52,6 +52,7 @@ namespace curlpipe {
         struct var;
         string literal;
         struct uri uri;
+        string selector;
         vector <tuple<string,string>> headers;
     };
 

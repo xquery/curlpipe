@@ -115,4 +115,13 @@ inline std::string convert(std::wstring wstring)
     return str;
 }
 
+string replaceString(std::string haystack, const std::string& needle, const std::string& replace) {
+    size_t pos = 0;
+    while ((pos = haystack.find(needle, pos)) != std::string::npos) {
+        haystack.replace(pos, needle.length(), replace);
+        pos += replace.length();
+    }
+    return haystack;
+}
+
 #endif //CURLPIPE_HELPERS_H

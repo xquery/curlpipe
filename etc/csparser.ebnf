@@ -8,7 +8,9 @@ statement ::= Operator items
 
 items ::= item ("," item)*
 
-item ::= URI | literal
+item ::= (URI | literal ) selector?
+
+selector ::= "." nstring
 
 Separator
   ::= ';'

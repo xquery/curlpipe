@@ -1,1 +1,1 @@
-[http://localhost:81/basic-auth/test/test]
+[http://localhost:81/image/svg].svg.title | [http://localhost:81/post "Content-type":"application/xml"]

@@ -101,7 +101,13 @@ namespace curlpipe {
             DLOG_S(INFO) << " encode item literal";
             cur_item.literal = item.child("literal").child("astring").text().as_string();
         }
-            return cur_item;
+
+        if(item.child("selector")) {
+            DLOG_S(INFO) << " encode item selector";
+            cur_item.selector = item.child("selector").child("nstring").text().as_string();
+        }
+
+        return cur_item;
     }
 
     vector<expr> generate_ast(string parsed){

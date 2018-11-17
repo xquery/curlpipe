@@ -44,8 +44,15 @@
 #include "expr.h"
 #include "http.cpp"
 #include "helpers.h"
+#include <rapidjson/document.h>
+#include <rapidjson/prettywriter.h>
+#include <rapidjson/stringbuffer.h>
+#include <rapidjson/pointer.h>
+
+#include <pugixml.hpp>
 
 using namespace std;
+using namespace rapidjson;
 
 namespace curlpipe {
 
@@ -74,7 +81,45 @@ namespace curlpipe {
                                     }else{
                                         DLOG_S(INFO) << "item uri:" << item.uri.get_uri();
                                         if(!item.uri.get_uri().empty()){
-                                            out += http_get(item.uri.urlp, item.headers);
+
+                                            if(item.selector.empty()){
+                                                out += http_get(item.uri.urlp, item.headers);
+                                            }else{
+                                                string selector = item.selector;
+                                                selector = "/" + replaceString(selector,".","/");
+
+                                                string result = http_get(item.uri.urlp, item.headers);
+                                                // if json
+                                                Document json;
+                                                if (json.Parse(result.c_str()).HasParseError()) {
+                                                   //could be xml
+                                                    pugi::xml_document doc;
+                                                    doc.load_string(result.c_str());
+                                                    if(doc){
+                                                        pugi::xpath_node_set select = doc.select_nodes(selector.c_str());
+
+                                                        for (pugi::xpath_node_set::const_iterator it = select.begin(); it != select.end(); ++it)
+                                                        {
+                                                            pugi::xpath_node node = *it;
+                                                            ostringstream oss;
+                                                            node.node().print(oss, "", pugi::format_raw);
+                                                            out += oss.str();
+                                                        }
+                                                    }else{
+                                                        LOG_S(ERROR) << "selector can only be used on xml or json.";
+                                                    }
+                                                }else{
+                                                    Value* results = Pointer(selector.c_str()).Get(json);
+                                                    rapidjson::StringBuffer buffer;
+                                                    buffer.Clear();
+                                                    rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+                                                    results->Accept(writer);
+
+                                                    out += string( buffer.GetString() );
+                                                }
+
+
+                                            }
                                         }
                                         item.uri.cleanup();
                                     }

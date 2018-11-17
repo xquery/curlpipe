@@ -25,6 +25,9 @@
 "<test>1</test>" | [http://localhost:81/post]
 "{'test':1}" | [http://localhost:81/post]
 
+// selector
+[http://localhost:81/image/svg].svg.title | [http://localhost:81/post "Content-type":"application/xml"]
+
 // GET and post and post and save file
 [http://localhost:81/get] | [http://localhost:81/post] | [http://localhost:81/post] > [/tmp/test3.json]
 
