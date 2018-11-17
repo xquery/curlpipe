@@ -74,7 +74,7 @@ namespace curlpipe {
             if(!fragment.empty()){
                 rc = curl_url_set(cur_item.uri.urlp, CURLUPART_FRAGMENT, fragment.c_str(), 0);
             }else{
-                DLOG_S(INFO) << "      url fragement is empty";
+                DLOG_S(INFO) << "      url fragment is empty";
             }
 
             string query = "";

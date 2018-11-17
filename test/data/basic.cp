@@ -3,7 +3,7 @@
 [http://localhost:81] > [file://tmp/output1.json]
 
 // GET multiple and save
-[http://localhost:81/uuid "Accept":"applicationxml"], [http://localhost:81/uuid] > [/tmp/output2.json]
+[http://localhost:81/uuid "Accept":"application/json"], [http://localhost:81/uuid] > [/tmp/output2.json]
 
 // retrieve file
 [http://localhost:81/get]
@@ -12,7 +12,7 @@
 [http://localhost:81/get#test?test=1]
 
 // GET and post and save file
-[http://localhost:81/get] | [http://localhost:81/post "Accept":"application/xml"] > [file:///tmp/test1.json] ;
+[http://localhost:81/get] | [http://localhost:81/post "Accept":"application/json" "User-Agent":"testua"] > [file:///tmp/test1.json] ;
 
 // GET and save file
 [http://localhost:81/drip] > [/tmp/test2.json]
