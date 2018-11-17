@@ -1,5 +1,5 @@
 // GET and save
-[http://localhost:81/uuid "Accept":"application/json"] > [file://tmp/output.json]
+[http://localhost:81/get "User-Agent":"curlpipe" "Accept":"text/plain"] > [file://tmp/output.json]
 [http://localhost:81] > [file://tmp/output1.json]
 
 // GET multiple and save

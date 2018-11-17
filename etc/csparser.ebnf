@@ -63,7 +63,7 @@ pall ::= Operator | alpha | digit | schar
 astring ::= all (all)*
 all ::= Operator | alpha | digit | schar | path_delim
 
-schar ::= "_" | "." | "<" | ">" | "</" | "'"  | "," | ";" | "&" | "{" | "}"
+schar ::= "_" | "." | "<" | ">" | "</" | "'"  | "," | ";" | "&" | "{" | "}" | "-"
 
 path_delim ::= '/'
 

@@ -1,1 +1,2 @@
-[http://localhost:81/uuid "Accept":"application/json"] > [file://tmp/output.json]
+[http://test:test@localhost:81/basic-auth/test/test]
+// [http://localhost:81/basic-auth/test/test]
