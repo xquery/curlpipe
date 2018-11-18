@@ -356,9 +356,9 @@ Find more examples [here](https://github.com/xquery/curlpipe/tree/develop/docs/e
 ```$bash
 [http://www.httpbin.org/get],[http://www.httpbin.org/uuid] >> [/tmp/response.txt]
 ```
-##### GET and narrow down result
+##### GET and narrow down result with selector
 ```$bash
-[http://www.httpbin.org/get].id  
+[http://www.httpbin.org/image/svg].svg.title | [http://www.httpbin.org "Content-type":"application/xml"]
 ```
 
 ##### conditional operation
