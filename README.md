@@ -20,19 +20,19 @@ Eventually you will be able to [Download](https://github.com/xquery/curlpipe/rel
 
 To try it out, 
 
-```$bash
+```bash
 echo "[http://www.httpbin.org/get] > [/tmp/output.txt]" | curlpipe
 ```
 
 or define a file (example.cp) 
 
-```$bash
+```bash
 [http://www.httpbin.org/get] > [/tmp/output.txt]
 ```
 
 and invoke curlpipe, supplying that file as its only argument.
 
-```$bash
+```bash
 > curlpipe example.cp
 ```
 
@@ -40,7 +40,7 @@ You should now observe the output from the URI saved to a file.
 
 It is easy to send data eg.
 
-```$bash
+```bash
 "name=Jasmine&age=1" | [http://www.httpbin.org/post]
 ```
 
@@ -48,11 +48,11 @@ It is easy to send data eg.
 
 To get help run
 
-```$bash
+```bash
 > curlpipe -h
 ```
 
-```$bash
+```bash
 curlpipe 0.1.0 | ⓒ 2017-2018 James Fuller <jim.fuller@webcomposite.com> | https://github.com/xquery/curlpipe
 
 > curlpipe mycurlpipe.cp 
@@ -88,7 +88,7 @@ The following flags set the default auth credentials and auth-type used by curlp
 | -A     | --auth-type |  Specify the auth mechanism (basic|digest). |
 
 ~/.netrc (on windows ~/_netrc) is also supported by curlpipe (by dint of libcurl support): 
-```$bash
+```bash
 > cat ~/.netrc
 machine example.org
 login myuser
@@ -105,17 +105,17 @@ Parameters maybe passed to curlpipe, replacing tokens in the curlpipe script.
 | -P     | --param  | set a param (ex. -Pid=1).|
 
 Parameters can be passed in via a file, for example, using data.json:
-```$json
+```json
 {"id":1, "name":"Ali G"}
 ```
 
 The call to curlpipe would be
-```$bash
+```bash
 > curlpipe -p data.json example.cp
 ```
 
 or data.xml looks like 
-```$xml
+```xml
 <params>
 <param>
 <name>id</name>
@@ -128,13 +128,13 @@ or data.xml looks like
 </params>
 ```
 and similarly called
-```$bash
+```bash
 > curlpipe -p data.xml example.cp
 ```
 
 Paramaters may also be individually defined, overidding params if used in conjunction with above -p flag.
 
-```$bash
+```bash
 > curlpipe -Pid=1 -Pname=Ali G example.cp
 ```
 ### Options
@@ -160,7 +160,7 @@ Options can be overriden at the command line using the -O flag. The set of optio
 ## The curlpipe language
 
 Curlpipe defines a series of statement(s). The simplest statement defines retrieval of a URI:
-```$bash
+```bash
 [http://www.httpbin.org/get] ;
 ```
 where the seperator (;) is optional.
@@ -173,26 +173,26 @@ In addition to a URI, curlpipe supports boolean, literal, binary, xml, json and 
 
 | data type  | example |description   |
 |------------|---------|--------------|
-| URI        | [http://www.example.org]   | used to POST, PUT or DELETE.| 
-| literal    |  "name=value;name=value"   | literal data value.|
+| URI        | `[http://www.example.org]`   | used to POST, PUT or DELETE.| 
+| literal    | `"name=value;name=value"`   | literal data value.|
 | binary     |  ex. zip file              | binary data value.|
-| xml        | <person><name>Tommy</name></person>        | well formed xml data.|
-| json       | {id:1,name:"Tommy"}        | json data.|
-| boolean    |    ? ?                     | true or false.|
-| null       |   []                       | an empty/null value.|
+| xml        | `<person><name>Tommy</name></person>`        | well formed xml data.|
+| json       | `{id:1,name:"Tommy"}`        | json data.|
+| boolean    | `? ?`                      | true or false.|
+| null       | `[]`                       | an empty/null value.|
 
 Literal string data can be used to pass in name value pairs (using application/x-www-form-urlencoded content type): 
-```$bash
+```bash
 "name=value&name=value" ;
 ```
 Binary data (for example, a zip file) is also supported.
 
 Support for common formats, like XML and json. 
-```$xml
+```xml
 "<person><name>Tommy</name></person>" ;
 ```
 
-```$json
+```json
 "{id:1,name:'Tommy;}";
 ```
 
@@ -207,29 +207,29 @@ A single curlpipe statement can be comprised of
 either a datatype or a datatype + operator + datatype where operators perform actions (or test conditions) on datatypes. 
 
 The following example illustrates how the contents of /temp/data.json is sent to a HTTP endpoint supporting POST method.
-```$bash
+```bash
 [/tmp/data.json] | [http://httpbin.org/post] 
 ```
 If the endpoint URI supports PUT it may opt to use that. If the endpoint does not support these methods then the appropriate
 http error code is thrown.
 
-```$bash
+```bash
 "name=Jim&age=21" | [http://httpbin.org/post] 
 ```
 
 The following would POST xml to the URI.
 
-```$bash
+```bash
 "<person><name>Tommy</name></person>" | [http://httpbin.org/post] 
 ```
 or now with a json datatype.
 
-```$bash
+```bash
 "{id:1,name:'Tommy'}" | [http://httpbin.org/post] 
 ```
 
 The pipe operator can be used to perform an HTTP DELETE
-```$bash
+```bash
 [] | [http://httpbin.org/delete] 
 ```
 
@@ -237,16 +237,16 @@ Like the PUT the pipe operator will deduce if the endpoint supports DELETE. This
 by curlpipe options (which can be set when invoking curlpipe).
 
 Otherwise one is always free to force a PUT
-```$bash
+```bash
 "{id:1,name:'Tommy'}" =| [http://httpbin.org/put]  
 ```
 To force a DELETE method
-```$bash
+```bash
 [] =| [http://httpbin.org/delete] 
 ```
 
 To force a HEAD method use a conditional (explained further down)
-```$bash
+```bash
 [http://httpbin.org/head] != []
 ```
 
@@ -254,7 +254,7 @@ To force a HEAD method use a conditional (explained further down)
 
 Operators chain together to build execution pipeline of arbitrary length.
 
-```$bash
+```bash
 [/tmp/data.json] | [http://httpbin.org/post] > [/tmp/output.txt] | [http://httpbin.org/post]
 ```
 
@@ -271,11 +271,11 @@ The set of processing operators are:
 ### Parameters
 
 Parameters can be passed into curlpipe 
-```$bash
+```bash
 > curlpipe -Pname=Tommy example.cp -Pid=1
 ```
 and used for token replacement (ex. ${token}) in either data or URIs.
-```$bash
+```bash
 {name:"${name}"} | [http://httpbin.org/get/${id}]
 ```
 
@@ -284,30 +284,30 @@ and used for token replacement (ex. ${token}) in either data or URIs.
 curlpipe implements boolean and null datatype which can be used with conditional operators
 to test data values.
 
-```$bash
+```bash
 [http://www.httpbin.org/get] == "test"
 ```
 
-```$bash
+```bash
 [http://www.httpbin.org/get] ~= "test"
 ```
 
 Where conditionals can be composited up using AND(&&) or OR(||) operators.
 
-```$bash
+```bash
 [http://www.httpbin.org/get] ~= "test" && [http://www.httpbin.org/get] != "not test"
 ```
 
 curlpipe supports boolean logic, in the following form.
 
-```$bash
+```bash
 [http://www.httpbin.org/get] =~ "test" > [/tmp/matches.txt]
 ```
 where the file is only written if the match is a success.
 
 Additionally, curlpipe supports trinary logic, in the following form.
 
-```$bash
+```bash
 [http://www.httpbin.org/get] =~ "test"
        ? > [/tmp/success.txt] 
        : 2> [/tmp/fail.txt]       
@@ -336,38 +336,38 @@ Curlpipe defines the following options
 Find more examples [here](https://github.com/xquery/curlpipe/tree/develop/docs/examples).
 
 ##### Retrieve (GET) and save to file   
-```$bash
+```bash
 [http://www.httpbin.org/get] > [/tmp/output.txt]
 ```
 ##### Retrieve (GET) and save to file   
-```$bash
+```bash
 [http://www.httpbin.org/get auth=myser:password auth-type=digest] > [/tmp/output3.txt]
 ```
 
 ##### Retrieve (GET) setting headers
-```$bash
+```bash
 [http://www.httpbin.org/get "Accept":"application/json"]
 ```
 
 ##### GET and append to file  
-```$bash
+```bash
 [http://www.httpbin.org/get] >> [/tmp/response.txt]
 ```
-```$bash
+```bash
 [http://www.httpbin.org/get],[http://www.httpbin.org/uuid] >> [/tmp/response.txt]
 ```
 ##### GET and narrow down result with selector
-```$bash
+```bash
 [http://www.httpbin.org/image/svg].svg.title | [http://www.httpbin.org "Content-type":"application/xml"]
 ```
 
 ##### conditional operation
-```$bash
+```bash
 [http://www.httpbin.org/get] =~ "test" > [/tmp/matches.txt]
 ```
 
 ##### Trinary operator
-```$bash
+```bash
 [http://www.httpbin.org/get] =~ "test"
        ? > [/tmp/success.txt] 
        : > [/tmp/fail/fail.txt]
@@ -375,53 +375,53 @@ Find more examples [here](https://github.com/xquery/curlpipe/tree/develop/docs/e
 ```
 
 ##### POST json
-```$bash
+```bash
 {"id":1 , "name":"James Fuller" age="${age}"} | [http://www.httpbin.org/post] ;
 ```
 
-```$bash
+```bash
 [/tmp/data.json] | [http://www.httpbin.org/post "Content-type":"application/json"] ;
 ```
 
 ##### POST xml
-```$bash
+```bash
 <person id="1"><name>John Smith<name><age>${age}</age></person> | [http://www.httpbin.org/post] ;
 ```
 
-```$bash
+```bash
 [/tmp/data.xml] | [http://www.httpbin.org/post "Content-type":"application/xml"] ;
 ```
 
 ##### POST name=value
-```$bash
+```bash
 "id=1&name=James Fuller" | [http://www.httpbin.org/post] ;
 ```
 
 ##### POST zip file
-```$bash
+```bash
 [/tmp/mydoc.zip] | [http://www.httpbin.org/post "Content-type":"application/zip"] ;
 ```
 
 ##### PUT some json
 
 will deduce if endpoint supports PUT
-```$bash
+```bash
 {"test:1} | [http://www.httpbin.org/put]
 ```
 
 force an HTTP PUT
-```$bash
+```bash
 {"test:1} =| [http://www.httpbin.org/put]
 ```
 
 ##### DELETE
 will deduce if endpoint supports DELETE
-```$bash
+```bash
 [] | [http://www.httpbin.org/delete]
 ```
 
 force an HTTP DELETE
-```$bash
+```bash
 [/dev/null] =| [http://www.httpbin.org/delete] 
 ```
 
@@ -436,10 +436,10 @@ ${mypayload} | [http://www.httpbin.org/delete/${myid}]
 ```
 
 ##### Comparison
-```$bash
+```bash
 [http://www.httpbin.org/get].url == 'http://www.httpbin.org/get'
 ```
-```$bash
+```bash
 [http://www.httpbin.org/get] .url != 'http://www.example.com'
 ```
 
@@ -471,7 +471,7 @@ Please [raise an issue](https://github.com/xquery/curlpipe/issues) or make a con
 
 To build software, run cmake:
 
-```$bash
+```bash
 > mkdir build
 > cd build
 > cmake -DCMAKE_BUILD_TYPE=Debug -DENABLE_MANUAL=OFF -DBUILD_TESTING=OFF ..
@@ -490,18 +490,18 @@ The build should complain if any other dependencies are missing (ex. openssl). P
 Tests require [httpbin](http://httpbin.org) - which should be setup on port 81 - running the following docker command
 or however way you feel comfortable installing.
 
-```$bash
+```bash
 > docker run -p 81:80 kennethreitz/httpbin
 ```
 
 After building usually it is just a matter of running make test target.
 
-```$bash
+```bash
 > make test
 ```
 
 or you could run directly
-```$bash
+```bash
 > cd test
 > ./runAllTests
 ```
@@ -511,7 +511,7 @@ or you could run directly
 lib/curlpipe/csparser.cpp is generated using [REx Parser Generator](http://www.bottlecaps.de/rex/) with the 
 following flags.
 
-```$bash
+```bash
 -name csparser -tree -cpp -faster
 ```
 
@@ -520,7 +520,7 @@ following flags.
 Release packages are built using CPack.
 
 Make a release build.
-```$bash
+```bash
 > mkdir build
 > cd build
 > cmake -DCMAKE_BUILD_TYPE=Release -DENABLE_MANUAL=OFF -DBUILD_TESTING=OFF ..
