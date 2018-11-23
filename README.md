@@ -323,6 +323,17 @@ The set of conditional operators are:
 | &&        |  AND chain condition    | 
 | &#124;&#124; | OR chain condition    | 
 
+### Selectors
+
+You can narrow down data using selectors, with postfix defining a simple xpath like selection.
+
+```bash
+[http://localhost:81/image/svg].svg.title | [http://localhost:81/post "Content-type":"application/xml"]
+```
+
+Where the above example will retrieve elements under svg/title ... this simple path selection works equally
+across xml or json.
+
 ### Options
 
 Curlpipe defines the following options
