@@ -526,6 +526,11 @@ following flags.
 -name csparser -tree -cpp -faster
 ```
 
+### Developing
+
+Development work happens on the [develop branch])(https://github.com/xquery/curlpipe/tree/develop) and 
+releases are based on [master branch](https://github.com/xquery/curlpipe/tree/master).
+
 ### Release Package
 
 Release packages are built using CPack.
