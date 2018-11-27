@@ -369,7 +369,8 @@ Find more examples [here](https://github.com/xquery/curlpipe/tree/develop/docs/e
 ```bash
 [http://www.httpbin.org/get],[http://www.httpbin.org/uuid] >> [/tmp/response.txt]
 ```
-##### GET and narrow down result with selector
+
+##### GET and narrow down result with selector and POST results
 ```bash
 [http://www.httpbin.org/image/svg].svg.title | [http://www.httpbin.org "Content-type":"application/xml"]
 ```
@@ -389,7 +390,7 @@ Find more examples [here](https://github.com/xquery/curlpipe/tree/develop/docs/e
 
 ##### POST json
 ```bash
-{"id":1 , "name":"James Fuller" age="${age}"} | [http://www.httpbin.org/post] ;
+"{'id':1 , "name":'James Fuller' age='${age}'}" | [http://www.httpbin.org/post] ;
 ```
 
 ```bash
@@ -398,7 +399,7 @@ Find more examples [here](https://github.com/xquery/curlpipe/tree/develop/docs/e
 
 ##### POST xml
 ```bash
-<person id="1"><name>John Smith<name><age>${age}</age></person> | [http://www.httpbin.org/post] ;
+"<person id="1"><name>John Smith<name><age>${age}</age></person>" | [http://www.httpbin.org/post] ;
 ```
 
 ```bash
@@ -419,12 +420,12 @@ Find more examples [here](https://github.com/xquery/curlpipe/tree/develop/docs/e
 
 will deduce if endpoint supports PUT
 ```bash
-{"test:1} | [http://www.httpbin.org/put]
+"{"test":1}" | [http://www.httpbin.org/put]
 ```
 
 force an HTTP PUT
 ```bash
-{"test:1} =| [http://www.httpbin.org/put]
+"{"test":1}" =| [http://www.httpbin.org/put]
 ```
 
 ##### DELETE
@@ -440,7 +441,7 @@ force an HTTP DELETE
 
 ##### Transclusion in URI
 ```
-${mypayload} | [http://www.httpbin.org/delete/${myid}]
+"${mypayload}" | [http://www.httpbin.org/delete/${myid}]
 ```
 
 ##### Transclusion in payload
@@ -479,6 +480,9 @@ curlpipe is trying to address and worth a mention.
 ## Developing curlpipe
 
 Please [raise an issue](https://github.com/xquery/curlpipe/issues) or make a contribution by forking the repository and creating a [pr](https://github.com/xquery/curlpipe/pulls). 
+
+Development work happens on the [develop branch])(https://github.com/xquery/curlpipe/tree/develop) and 
+releases are based on [master branch](https://github.com/xquery/curlpipe/tree/master).
 
 ### Compiling
 
@@ -527,11 +531,6 @@ following flags.
 ```bash
 -name csparser -tree -cpp -faster
 ```
-
-### Developing
-
-Development work happens on the [develop branch])(https://github.com/xquery/curlpipe/tree/develop) and 
-releases are based on [master branch](https://github.com/xquery/curlpipe/tree/master).
 
 ### Release Package
 
