@@ -44,6 +44,8 @@ It is easy to send data eg.
 "name=Jasmine&age=1" | [http://www.httpbin.org/post]
 ```
 
+Some more [examples](https://github.com/xquery/curlpipe#examples).
+
 ## Usage
 
 To get help run
