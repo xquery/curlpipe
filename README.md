@@ -7,10 +7,10 @@
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](COPYING)
 
 
-[Curlpipe](https://github.com/xquery/curlpipe) is a little [DSL](https://en.wikipedia.org/wiki/Domain-specific_language) making it easy to build up http execution pipelines. 
+[Curlpipe](https://github.com/xquery/curlpipe) is a little [DSL](https://en.wikipedia.org/wiki/Domain-specific_language) making it easy to build up http execution pipelines.
 
 Curlpipe uses [libcurl](https://curl.haxx.se/) under the covers, curl is a great ~~swiss army knife~~ http client that does much more then just make it easy to work with HTTP, supporting a plethora of URI addressable protocols.  Over the years, the curl command line interface has grown - exposing many options with most users only ever invoking a subset of features, learning more advanced features over time.
- 
+
 [Getting Started](#getting-started) | [Usage](#usage) | [Language](#the-curlpipe-language) | [Examples](#examples) | [Points of Interest](#points-of-interests) | [Developing](#developing-curlpipe) | [License](#license)
 
 ## Getting started
@@ -18,13 +18,13 @@ Curlpipe uses [libcurl](https://curl.haxx.se/) under the covers, curl is a great
 Eventually you will be able to [Download](https://github.com/xquery/curlpipe/releases) the latest release for your platform but today you are on the bleeding edge and
  must [build](#compiling) the software.
 
-To try it out, 
+To try it out,
 
 ```bash
 echo "[http://www.httpbin.org/get] > [/tmp/output.txt]" | curlpipe
 ```
 
-or define a file (example.cp) 
+or define a file (example.cp)
 
 ```bash
 [http://www.httpbin.org/get] > [/tmp/output.txt]
@@ -57,7 +57,7 @@ To get help run
 ```bash
 curlpipe 0.1.0 | ⓒ 2017-2018 James Fuller <jim.fuller@webcomposite.com> | https://github.com/xquery/curlpipe
 
-> curlpipe mycurlpipe.cp 
+> curlpipe mycurlpipe.cp
     -h | --help   : Help.
     -d | --debug  : Emit debug info logging.
     -i | --info   : Emit info logging.
@@ -75,7 +75,7 @@ Curlpipe flags for controlling how much information is emitted during processing
 
 | short  | long     | description   |
 |--------|----------|---------------|
-| -h     | --help   | Obtain help   | 
+| -h     | --help   | Obtain help   |
 | -d     | --debug  | Emit debug info logging.|
 | -i     | --info   | Emit info logging.|
 | -l     | --log    | Enable logging to file.|
@@ -86,10 +86,10 @@ The following flags set the default auth credentials and auth-type used by curlp
 
 | short  | long        | description   |
 |--------|-------------|---------------|
-| -a     | --auth      |  Pass a username:password pair as the argument.  |  
+| -a     | --auth      |  Pass a username:password pair as the argument.  |
 | -A     | --auth-type |  Specify the auth mechanism (basic|digest). |
 
-~/.netrc (on windows ~/_netrc) is also supported by curlpipe (by dint of libcurl support): 
+~/.netrc (on windows ~/_netrc) is also supported by curlpipe (by dint of libcurl support):
 ```bash
 > cat ~/.netrc
 machine example.org
@@ -103,7 +103,7 @@ Parameters maybe passed to curlpipe, replacing tokens in the curlpipe script.
 
 | short  | long     | description   |
 |--------|----------|---------------|
-| -p     | --params | set file containing params (xml|json format).| 
+| -p     | --params | set file containing params (xml|json format).|
 | -P     | --param  | set a param (ex. -Pid=1).|
 
 Parameters can be passed in via a file, for example, using data.json:
@@ -116,7 +116,7 @@ The call to curlpipe would be
 > curlpipe -p data.json example.cp
 ```
 
-or data.xml looks like 
+or data.xml looks like
 ```xml
 <params>
 <param>
@@ -142,11 +142,11 @@ Paramaters may also be individually defined, overidding params if used in conjun
 ### Options
 
 By default, curlpipe looks for a ~/.curlpiperc file (on windows _curlpiperc) containing options that control curlpipe
-processing behavior. An example ~/.curlpiperc file is [here](https://github.com/xquery/curlpipe/blob/develop/etc/.curlpiperc) 
+processing behavior. An example ~/.curlpiperc file is [here](https://github.com/xquery/curlpipe/blob/develop/etc/.curlpiperc)
 
 | short  | long     | description   |
 |--------|----------|---------------|
-| -o     | --options | set file containing curlpipe options (xml|json format).| 
+| -o     | --options | set file containing curlpipe options (xml|json format).|
 | -O     | --option  | set an option (ex. -Pid=1).|
 
 Alternately you can set the location of this file with the -o flag.
@@ -155,7 +155,7 @@ Options can be overriden at the command line using the -O flag. The set of optio
 
 | option | example  | description   |
 |--------|----------|---------------|
-|        |          | TBA.| 
+|        |          | TBA.|
 |        |          | TBA.|
 
 
@@ -175,7 +175,7 @@ In addition to a URI, curlpipe supports boolean, literal, binary, xml, json and 
 
 | data type  | example |description   |
 |------------|---------|--------------|
-| URI        | `[http://www.example.org]`   | used to POST, PUT or DELETE.| 
+| URI        | `[http://www.example.org]`   | used to POST, PUT or DELETE.|
 | literal    | `"name=value;name=value"`   | literal data value.|
 | binary     |  ex. zip file              | binary data value.|
 | xml        | `<person><name>Tommy</name></person>`        | well formed xml data.|
@@ -183,13 +183,13 @@ In addition to a URI, curlpipe supports boolean, literal, binary, xml, json and 
 | boolean    | `? ?`                      | true or false.|
 | null       | `[]`                       | an empty/null value.|
 
-Literal string data can be used to pass in name value pairs (using application/x-www-form-urlencoded content type): 
+Literal string data can be used to pass in name value pairs (using application/x-www-form-urlencoded content type):
 ```bash
 "name=value&name=value" ;
 ```
 Binary data (for example, a zip file) is also supported.
 
-Support for common formats, like XML and json. 
+Support for common formats, like XML and json.
 ```xml
 "<person><name>Tommy</name></person>" ;
 ```
@@ -206,33 +206,33 @@ A single curlpipe statement can be comprised of
 (datatype | datatype operator datatype)
 ```
 
-either a datatype or a datatype + operator + datatype where operators perform actions (or test conditions) on datatypes. 
+either a datatype or a datatype + operator + datatype where operators perform actions (or test conditions) on datatypes.
 
 The following example illustrates how the contents of /temp/data.json is sent to a HTTP endpoint supporting POST method.
 ```bash
-[/tmp/data.json] | [http://httpbin.org/post] 
+[/tmp/data.json] | [http://httpbin.org/post]
 ```
 If the endpoint URI supports PUT it may opt to use that. If the endpoint does not support these methods then the appropriate
 http error code is thrown.
 
 ```bash
-"name=Jim&age=21" | [http://httpbin.org/post] 
+"name=Jim&age=21" | [http://httpbin.org/post]
 ```
 
 The following would POST xml to the URI.
 
 ```bash
-"<person><name>Tommy</name></person>" | [http://httpbin.org/post] 
+"<person><name>Tommy</name></person>" | [http://httpbin.org/post]
 ```
 or now with a json datatype.
 
 ```bash
-"{id:1,name:'Tommy'}" | [http://httpbin.org/post] 
+"{id:1,name:'Tommy'}" | [http://httpbin.org/post]
 ```
 
 The pipe operator can be used to perform an HTTP DELETE
 ```bash
-[] | [http://httpbin.org/delete] 
+[] | [http://httpbin.org/delete]
 ```
 
 Like the PUT the pipe operator will deduce if the endpoint supports DELETE. This built in behavior is enabled
@@ -240,11 +240,11 @@ by curlpipe options (which can be set when invoking curlpipe).
 
 Otherwise one is always free to force a PUT
 ```bash
-"{id:1,name:'Tommy'}" =| [http://httpbin.org/put]  
+"{id:1,name:'Tommy'}" =| [http://httpbin.org/put]
 ```
 To force a DELETE method
 ```bash
-[] =| [http://httpbin.org/delete] 
+[] =| [http://httpbin.org/delete]
 ```
 
 To force a HEAD method use a conditional (explained further down)
@@ -264,7 +264,7 @@ The set of processing operators are:
 
 | operator  | description   |
 |-----------|---------------|
-| &#124;    | used to POST, PUT or DELETE.| 
+| &#124;    | used to POST, PUT or DELETE.|
 | &#62;     | redirect output to file.|
 | &#62;&#62;| append output to file.|
 | =&#124;   | used to force PUT or DELETE.|
@@ -272,7 +272,7 @@ The set of processing operators are:
 
 ### Parameters
 
-Parameters can be passed into curlpipe 
+Parameters can be passed into curlpipe
 ```bash
 > curlpipe -Pname=Tommy example.cp -Pid=1
 ```
@@ -311,19 +311,19 @@ Additionally, curlpipe supports trinary logic, in the following form.
 
 ```bash
 [http://www.httpbin.org/get] =~ "test"
-       ? > [/tmp/success.txt] 
-       : 2> [/tmp/fail.txt]       
+       ? > [/tmp/success.txt]
+       : 2> [/tmp/fail.txt]
 ```
 
 The set of conditional operators are:
 
 | operator  | description        |
 |-----------|--------------------|
-| ==        |  equal             | 
-| !=        |  does not equal    | 
-| ~=        |  regex text        | 
-| &&        |  AND chain condition    | 
-| &#124;&#124; | OR chain condition    | 
+| ==        |  equal             |
+| !=        |  does not equal    |
+| ~=        |  regex text        |
+| &&        |  AND chain condition    |
+| &#124;&#124; | OR chain condition    |
 
 ### Selectors
 
@@ -342,17 +342,17 @@ Curlpipe defines the following options
 
 | option  | type | default |description        |
 |---------|------|---------|-------------------|
-| deduce-methods-on-pipe | boolean   | true |will detect if URI supports PUT or DELETE when using pipe operator.| 
- 
+| deduce-methods-on-pipe | boolean   | true |will detect if URI supports PUT or DELETE when using pipe operator.|
+
 ## Examples
 
 Find more examples [here](https://github.com/xquery/curlpipe/tree/develop/docs/examples).
 
-##### Retrieve (GET) and save to file   
+##### Retrieve (GET) and save to file
 ```bash
 [http://www.httpbin.org/get] > [/tmp/output.txt]
 ```
-##### Retrieve (GET) and save to file   
+##### Retrieve (GET) and save to file
 ```bash
 [http://www.httpbin.org/get auth=myser:password auth-type=digest] > [/tmp/output3.txt]
 ```
@@ -362,7 +362,7 @@ Find more examples [here](https://github.com/xquery/curlpipe/tree/develop/docs/e
 [http://www.httpbin.org/get "Accept":"application/json"]
 ```
 
-##### GET and append to file  
+##### GET and append to file
 ```bash
 [http://www.httpbin.org/get] >> [/tmp/response.txt]
 ```
@@ -383,9 +383,9 @@ Find more examples [here](https://github.com/xquery/curlpipe/tree/develop/docs/e
 ##### Trinary operator
 ```bash
 [http://www.httpbin.org/get] =~ "test"
-       ? > [/tmp/success.txt] 
+       ? > [/tmp/success.txt]
        : > [/tmp/fail/fail.txt]
-       
+
 ```
 
 ##### POST json
@@ -436,7 +436,7 @@ will deduce if endpoint supports DELETE
 
 force an HTTP DELETE
 ```bash
-[/dev/null] =| [http://www.httpbin.org/delete] 
+[/dev/null] =| [http://www.httpbin.org/delete]
 ```
 
 ##### Transclusion in URI
@@ -459,7 +459,7 @@ force an HTTP DELETE
 
 ## Points of Interests
 
-curlpipe is by design a 'little language' and most likely missing features from your 'favourite' language. It is intended as an adjunct to your existing script processing or host language. 
+curlpipe is by design a 'little language' and most likely missing features from your 'favourite' language. It is intended as an adjunct to your existing script processing or host language.
 
 To provide a framework for design thoughts, here are a few possibly non obvious gaps in the current codebase.
 
@@ -467,21 +467,21 @@ To provide a framework for design thoughts, here are a few possibly non obvious 
 * Intentionally [lazy](http://threevirtues.com/) defining internals or worrying too much about performance at this stage.
 * curlpipe language is defined with an [EBNF](etc/csparser.ebnf) which is used to produce a strict parser.
 * Designing a programming language is hard - coherence and an easy to run AST are the first goals, please do [raise an issue](https://github.com/xquery/curlpipe/issues) if you feel strongly where syntax could change.
-* I find using [CMake](https://cmake.org/) non intuitive ... its enforced usage on this project is an attempt to learn more (otherwise you would see a Makefile here!). 
+* I find using [CMake](https://cmake.org/) non intuitive ... its enforced usage on this project is an attempt to learn more (otherwise you would see a Makefile here!).
 * Currently curlpipe is http centric in initial releases.
 * Woefully ignorant of windows platform ... looking at [appveyor](https://www.appveyor.com/) to eventually help solve that ([issue #2](https://github.com/xquery/curlpipe/issues/2)).
 
 I have blatantly stolen (and deformed) concepts from many places (bash, unix pipes, prolog, etc..). The following projects provide alternate approaches to solving similar problems that
 curlpipe is trying to address and worth a mention.
 
-* [httpie](https://github.com/jakubroztocil/httpie) 
+* [httpie](https://github.com/jakubroztocil/httpie)
 * [curlrc](https://github.com/benwebber/curlrc)
 
 ## Developing curlpipe
 
-Please [raise an issue](https://github.com/xquery/curlpipe/issues) or make a contribution by forking the repository and creating a [pr](https://github.com/xquery/curlpipe/pulls). 
+Please [raise an issue](https://github.com/xquery/curlpipe/issues) or make a contribution by forking the repository and creating a [pr](https://github.com/xquery/curlpipe/pulls).
 
-Development work happens on the [develop branch])(https://github.com/xquery/curlpipe/tree/develop) and 
+Development work happens on the [develop branch])(https://github.com/xquery/curlpipe/tree/develop) and
 releases are based on [master branch](https://github.com/xquery/curlpipe/tree/master).
 
 ### Compiling
@@ -492,20 +492,25 @@ To build software, run cmake:
 > mkdir build
 > cd build
 > cmake -DCMAKE_BUILD_TYPE=Debug -DENABLE_MANUAL=OFF -DBUILD_TESTING=OFF ..
-> make 
+> make
 > make test
 > make install
 ```
 
-Running cmake requires access to the internet to pull down dependencies. This is problematic  approach for 
+Running cmake requires access to the internet to pull down dependencies. This is problematic  approach for
 those wishing to build on a standalone machine off the network (tracked as [issue 1](https://github.com/xquery/curlpipe/issues/1))
 
 The build should complain if any other dependencies are missing (ex. openssl). Please review third party [dependencies](#dependencies) for any other build requirements.
 
 ### Testing
 
-Tests require [httpbin](http://httpbin.org) - which should be setup on port 81 - running the following docker command
-or however way you feel comfortable installing.
+Tests require [httpbin](http://httpbin.org) - to setup run docker-compose from top level dir (which will setup both http/https)
+
+```
+> docker-compose -d up
+```
+
+alternately, run the docker command.
 
 ```bash
 > docker run -p 81:80 kennethreitz/httpbin
@@ -525,7 +530,7 @@ or you could run directly
 
 ### Generating the Parser
 
-lib/curlpipe/csparser.cpp is generated using [REx Parser Generator](http://www.bottlecaps.de/rex/) with the 
+lib/curlpipe/csparser.cpp is generated using [REx Parser Generator](http://www.bottlecaps.de/rex/) with the
 following flags.
 
 ```bash
@@ -551,8 +556,8 @@ Then run cpack.
 
 ### Dependencies
 This project depends on the following external libs:
-* [curl](https://curl.haxx.se/): libcurl (of course!). 
-* [REx Parser Generator](http://www.bottlecaps.de/rex/): Gunther Rademacher <grd@gmx.net> excellant parser generator. 
+* [curl](https://curl.haxx.se/): libcurl (of course!).
+* [REx Parser Generator](http://www.bottlecaps.de/rex/): Gunther Rademacher <grd@gmx.net> excellant parser generator.
 * [loguru](https://github.com/emilk/loguru): no fuss logging.
 * [cxxopt](https://github.com/jarro2783/cxxopts): parsing command args.
 * [googletest](https://github.com/google/googletest): testing.
